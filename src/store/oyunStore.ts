@@ -1,6 +1,7 @@
 import { create } from 'zustand';
 import { BOLUMLER, TOPLAM_BOLUM } from '../levels';
 import { calistir } from '../core/yurutucu';
+import { dersBul } from '../content/dersler';
 import type { Adim, Bolum, CalismaSonucu, Kod } from '../core/types';
 
 const KAYIT = 'sezeritma.ilerleme.v1';
@@ -8,9 +9,11 @@ const KAYIT = 'sezeritma.ilerleme.v1';
 interface Kayit {
   yildizlar: Record<number, 0 | 1 | 2 | 3>;
   kodlar: Record<number, Kod>;
+  /** Gösterilmiş ders kartları — aynı ders iki kere zorla açılmasın. */
+  gorulenDersler: number[];
 }
 
-const bosKayit: Kayit = { yildizlar: {}, kodlar: {} };
+const bosKayit: Kayit = { yildizlar: {}, kodlar: {}, gorulenDersler: [] };
 
 const kayitOku = (): Kayit => {
   try {
@@ -52,6 +55,9 @@ interface OyunDurumu {
   ipucuKullanildi: boolean;
   basariAcik: boolean;
   haritaAcik: boolean;
+  dersAcik: boolean;
+  kavramlarAcik: boolean;
+  gorulenDersler: number[];
 
   kodYaz: (kod: Partial<Kod>) => void;
   calistirBasla: () => void;
@@ -65,7 +71,16 @@ interface OyunDurumu {
   ipucuAc: () => void;
   haritaAcKapa: (acik: boolean) => void;
   basariKapat: () => void;
+  dersAc: () => void;
+  dersKapat: () => void;
+  kavramlarAcKapa: (acik: boolean) => void;
 }
+
+/** Ders kartı sadece o bölümde yeni bir kavram varsa ve daha önce görülmediyse açılır. */
+const dersGosterilsinMi = (bolumNo: number, gorulen: number[]) => {
+  const vardiyaBasi = [1, 5, 9, 13].includes(bolumNo);
+  return (dersBul(bolumNo) !== undefined || vardiyaBasi) && !gorulen.includes(bolumNo);
+};
 
 const ilkKayit = kayitOku();
 const ilkBolum =
@@ -87,6 +102,9 @@ export const useOyun = create<OyunDurumu>((set, get) => ({
   ipucuKullanildi: false,
   basariAcik: false,
   haritaAcik: false,
+  dersAcik: dersGosterilsinMi(ilkBolum.no, ilkKayit.gorulenDersler),
+  kavramlarAcik: false,
+  gorulenDersler: ilkKayit.gorulenDersler,
 
   kodYaz: (parca) => {
     const kod = { ...get().kod, ...parca };
@@ -153,6 +171,8 @@ export const useOyun = create<OyunDurumu>((set, get) => ({
       ipucuKullanildi: false,
       basariAcik: false,
       haritaAcik: false,
+      kavramlarAcik: false,
+      dersAcik: dersGosterilsinMi(no, kayit.gorulenDersler),
     });
   },
 
@@ -172,6 +192,20 @@ export const useOyun = create<OyunDurumu>((set, get) => ({
 
   haritaAcKapa: (haritaAcik) => set({ haritaAcik }),
   basariKapat: () => set({ basariAcik: false }),
+
+  dersAc: () => set({ dersAcik: true }),
+
+  dersKapat: () => {
+    const no = get().bolum.no;
+    const gorulen = get().gorulenDersler.includes(no)
+      ? get().gorulenDersler
+      : [...get().gorulenDersler, no];
+    const kayit = kayitOku();
+    kayitYaz({ ...kayit, gorulenDersler: gorulen });
+    set({ dersAcik: false, gorulenDersler: gorulen });
+  },
+
+  kavramlarAcKapa: (kavramlarAcik) => set({ kavramlarAcik }),
 }));
 
 export const bolumAcik = acikMi;

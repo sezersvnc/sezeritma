@@ -11,7 +11,11 @@ import { KomutListesi } from './components/panel/KomutListesi';
 import { IpucuPaneli } from './components/panel/IpucuPaneli';
 import { VardiyaSonu } from './components/panel/VardiyaSonu';
 import { BolumHaritasi } from './components/panel/BolumHaritasi';
+import { DersKarti } from './components/panel/DersKarti';
+import { Kavramlar } from './components/panel/Kavramlar';
 import { kodluMetin } from './components/panel/metin';
+import { dersBul, vardiyaBul } from './content/dersler';
+import { adimAnlat } from './content/anlatici';
 import type { Durum } from './core/types';
 
 /** Hız kaydırıcısının adım aralıkları. */
@@ -78,6 +82,10 @@ export default function App() {
   const toplamYildiz = Object.values(s.yildizlar).reduce<number>((a, b) => a + b, 0);
   const hata = sonuc?.hata;
 
+  const ders = dersBul(bolum.no);
+  const vardiyaGirisi = [1, 5, 9, 13].includes(bolum.no) ? vardiyaBul(bolum.vardiya) : undefined;
+  const anlati = adimAnlat(suAnkiAdim, adimIndex > 0 ? adimlar[adimIndex - 1] : undefined);
+
   return (
     <div className="uygulama">
       <UstBar
@@ -87,6 +95,7 @@ export default function App() {
         toplamYildiz={toplamYildiz}
         enFazlaYildiz={EN_FAZLA_YILDIZ}
         onHaritaAc={() => s.haritaAcKapa(true)}
+        onKavramlarAc={() => s.kavramlarAcKapa(true)}
       />
 
       <main className="tezgah">
@@ -96,6 +105,8 @@ export default function App() {
             ad={bolum.ad}
             kavram={bolum.kavram}
             gorev={bolum.gorev}
+            dersVar={ders !== undefined}
+            onDers={s.dersAc}
           />
           <div className="zemin-alani">
             <Izgara bolum={bolum} durum={durum} iz={iz} />
@@ -106,6 +117,9 @@ export default function App() {
               toplamAdim={adimlar.length}
               degiskenler={suAnkiAdim?.degiskenler ?? {}}
             />
+            <p className="anlati" aria-live="polite">
+              {anlati}
+            </p>
           </div>
         </section>
 
@@ -174,6 +188,22 @@ export default function App() {
             s.sifirla();
           }}
         />
+      )}
+
+      {s.dersAcik && (
+        <DersKarti
+          ders={ders}
+          vardiya={vardiyaGirisi}
+          onKapat={s.dersKapat}
+          onKavramlar={() => {
+            s.dersKapat();
+            s.kavramlarAcKapa(true);
+          }}
+        />
+      )}
+
+      {s.kavramlarAcik && (
+        <Kavramlar bolumNo={bolum.no} onKapat={() => s.kavramlarAcKapa(false)} />
       )}
 
       {s.haritaAcik && (

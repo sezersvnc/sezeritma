@@ -7,7 +7,8 @@ export function UstBar({
   toplamYildiz,
   enFazlaYildiz,
   onHaritaAc,
-}: UstBarProps) {
+  onKavramlarAc,
+}: UstBarProps & { onKavramlarAc: () => void }) {
   return (
     <header>
       <div className="ustbar">
@@ -34,6 +35,9 @@ export function UstBar({
             {toplamYildiz}/{enFazlaYildiz}
           </span>
 
+          <button className="harita-dugmesi etiket" onClick={onKavramlarAc}>
+            Kavramlar
+          </button>
           <button className="harita-dugmesi etiket" onClick={onHaritaAc}>
             Vardiya çizelgesi
           </button>

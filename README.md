@@ -12,6 +12,10 @@ Gerçek olaylardan esinlenilmiştir.
 
 Yeni başlayan öğrencinin asıl problemi sözdizimi değil, kodun zamanda aktığını görememesi. `for` döngüsünü ezberliyor ama "şu an 3. tur, `i` iki, karakter burada" resmini kafasında kuramıyor. Bu projenin tek işi o resmi ekrana koymak.
 
+- **Ders kartları** — her yeni kavram, ilk kullanıldığı bölümde anlatılıyor: önce hangi problemi çözdüğü, sonra nasıl çalıştığı, sonra satır satır açıklamalı bir örnek. Cevabı vermiyor, kavramı öğretiyor.
+- **Adım anlatıcısı** — kod çalışırken her adımı cümleyle anlatıyor: *"4. satır: Sezer yerinde döndü, artık aşağı bakıyor. Konumu değişmedi."*
+- **Kavram sözlüğü** — öğrenilen her kavram üst bardan her an açılabiliyor; unutunca geri dönülüyor.
+- **Vardiya girişi ve özeti** — her bölümde ne öğreneceğini önce, ne öğrendiğini sonra söylüyor.
 - **Aktif satır vurgusu** — kod çalışırken editörde işlenen satır boyanır. Döngünün başa dönüşü görünür hale gelir.
 - **Değişken izleyici** — `int sayac = 0;` yazıldığı anda yan panelde `sayac: 0 → 1 → 2` akar.
 - **Adım adım çalıştırma** — kod tek tek adımlanabilir, hız ayarlanabilir. Öğrenci hayatındaki ilk hata ayıklayıcıyı farkında olmadan kullanır.
@@ -22,6 +26,21 @@ Yeni başlayan öğrencinin asıl problemi sözdizimi değil, kodun zamanda akt�
 > 3. satırın sonunda noktalı virgül eksik.
 > 4. satırda palete çarptın. Sağa bakıyordun ve orada bir palet vardı — `onumdePaletVar()` ile önce kontrol etmeyi dene.
 > `iflerle` diye bir komut yok. `ilerle` mi demek istedin?
+
+Öğrenci bu yüzden kimsenin anlatmasına ihtiyaç duymuyor: kavram anlatılıyor, alıştırma yaptırılıyor, sonuç yorumlanıyor, öğrenilen geri dönülebilir halde duruyor.
+
+## Müfredat
+
+Dört vardiya, on altı bölüm. Her bölüm tek bir yeni fikir öğretiyor ve öncekini tekrar ettiriyor.
+
+| Vardiya | Ne öğretiyor |
+|---|---|
+| 1 — Üretim Hattı | Komut, sıra, durum: bilgisayara adım adım iş anlatmak |
+| 2 — İstif Deposu | Tekrarın problemi, `for`, döngü gövdesi, iç içe döngü |
+| 3 — Sevkiyat Bölgesi | `while`, `if`, `if / else`, ve **algoritma** kavramının kendisi |
+| 4 — Gece Vardiyası | Değişken, mantıksal koşullar, fonksiyon, sentez |
+
+Son bölümün dersi şunu söylüyor: bütün bunlar aslında dört fikirdi — **sıra, tekrar, karar, isimlendirme.** Hangi dili öğrenirse öğrensin aynı dördünü görecek.
 
 ## C++'ın tören yükü
 

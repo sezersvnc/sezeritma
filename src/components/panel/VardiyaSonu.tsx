@@ -1,5 +1,7 @@
 import { useEffect, useRef } from 'react';
 import type { VardiyaSonuProps } from '../../core/types';
+import { vardiyaBul } from '../../content/dersler';
+import { kodluMetin } from './metin';
 
 export function VardiyaSonu({
   bolumNo,
@@ -17,6 +19,10 @@ export function VardiyaSonu({
   useEffect(() => odak.current?.focus(), []);
 
   const verimli = kullanilanSatir <= hedefSatir;
+  // Vardiyanın son bölümü geçildiğinde ne öğrenildiğini toparlıyoruz.
+  const vardiyaOzeti = [4, 8, 12, 16].includes(bolumNo)
+    ? vardiyaBul(Math.ceil(bolumNo / 4))
+    : undefined;
 
   return (
     <div className="orti" role="dialog" aria-modal="true" aria-label={`Bölüm ${bolumNo} tamamlandı`}>
@@ -49,6 +55,15 @@ export function VardiyaSonu({
           </div>
 
           <p className="vardiya-notu">{vardiyaNotu}</p>
+
+          {vardiyaOzeti && (
+            <section className="vardiya-ozeti">
+              <span className="etiket">
+                Vardiya {vardiyaOzeti.no} bitti — {vardiyaOzeti.ad}
+              </span>
+              <p>{kodluMetin(vardiyaOzeti.ozet)}</p>
+            </section>
+          )}
 
           {!verimli && (
             <p className="etiket" style={{ color: 'var(--beton-4)', marginBottom: 16 }}>

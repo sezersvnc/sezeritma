@@ -816,3 +816,186 @@ button {
     gap: 1px;
   }
 }
+
+/* ------------------------------------------------------------------ ders kartı */
+
+.ders-tabelasi {
+  max-width: 680px;
+  max-height: 88vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.ders-ic {
+  overflow: auto;
+}
+
+.vardiya-girisi {
+  border-left: 2px solid var(--yelek);
+  padding: 2px 0 2px 14px;
+  margin-bottom: 22px;
+}
+
+.vardiya-girisi p {
+  margin: 6px 0 0;
+  font-size: 15px;
+  line-height: 1.55;
+}
+
+.ders-metin p {
+  margin: 0 0 12px;
+  font-size: 15px;
+  line-height: 1.62;
+  max-width: 62ch;
+}
+
+.ders-ornek {
+  background: var(--kakao-1);
+  padding: 14px 16px;
+  margin: 18px 0;
+  display: grid;
+  gap: 3px;
+}
+
+.ders-satir {
+  display: grid;
+  grid-template-columns: minmax(0, 20em) minmax(0, 1fr);
+  gap: 18px;
+  align-items: baseline;
+}
+
+.ders-satir code {
+  font-family: var(--kod);
+  font-size: 13px;
+  color: var(--sut);
+  white-space: pre;
+}
+
+.ders-satir span {
+  font-size: 12.5px;
+  line-height: 1.5;
+  color: var(--beton-3);
+}
+
+.ders-satir span code {
+  font-size: 12px;
+  color: var(--yelek);
+}
+
+.ders-hatirla {
+  border-top: 1px solid var(--beton-3);
+  padding-top: 14px;
+  margin: 0 0 22px;
+  font-size: 15px;
+  line-height: 1.55;
+}
+
+.ders-hatirla .etiket {
+  display: block;
+  color: var(--beton-4);
+  margin-bottom: 5px;
+}
+
+.ders-hatirla code,
+.ders-metin code,
+.vardiya-girisi code {
+  font-family: var(--kod);
+  font-size: 13px;
+  background: rgba(22, 23, 26, 0.07);
+  padding: 1px 5px;
+}
+
+.ders-baglantisi {
+  margin-left: 10px;
+  font-size: 13px;
+  color: var(--yelek);
+  border-bottom: 1px solid currentColor;
+  padding: 0;
+}
+
+/* ------------------------------------------------------------------ kavramlar */
+
+.kavram-blogu {
+  margin-top: 20px;
+}
+
+.kavram-blogu h3 {
+  margin: 0 0 8px;
+  color: var(--beton-4);
+}
+
+.kavram-satiri + .kavram-satiri {
+  margin-top: 4px;
+}
+
+.kavram-baslik {
+  display: flex;
+  align-items: baseline;
+  gap: 12px;
+  width: 100%;
+  text-align: left;
+  padding: 9px 12px;
+  background: var(--beton-2);
+  border: 1px solid transparent;
+}
+
+.kavram-baslik:hover:not(:disabled) {
+  border-color: var(--kakao-1);
+}
+
+.kavram-baslik:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
+.kavram-no {
+  color: var(--beton-4);
+}
+
+.kavram-govde {
+  padding: 12px 12px 2px;
+}
+
+.kavram-govde p {
+  margin: 0;
+  font-size: 14.5px;
+  line-height: 1.55;
+}
+
+/* ------------------------------------------------------------------ anlatı */
+
+.anlati {
+  margin: 0;
+  max-width: 62ch;
+  min-height: 2.6em;
+  font-size: 14px;
+  line-height: 1.5;
+  color: var(--kakao-2);
+  border-left: 2px solid var(--beton-3);
+  padding-left: 12px;
+}
+
+.vardiya-ozeti {
+  border-left: 2px solid var(--yelek);
+  padding: 2px 0 2px 14px;
+  margin: 0 0 20px;
+}
+
+.vardiya-ozeti .etiket {
+  display: block;
+  color: var(--beton-4);
+  margin-bottom: 6px;
+}
+
+.vardiya-ozeti p {
+  margin: 0;
+  font-size: 14.5px;
+  line-height: 1.58;
+}
+
+.vardiya-ozeti code {
+  font-family: var(--kod);
+  font-size: 13px;
+  background: rgba(22, 23, 26, 0.07);
+  padding: 1px 5px;
+}

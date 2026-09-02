@@ -40,6 +40,9 @@ await sayfa.evaluate(
 );
 await sayfa.reload({ waitUntil: 'networkidle' });
 await sayfa.waitForTimeout(600);
+const dersDugmesi = sayfa.getByRole('button', { name: 'BÖLÜME BAŞLA' });
+if (await dersDugmesi.count()) await dersDugmesi.first().click();
+await sayfa.waitForTimeout(300);
 
 await sayfa.locator('input[type=range]').fill('5');
 await sayfa.getByRole('button', { name: /Çalıştır/ }).click();
