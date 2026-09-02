@@ -12,7 +12,8 @@
     "test:watch": "vitest",
     "typecheck": "tsc --noEmit",
     "bolum:dogrula": "vitest run src/levels",
-    "bolum:gelen": "vitest run"
+    "bolum:gelen": "vitest run",
+    "cevap-anahtari": "vitest run src/levels/cevapAnahtari.kontrol.ts"
   },
   "dependencies": {
     "@codemirror/commands": "^6.11.0",

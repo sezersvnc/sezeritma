@@ -215,13 +215,16 @@ button {
 }
 
 .kavram {
-  display: inline-block;
-  margin-top: 8px;
+  margin: 10px 0 0;
+  font-size: 13.5px;
+  color: var(--beton-4);
+}
+
+.kavram b {
   font-family: var(--kod);
-  font-size: 11px;
-  background: var(--kakao-1);
-  color: var(--serit);
-  padding: 3px 8px;
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--kakao-2);
 }
 
 .zemin-alani {
@@ -594,22 +597,7 @@ button {
   font-family: var(--kod);
   color: var(--serit);
   font-size: 12.5px;
-  min-width: 178px;
-}
-
-.yapi-rozetleri {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 6px;
-  margin-top: 4px;
-}
-
-.yapi-rozeti {
-  font-family: var(--kod);
-  font-size: 11px;
-  border: 1px solid var(--kakao-4);
-  color: var(--beton-3);
-  padding: 2px 7px;
+  min-width: 208px;
 }
 
 .ipucu-dugmesi {

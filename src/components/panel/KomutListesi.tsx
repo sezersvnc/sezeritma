@@ -20,13 +20,13 @@ const ACIKLAMA: Record<KomutAdi, string> = {
   ustumdeCikolataVar: 'Bastığın karede çikolata varsa doğru.',
 };
 
-const YAPI_ETIKET: Record<YapiAdi, string> = {
-  for: 'for',
-  while: 'while',
-  if: 'if',
-  else: 'else',
-  degisken: 'int / bool',
-  fonksiyon: 'void isim()',
+const YAPI: Record<YapiAdi, { imza: string; ne: string }> = {
+  for: { imza: 'for (int i = 0; i < n; i++)', ne: 'Kaç kere tekrarlanacağını bildiğinde.' },
+  while: { imza: 'while (kosul)', ne: 'Koşul doğru olduğu sürece tekrarlar.' },
+  if: { imza: 'if (kosul)', ne: 'Koşul doğruysa içindekini çalıştırır.' },
+  else: { imza: 'else', ne: 'Koşul yanlışsa bunu çalıştırır.' },
+  degisken: { imza: 'int sayac = 0;', ne: 'Bir sayıyı hatırlar, sonra değiştirebilirsin.' },
+  fonksiyon: { imza: 'void isim() { }', ne: 'Kendi komutunu tanımlarsın, adıyla çağırırsın.' },
 };
 
 export function KomutListesi({ izinliKomutlar, izinliYapilar }: KomutListesiProps) {
@@ -46,11 +46,12 @@ export function KomutListesi({ izinliKomutlar, izinliYapilar }: KomutListesiProp
       </div>
 
       {izinliYapilar.length > 0 && (
-        <div className="yapi-rozetleri">
+        <div className="komut-listesi" style={{ marginTop: 12 }}>
           {izinliYapilar.map((y) => (
-            <span key={y} className="yapi-rozeti">
-              {YAPI_ETIKET[y]}
-            </span>
+            <div key={y} className="komut">
+              <code>{YAPI[y].imza}</code>
+              <span>{YAPI[y].ne}</span>
+            </div>
           ))}
         </div>
       )}

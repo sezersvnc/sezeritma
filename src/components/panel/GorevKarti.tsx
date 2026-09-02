@@ -6,7 +6,7 @@ export function GorevKarti({ bolumNo, ad, kavram, gorev }: GorevKartiProps) {
       <span className="etiket no">Bölüm {String(bolumNo).padStart(2, '0')}</span>
       <h1>{ad}</h1>
       <p>{gorev}</p>
-      <span className="kavram">{kavram}</span>
+      <p className="kavram">Bu bölümde öğrendiğin: <b>{kavram}</b></p>
     </section>
   );
 }

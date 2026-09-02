@@ -51,6 +51,8 @@ npm run dev
 | `npm run dev` | Geliştirme sunucusu |
 | `npm test` | Bütün testler (209 test) |
 | `npm run bolum:dogrula` | Bölüm doğrulayıcı: her bölümü referans çözümüyle otomatik oynatır |
+| `npm run bolum:gelen` | `docs/bolumler/` altındaki taslakları denetler, raporu `docs/gelen-bolum-raporu.md` dosyasına yazar |
+| `npm run cevap-anahtari` | Bütün bölümlerin doğrulanmış çözümlerini `docs/cevap-anahtari.md` dosyasına üretir |
 | `npm run typecheck` | Tip kontrolü |
 | `npm run build` | Yayın derlemesi |
 
