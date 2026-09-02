@@ -94,13 +94,13 @@ export function bolumOku(metin: string, no: number): Bolum {
   }
 
   const vardiya = Number(ustBilgi(metin, 'vardiya', no));
-  if (![1, 2, 3, 4].includes(vardiya)) {
-    throw new Error(`Bölüm ${no}: vardiya 1, 2, 3 veya 4 olmalı.`);
+  if (![1, 2, 3, 4, 5].includes(vardiya)) {
+    throw new Error(`Bölüm ${no}: vardiya 1 ile 5 arasında olmalı.`);
   }
 
   return {
     no,
-    vardiya: vardiya as 1 | 2 | 3 | 4,
+    vardiya: vardiya as 1 | 2 | 3 | 4 | 5,
     ad: basligiEslesme[1].trim(),
     kavram: ustBilgi(metin, 'kavram', no),
     gorev: al('Gorev'),
@@ -122,6 +122,7 @@ export function bolumOku(metin: string, no: number): Bolum {
     izinliYapilar,
     hedefSatir,
     fonksiyonBolmesi,
+    kartModu: izinliYapilar.length === 0,
 
     baslangicKodu: parcalar.get('BaslangicKodu') ?? '',
     referansCozum: al('Cozum'),

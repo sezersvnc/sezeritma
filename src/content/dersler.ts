@@ -26,7 +26,7 @@ export interface Ders {
 }
 
 export interface Vardiya {
-  no: 1 | 2 | 3 | 4;
+  no: 1 | 2 | 3 | 4 | 5;
   ad: string;
   giris: string;
   ozet: string;
@@ -65,11 +65,38 @@ export const VARDIYALAR: readonly Vardiya[] = [
     ozet:
       'Bitti. Değişkenle bilgi saklamayı, koşulları birleştirmeyi ve kendi fonksiyonunu yazmayı öğrendin. Bu dördü — sıra, tekrar, karar, isimlendirme — bugüne kadar yazılmış her programın temel taşları. Hangi dili öğrenirsen öğren, aynı dördü göreceksin.',
   },
+  {
+    no: 5,
+    ad: 'Hata Ayıklama',
+    giris:
+      'Şimdiye kadar hep sen yazdın. Bu vardiyada kodu başkası yazdı ve çalışmıyor. Gerçek hayatta bir programcının zamanının büyük kısmı burada geçer: yazmakta değil, neden çalışmadığını bulmakta.',
+    ozet:
+      'Artık bozuk bir kodu okuyup düzeltebiliyorsun. Bu, kod yazmaktan daha zor ve daha değerli bir beceri — çünkü kendi yazdığın kod da bir gün çalışmayacak, ve o gün bu bölümlerde öğrendiğin refleksi kullanacaksın.',
+  },
 ];
 
 export const DERSLER: readonly Ders[] = [
   {
     bolum: 1,
+    baslik: 'Algoritma nedir?',
+    neden: [
+      'Kod yazmayı hiç bilmiyor olabilirsin. Sorun değil — programlamanın özü kod değil, algoritma. Ve algoritma zaten bildiğin bir şey.',
+      'Birine çay yapmayı tarif ettiğini düşün: suyu koy, kaynat, demliği yerleştir, beş dakika bekle. Sırayı bozarsan çay olmaz. Adımı atlarsan çay olmaz. İşte bu bir algoritma: bir işi yapan, sırası önemli, eksiksiz adımlar dizisi.',
+    ].join('\n\n'),
+    nasil: [
+      'Bilgisayarın senden tek farkı, hiçbir şeyi kendiliğinden anlamaması. "Çayı demle" demek yetmez; her adımı tek tek söylemen gerekir. Bu oyunda da Sezer\'e ne yapacağını adım adım söyleyeceksin.',
+      'Bu ilk bölümlerde kod yazmayacaksın. Aşağıdaki komut kartlarına basacaksın, satırlar senin yerine yazılacak. Sen sadece sıraya karar vereceksin — yani asıl işi, algoritmayı kuracaksın. Yazmaya sonra geçeceğiz.',
+    ].join('\n\n'),
+    ornek: [
+      { kod: 'suyu koy;', not: 'Adımlar sırayla yapılır.' },
+      { kod: 'kaynat;', not: 'Sırayı bozarsan sonuç bozulur.' },
+      { kod: 'demle;', not: 'Bilgisayar tam olarak dediğini yapar, fazlasını değil.' },
+    ],
+    hatirla:
+      'Algoritma, bir işi yapan sıralı ve eksiksiz adımlar dizisidir. Programlama, o adımları bilgisayarın anlayacağı dilde yazmaktır.',
+  },
+  {
+    bolum: 2,
     baslik: 'Komut ve sıra',
     neden:
       'Bilgisayar sezgi kullanmaz. "Mola odasına git" demek işe yaramaz; oraya nasıl gidileceğini adım adım söylemen gerekir. Programlama tam olarak budur: bir işi bilgisayarın yapabileceği kadar küçük parçalara bölmek.',
@@ -281,6 +308,27 @@ export const DERSLER: readonly Ders[] = [
       { kod: '}' },
     ],
     hatirla: 'Sıra, tekrar, karar, isimlendirme. Bütün programlar bu dördünden kuruludur.',
+  },
+  {
+    bolum: 17,
+    baslik: 'Hata ayıklama',
+    neden:
+      'Kod yazmak işin kolay yarısı. Çalışmayan bir kodu okuyup neyin yanlış olduğunu bulmak asıl beceridir — ve kimse bunu doğuştan bilmez, herkes alıştırmayla öğrenir.',
+    nasil: [
+      'Sırası şu ve hiç değişmez.',
+      '1 — Çalıştır. Tahmin etme, gör. Kod gerçekte ne yapıyor?',
+      '2 — Karşılaştır. Ne yapmasını istiyordun, ne yaptı? Fark tam olarak nerede başlıyor?',
+      '3 — Tek şey değiştir. Aynı anda üç yeri düzeltirsen hangisinin işe yaradığını anlayamazsın.',
+      '4 — Tekrar çalıştır. Düzeldi mi, yoksa başka bir yeri mi bozdun?',
+      'Adım adım düğmesi ve satır vurgusu tam olarak bunun için var: kodun hangi satırda ne yaptığını tek tek izleyebilirsin.',
+    ].join('\n\n'),
+    ornek: [
+      { kod: 'for (int i = 0; i < 5; i++)', not: 'Beklenen 7 tur, yazılan 5. Kod çalışır ama yanlış çalışır.' },
+      { kod: 'while (!bitti) { don(); }', not: 'Konumu değiştiren bir şey yok — sonsuz döngü.' },
+      { kod: 'if (...) { } else { sayac++; }', not: 'Doğru satır, yanlış dal. Sayaç yanlış şeyi sayar.' },
+    ],
+    hatirla:
+      'Önce çalıştır, sonra karşılaştır, sonra tek bir şey değiştir. Hata mesajını okumak, tahmin etmekten her zaman hızlıdır.',
   },
 ];
 

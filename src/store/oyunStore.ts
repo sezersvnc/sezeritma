@@ -2,9 +2,15 @@ import { create } from 'zustand';
 import { BOLUMLER, TOPLAM_BOLUM } from '../levels';
 import { calistir } from '../core/yurutucu';
 import { dersBul } from '../content/dersler';
-import type { Adim, Bolum, CalismaSonucu, Kod } from '../core/types';
+import type { Adim, Bolum, CalismaSonucu, Kod, KomutAdi } from '../core/types';
 
 const KAYIT = 'sezeritma.ilerleme.v1';
+
+const SATIR_SONU = String.fromCharCode(10);
+
+/** Kart modunda gövde, boş satır barındırmayan düz bir komut listesidir. */
+const kartSatirlari = (govde: string): string[] =>
+  govde.split(SATIR_SONU).filter((l) => l.trim().length > 0);
 
 interface Kayit {
   yildizlar: Record<number, 0 | 1 | 2 | 3>;
@@ -57,6 +63,8 @@ interface OyunDurumu {
   haritaAcik: boolean;
   dersAcik: boolean;
   kavramlarAcik: boolean;
+  /** Kart modu açıkken öğrenci klavye yerine komut kartlarıyla kod kuruyor. */
+  kartlaYaz: boolean;
   gorulenDersler: number[];
 
   kodYaz: (kod: Partial<Kod>) => void;
@@ -74,11 +82,15 @@ interface OyunDurumu {
   dersAc: () => void;
   dersKapat: () => void;
   kavramlarAcKapa: (acik: boolean) => void;
+  kartEkle: (komut: KomutAdi) => void;
+  kartGeriAl: () => void;
+  kartTemizle: () => void;
+  kartlaYazDegistir: (kartla: boolean) => void;
 }
 
 /** Ders kartı sadece o bölümde yeni bir kavram varsa ve daha önce görülmediyse açılır. */
 const dersGosterilsinMi = (bolumNo: number, gorulen: number[]) => {
-  const vardiyaBasi = [1, 5, 9, 13].includes(bolumNo);
+  const vardiyaBasi = [1, 5, 9, 13, 17].includes(bolumNo);
   return (dersBul(bolumNo) !== undefined || vardiyaBasi) && !gorulen.includes(bolumNo);
 };
 
@@ -104,6 +116,7 @@ export const useOyun = create<OyunDurumu>((set, get) => ({
   haritaAcik: false,
   dersAcik: dersGosterilsinMi(ilkBolum.no, ilkKayit.gorulenDersler),
   kavramlarAcik: false,
+  kartlaYaz: ilkBolum.kartModu,
   gorulenDersler: ilkKayit.gorulenDersler,
 
   kodYaz: (parca) => {
@@ -172,6 +185,7 @@ export const useOyun = create<OyunDurumu>((set, get) => ({
       basariAcik: false,
       haritaAcik: false,
       kavramlarAcik: false,
+      kartlaYaz: bolum.kartModu,
       dersAcik: dersGosterilsinMi(no, kayit.gorulenDersler),
     });
   },
@@ -206,6 +220,22 @@ export const useOyun = create<OyunDurumu>((set, get) => ({
   },
 
   kavramlarAcKapa: (kavramlarAcik) => set({ kavramlarAcik }),
+
+  kartEkle: (komut) => {
+    const satirlar = kartSatirlari(get().kod.govde);
+    satirlar.push(`${komut}();`);
+    get().kodYaz({ govde: satirlar.join(SATIR_SONU) });
+  },
+
+  kartGeriAl: () => {
+    const satirlar = kartSatirlari(get().kod.govde);
+    satirlar.pop();
+    get().kodYaz({ govde: satirlar.join(SATIR_SONU) });
+  },
+
+  kartTemizle: () => get().kodYaz({ govde: '' }),
+
+  kartlaYazDegistir: (kartlaYaz) => set({ kartlaYaz }),
 }));
 
 export const bolumAcik = acikMi;

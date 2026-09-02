@@ -46,7 +46,8 @@ export function Kavramlar({ bolumNo, onKapat }: Props) {
                 (v.no === 1 && bolum <= 4) ||
                 (v.no === 2 && bolum >= 5 && bolum <= 8) ||
                 (v.no === 3 && bolum >= 9 && bolum <= 12) ||
-                (v.no === 4 && bolum >= 13)
+                (v.no === 4 && bolum >= 13 && bolum <= 16) ||
+                (v.no === 5 && bolum >= 17)
               );
             });
             if (dersler.length === 0) return null;

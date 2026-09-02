@@ -384,3 +384,72 @@ while (!molaOdasindaMiyim()) {
 2. ipucu: `if` ile çikolatayı kap, `else if` ile palete rastlayınca dön, `else` ile ilerle. Tek döngü hepsini halleder.
 
 Vardiya notu: Vardiya bitti. Dört çikolata, sıfır tanık. Sezer paydos kartını bastı.
+
+## 17 — Bir Fazla, Bir Eksik
+
+**Vardiya 5 · sınır hatası (off-by-one)**
+
+Görev: Bu kodu senin için biri yazdı ama çalışmıyor. Önce çalıştır, ne olduğunu gör, sonra düzelt. Kodu silip baştan yazma — tek bir karakter yetiyor.
+
+Hedef 2 satır · bu çözüm 2 satır · çikolata 0 · 15 adım
+
+```cpp
+for (int i = 0; i < 7; i++) {
+  ilerle();
+}
+```
+
+1. ipucu: Çalıştır ve Sezer'in nerede durduğuna bak. Mola odasına kaç kare kaldı?
+
+2. ipucu: Döngü beş kere dönüyor ama koridor daha uzun. `i < 5` yazan yeri değiştir.
+
+Vardiya notu: Bir eksik saymak, programcıların en meşhur hatasıdır. Artık sen de kulübün üyesisin.
+
+## 18 — Hiç Bitmeyen Vardiya
+
+**Vardiya 5 · sonsuz döngü**
+
+Görev: Bu kod sonsuz döngüye giriyor. Çalıştır, oyunun sana ne söylediğini oku, sonra döngünün neden bitmediğini bul.
+
+Hedef 4 satır · bu çözüm 4 satır · çikolata 0 · 23 adım
+
+```cpp
+while (!molaOdasindaMiyim()) {
+  if (onumdePaletVar()) {
+    sagaDon();
+  }
+  ilerle();
+}
+```
+
+1. ipucu: Döngünün içinde Sezer'in konumunu değiştiren bir şey var mı? Dönmek konum değiştirmez.
+
+2. ipucu: Koşul "mola odasında değilken" diyor. Ama döngü içinde hiç ilerlenmiyorsa Sezer oraya nasıl varacak? Bir `ilerle();` eksik.
+
+Vardiya notu: Sonsuz döngü bir hata değil, bir unutkanlıktır: koşulu yanlış yapacak şeyi yazmayı unutursun.
+
+## 19 — Yanlış Yerdeki Satır
+
+**Vardiya 5 · satırın yeri anlamı değiştirir**
+
+Görev: Bu kod çalışıyor ama sayaç yanlış sayıyor. Çikolataları topluyor, sayaç ise hep bir adım geride. Satırlardan biri yanlış yerde.
+
+Hedef 7 satır · bu çözüm 7 satır · çikolata 4 · 42 adım
+
+```cpp
+int sayac = 0;
+while (!molaOdasindaMiyim()) {
+  if (ustumdeCikolataVar()) {
+    kap();
+    sayac++;
+  } else {
+    ilerle();
+  }
+}
+```
+
+1. ipucu: Sayacı artıran satır hangi dalın içinde? Çikolata kapıldığında mı artıyor, ilerlendiğinde mi?
+
+2. ipucu: `sayac++;` satırını `else` dalından alıp `kap();` satırının hemen altına taşı. Sayaç kapılanı saymalı, adımı değil.
+
+Vardiya notu: Aynı satır, farklı yer, bambaşka program. Girintiler süs değil, anlamın kendisi.

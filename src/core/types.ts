@@ -38,7 +38,7 @@ export type YapiAdi = (typeof YAPILAR)[number];
 
 export interface Bolum {
   no: number;
-  vardiya: 1 | 2 | 3 | 4;
+  vardiya: 1 | 2 | 3 | 4 | 5;
   ad: string;
   /** Bu bölümün öğrettiği tek yeni şey. */
   kavram: string;
@@ -61,6 +61,12 @@ export interface Bolum {
   hedefSatir: number;
   /** 15. bölümden itibaren main() üstünde ikinci düzenlenebilir bölme açılır. */
   fonksiyonBolmesi: boolean;
+  /**
+   * Kart modu: hiçbir C++ yapısı açılmamış bölümlerde öğrenci klavyeye
+   * dokunmadan, komut kartlarına tıklayarak program kurar. Kartlar kodu
+   * gözünün önünde yazar — yazmaya geçiş kademeli olur.
+   */
+  kartModu: boolean;
 
   baslangicKodu: string;
   /** Doğrulayıcının bölümü otomatik oynatmak için kullandığı çözüm. */
@@ -145,7 +151,7 @@ export interface BolumIlerleme {
 export interface UstBarProps {
   bolumNo: number;
   toplamBolum: number;
-  vardiya: 1 | 2 | 3 | 4;
+  vardiya: 1 | 2 | 3 | 4 | 5;
   toplamYildiz: number;
   enFazlaYildiz: number;
   onHaritaAc: () => void;

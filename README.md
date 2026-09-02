@@ -12,6 +12,7 @@ Gerçek olaylardan esinlenilmiştir.
 
 Yeni başlayan öğrencinin asıl problemi sözdizimi değil, kodun zamanda aktığını görememesi. `for` döngüsünü ezberliyor ama "şu an 3. tur, `i` iki, karakter burada" resmini kafasında kuramıyor. Bu projenin tek işi o resmi ekrana koymak.
 
+- **Kart modu** — ilk bölümlerde öğrenci hiç yazmıyor: komut kartlarına basıyor, C++ satırları editörde kendiliğinden beliriyor. Kod yazmayı bilmeyen biri ilk dakikadan itibaren doğru kodu görüyor, sadece yazma yükü kalkıyor. İstediği an "kendim yazayım" diyebiliyor.
 - **Ders kartları** — her yeni kavram, ilk kullanıldığı bölümde anlatılıyor: önce hangi problemi çözdüğü, sonra nasıl çalıştığı, sonra satır satır açıklamalı bir örnek. Cevabı vermiyor, kavramı öğretiyor.
 - **Adım anlatıcısı** — kod çalışırken her adımı cümleyle anlatıyor: *"4. satır: Sezer yerinde döndü, artık aşağı bakıyor. Konumu değişmedi."*
 - **Kavram sözlüğü** — öğrenilen her kavram üst bardan her an açılabiliyor; unutunca geri dönülüyor.
@@ -31,7 +32,7 @@ Yeni başlayan öğrencinin asıl problemi sözdizimi değil, kodun zamanda akt�
 
 ## Müfredat
 
-Dört vardiya, on altı bölüm. Her bölüm tek bir yeni fikir öğretiyor ve öncekini tekrar ettiriyor.
+Beş vardiya, on dokuz bölüm. Her bölüm tek bir yeni fikir öğretiyor ve öncekini tekrar ettiriyor.
 
 | Vardiya | Ne öğretiyor |
 |---|---|
@@ -39,6 +40,9 @@ Dört vardiya, on altı bölüm. Her bölüm tek bir yeni fikir öğretiyor ve �
 | 2 — İstif Deposu | Tekrarın problemi, `for`, döngü gövdesi, iç içe döngü |
 | 3 — Sevkiyat Bölgesi | `while`, `if`, `if / else`, ve **algoritma** kavramının kendisi |
 | 4 — Gece Vardiyası | Değişken, mantıksal koşullar, fonksiyon, sentez |
+| 5 — Hata Ayıklama | Bozuk kodu okuyup düzeltmek: sınır hatası, sonsuz döngü, yanlış yerdeki satır |
+
+Vardiya 5 tersine çalışıyor: kodu başkası yazmış ve bozuk. Öğrenci okuyor, çalıştırıyor, karşılaştırıyor, tek bir şey değiştiriyor. Gerçek bir programcının zamanının çoğu burada geçtiği için ayrı bir vardiya hak ediyor.
 
 Son bölümün dersi şunu söylüyor: bütün bunlar aslında dört fikirdi — **sıra, tekrar, karar, isimlendirme.** Hangi dili öğrenirse öğrensin aynı dördünü görecek.
 

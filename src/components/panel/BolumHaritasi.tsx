@@ -7,6 +7,7 @@ const VARDIYA_ADI: Record<number, string> = {
   2: 'İstif Deposu',
   3: 'Sevkiyat Bölgesi',
   4: 'Gece Vardiyası',
+  5: 'Hata Ayıklama',
 };
 
 export function BolumHaritasi({ bolumler, suAnki, onSec, onKapat }: BolumHaritasiProps) {
@@ -16,7 +17,7 @@ export function BolumHaritasi({ bolumler, suAnki, onSec, onKapat }: BolumHaritas
     return () => window.removeEventListener('keydown', kapat);
   }, [onKapat]);
 
-  const vardiyalar = [1, 2, 3, 4] as const;
+  const vardiyalar = [1, 2, 3, 4, 5] as const;
 
   return (
     <div className="orti" role="dialog" aria-modal="true" aria-label="Vardiya çizelgesi">

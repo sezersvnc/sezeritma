@@ -56,7 +56,9 @@ Bölüm adı kısa ve akılda kalıcı olsun. "Döngü Alıştırması 3" değil
 
 ### `vardiya`
 
-1, 2, 3 veya 4. Bölüm 1-4 birinci vardiya, 5-8 ikinci, 9-12 üçüncü, 13-16 dördüncü.
+1'den 5'e kadar. Bölüm 1-4 birinci vardiya, 5-8 ikinci, 9-12 üçüncü, 13-16 dördüncü, 17-19 beşinci (hata ayıklama).
+
+`izinliYapilar` boş (`-`) olan bölümlerde **kart modu** kendiliğinden açılır: öğrenci klavyeye dokunmadan, komut kartlarına basarak program kurar. Bu yüzden ilk bölümlerde yapı açmamaya dikkat et.
 
 ### `kavram`
 
@@ -172,6 +174,15 @@ void koseDon() {
 koseDon();
 koseDon();
 ```
+
+### `## BaslangicKodu` (isteğe bağlı)
+
+Bölüm açıldığında editörde hazır duran kod. İki işe yarar:
+
+- **Hata ayıklama bölümleri:** bozuk bir kod verip "bunu düzelt" dersin. Vardiya 5 böyle çalışıyor.
+- **İskelet vermek:** öğrenciye yarısı yazılmış bir kod bırakıp gerisini tamamlatırsın.
+
+Yazmazsan editör boş açılır.
 
 ### `## VardiyaNotu`
 

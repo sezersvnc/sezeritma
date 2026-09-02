@@ -5,6 +5,7 @@ import { Izgara } from './components/sahne/Izgara';
 import { DurumSeridi } from './components/sahne/DurumSeridi';
 import { KodEditoru } from './components/editor/KodEditoru';
 import { Kontroller } from './components/editor/Kontroller';
+import { KartModu } from './components/editor/KartModu';
 import { UstBar } from './components/panel/UstBar';
 import { GorevKarti } from './components/panel/GorevKarti';
 import { KomutListesi } from './components/panel/KomutListesi';
@@ -20,6 +21,9 @@ import type { Durum } from './core/types';
 
 /** Hız kaydırıcısının adım aralıkları. */
 const GECIKME = [700, 430, 260, 140, 60];
+
+const kartSatirSayisi = (govde: string) =>
+  govde.split(String.fromCharCode(10)).filter((l) => l.trim().length > 0).length;
 
 export default function App() {
   const s = useOyun();
@@ -83,7 +87,7 @@ export default function App() {
   const hata = sonuc?.hata;
 
   const ders = dersBul(bolum.no);
-  const vardiyaGirisi = [1, 5, 9, 13].includes(bolum.no) ? vardiyaBul(bolum.vardiya) : undefined;
+  const vardiyaGirisi = [1, 5, 9, 13, 17].includes(bolum.no) ? vardiyaBul(bolum.vardiya) : undefined;
   const anlati = adimAnlat(suAnkiAdim, adimIndex > 0 ? adimlar[adimIndex - 1] : undefined);
 
   return (
@@ -135,9 +139,38 @@ export default function App() {
             bolum={bolum}
             kod={s.kod}
             aktif={aktif}
-            duzenlenebilir={!s.oynatiliyor}
+            duzenlenebilir={!s.oynatiliyor && !s.kartlaYaz}
             onDegis={s.kodYaz}
           />
+
+          {bolum.kartModu && (
+            <div className="yazim-secimi">
+              <button
+                className="yazim-sekmesi"
+                data-secili={s.kartlaYaz ? '1' : undefined}
+                onClick={() => s.kartlaYazDegistir(true)}
+              >
+                Kartlarla diz
+              </button>
+              <button
+                className="yazim-sekmesi"
+                data-secili={!s.kartlaYaz ? '1' : undefined}
+                onClick={() => s.kartlaYazDegistir(false)}
+              >
+                Kendim yazayım
+              </button>
+            </div>
+          )}
+
+          {bolum.kartModu && s.kartlaYaz && (
+            <KartModu
+              izinliKomutlar={bolum.izinliKomutlar}
+              satirSayisi={kartSatirSayisi(s.kod.govde)}
+              onEkle={s.kartEkle}
+              onGeriAl={s.kartGeriAl}
+              onTemizle={s.kartTemizle}
+            />
+          )}
 
           <Kontroller
             oynatiliyor={s.oynatiliyor}

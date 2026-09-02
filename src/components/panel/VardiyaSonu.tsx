@@ -20,8 +20,8 @@ export function VardiyaSonu({
 
   const verimli = kullanilanSatir <= hedefSatir;
   // Vardiyanın son bölümü geçildiğinde ne öğrenildiğini toparlıyoruz.
-  const vardiyaOzeti = [4, 8, 12, 16].includes(bolumNo)
-    ? vardiyaBul(Math.ceil(bolumNo / 4))
+  const vardiyaOzeti = [4, 8, 12, 16, 19].includes(bolumNo)
+    ? vardiyaBul(bolumNo === 19 ? 5 : Math.ceil(bolumNo / 4))
     : undefined;
 
   return (

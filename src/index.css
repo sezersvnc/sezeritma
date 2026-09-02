@@ -999,3 +999,89 @@ button {
   background: rgba(22, 23, 26, 0.07);
   padding: 1px 5px;
 }
+
+/* ------------------------------------------------------------------ kart modu */
+
+.yazim-secimi {
+  display: flex;
+  gap: 0;
+  background: var(--kakao-1);
+  padding: 0 16px;
+  border-top: 1px solid var(--kakao-3);
+}
+
+.yazim-sekmesi {
+  font-family: var(--kod);
+  font-size: 11px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--beton-4);
+  padding: 11px 14px;
+  border-bottom: 2px solid transparent;
+}
+
+.yazim-sekmesi[data-secili='1'] {
+  color: var(--sut);
+  border-bottom-color: var(--yelek);
+}
+
+.kart-modu {
+  background: var(--kakao-1);
+  padding: 4px 16px 18px;
+}
+
+.kart-aciklama {
+  margin: 0 0 12px;
+  font-size: 13px;
+  line-height: 1.55;
+  color: var(--beton-3);
+  max-width: 52ch;
+}
+
+.kartlar {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+  gap: 8px;
+}
+
+.kart {
+  background: var(--kakao-3);
+  border: 1px solid var(--kakao-4);
+  padding: 11px 13px;
+  display: grid;
+  gap: 4px;
+  text-align: left;
+  transition: transform 90ms ease, border-color 90ms ease;
+}
+
+.kart:hover {
+  border-color: var(--yelek);
+  transform: translateY(-1px);
+}
+
+.kart:active {
+  transform: translateY(1px);
+}
+
+.kart code {
+  font-family: var(--kod);
+  font-size: 13px;
+  color: var(--sut);
+}
+
+.kart span {
+  font-size: 12px;
+  color: var(--beton-4);
+}
+
+.kart-arac {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 12px;
+}
+
+.kart-sayac {
+  margin-left: auto;
+  color: var(--beton-4);
+}
