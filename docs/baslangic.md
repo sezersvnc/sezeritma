@@ -65,6 +65,21 @@ Bunların yanında öğrenci C++'ın öğrettiğimiz kısmını kullanabiliyor: 
 
 Yok: pointer, dizi, sınıf, `string`, `cout`, `cin`.
 
+## Bölümler nerede duruyor
+
+İki klasör var ve ayrımı basit:
+
+| Klasör | Ne | Kim dokunur |
+|---|---|---|
+| `docs/bolumler/` | Henüz oyuna girmemiş taslaklar | Sezer, serbestçe |
+| `src/levels/bolumler/` | Oyunda yayında olan bölümler | Doğrulayıcıdan geçen taslaklar buraya taşınır |
+
+Akış: taslağı `docs/bolumler/` altına yaz → `npm run bolum:gelen` çalıştır → `docs/gelen-bolum-raporu.md` dosyasını oku → düzelt → tekrar çalıştır → yeşil olunca `src/levels/bolumler/` altına taşı.
+
+`npm run bolum:gelen` motorun kendisiyle bölümü baştan sona oynuyor. Yani "çözülüyor mu, boş kodla geçiliyor mu, izinli komutları aşmış mı, hedef satır tutuyor mu" sorularının cevabını saniyeler içinde veriyor — üstelik motorun tek satırını okumadan.
+
+Şu an yayında **16 bölüm** var: 02-09 arası Sezer'in yazdıkları, kalanlar ilk geçişte konuldu ve elden geçirilmeyi bekliyor.
+
 ## Bölüm tarafında sıradaki iş
 
 Bölümler `src/levels/bolumler/` altında, her biri kendi dosyasında: `01.md`, `02.md`, ... `16.md`.
@@ -83,19 +98,22 @@ Bölümler `src/levels/bolumler/` altında, her biri kendi dosyasında: `01.md`,
 
 Sonraki paket 9-16, müfredat tablosu [tasarim.md](tasarim.md)'de.
 
-### Yazdıktan sonra kâğıtta oyna
+### Yazdıktan sonra doğrula
 
-Oyun henüz çalışmıyor, doğrulama şimdilik elle. Haritayı çiz, çözümdeki komutları tek tek uygula, Sezer'in nereye gittiğini takip et: mola odasına varıyor mu, bütün çikolataları topluyor mu, palete çarpıyor mu?
+```
+npm run bolum:gelen
+```
 
-Bu adım atlanabilir gibi duruyor ama atlanamıyor. Çözülemeyen bir bölüm, tek günlük bir projede en pahalı hata — ve hep en kötü anda, akşam ortaya çıkıyor.
+Sonuç `docs/gelen-bolum-raporu.md` dosyasında tablo halinde. Rapor "takıldı" diyorsa yanında ne yapılması gerektiği de yazıyor.
 
-Motor hazır olunca `npm run bolum:dogrula` bunu otomatik yapacak.
+Doğrulayıcı bölümün **çözülebildiğini** söylüyor, **öğrettiğini** söylemiyor. Zorluk eğrisi, metinlerin anlaşılırlığı ve "bu bölüm gerçekten yeni kavramı zorunlu kılıyor mu" sorusu hâlâ sende.
 
 ### Push
 
 ```
-git add src/levels/bolumler
-git commit -m "bolum 2-8 eklendi"
+npm run bolum:gelen
+git add docs/bolumler src/levels/bolumler
+git commit -m "bolum 10-16 duzeltildi"
 git push
 ```
 

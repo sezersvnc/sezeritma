@@ -80,6 +80,8 @@ Bu bölümde kullanılmasına izin verilen C++ yapıları. Yoksa `-` yaz.
 
 Kullanılabilecek değerler: `for`, `while`, `if`, `else`, `degisken`, `fonksiyon`.
 
+`for (int i = 0; ...)` başlığındaki tanım döngünün parçası sayılıyor: sırf onun için `degisken` yazmana gerek yok. `degisken` sadece gövdede kendi başına `int sayac = 0;` yazılan bölümlerde gerekiyor.
+
 ```
 izinliYapilar: for, if
 ```
@@ -93,6 +95,16 @@ Komutlarda olduğu gibi, bir yapı açıldığı bölümden itibaren hep izinli 
 Üçüncü yıldız için gereken en fazla satır sayısı. **Referans çözümün satır sayısına eşit yaz.**
 
 Sayılmayanlar: kilitli iskelet (`#include`, `int main()`, `return 0;`), boş satırlar, ve sadece `{` veya `}` içeren satırlar. Öğrenci parantez saymakla değil, algoritmayla uğraşıyor.
+
+En sık karışan yer burası, o yüzden örnekleyelim. Şu çözüm **2 satır** sayılır, 3 değil:
+
+```cpp
+for (int i = 0; i < 12; i++) {   // 1
+  ilerle();                      // 2
+}                                // sayılmaz, tek başına parantez
+```
+
+Emin olamadığında `npm run bolum:gelen` sana kaç çıktığını söylüyor.
 
 Bölüm 5 istisna: orada hedef satırı bilerek düşük tutuyoruz (örneğin `3`), böylece öğrenci 12 satır yazıp üçüncü yıldızı alamıyor ve bir sonraki bölümde döngüyü öğrenince geri dönüp alıyor.
 
@@ -232,4 +244,14 @@ Bölümleri yapay zekâya yazdırmak serbest, ama iki şart var:
 
 **Ürettiği her bölümü kendin oyna.** Yapay zekânın en sık yaptığı hata, haritada gerçekte çözülemeyen ya da tesadüfen boş kodla geçilen bölüm üretmek. Haritayı kâğıda çiz ve çözümü elle takip et: Sezer nereden başlıyor, hangi yöne bakıyor, komutlar onu nereye götürüyor, mola odasına varıyor mu, bütün çikolataları topluyor mu.
 
-Doğrulayıcı devreye girdikten sonra `npm run bolum:dogrula` bunu senin yerine yapacak, ama o zamana kadar elle kontrol şart.
+## 7. Doğrulayıcılar
+
+| Komut | Ne denetler |
+|---|---|
+| `npm run bolum:gelen` | `docs/bolumler/` altındaki taslakları. Sonucu `docs/gelen-bolum-raporu.md` dosyasına tablo halinde yazar: hangi bölüm hazır, hangisinde ne yanlış. |
+| `npm run bolum:dogrula` | Oyunda yayında olan bölümleri (`src/levels/bolumler/`). Bunun kırmızı olması oyunun bozulduğu anlamına gelir. |
+| `npm test` | Motor dahil her şey. Taslakları denetlemez. |
+
+Taslağını yazdıktan sonra `npm run bolum:gelen` çalıştır, raporu oku, düzelt, tekrar çalıştır. Hazır olan bölüm `src/levels/bolumler/` altına taşınır ve oyuna girer.
+
+Yapay zekânın ürettiğini de kâğıtta kontrol et: doğrulayıcı bölümün çözülebildiğini söylüyor, öğrettiğini söylemiyor.

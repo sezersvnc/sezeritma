@@ -163,6 +163,20 @@ describe('bolum kisitlari', () => {
     expect(s.hata?.mesaj).toContain('kap');
   });
 
+  it('for basligindaki int, ayrica degisken izni gerektirmez', () => {
+    const s = kosa(
+      ['for (int i = 0; i < 3; i++) {', '  ilerle();', '}'].join('\n'),
+      bolumYap(KORIDOR, { izinliYapilar: ['for'] }),
+    );
+    expect(s.hata?.mesaj ?? '').toBe('');
+    expect(s.basarili).toBe(true);
+  });
+
+  it('govdedeki int hala degisken izni ister', () => {
+    const s = kosa('int a = 0;', bolumYap(KORIDOR, { izinliYapilar: ['for'] }));
+    expect(s.hata?.kod).toBe('izinsiz-yapi');
+  });
+
   it('izinli olmayan yapiyi engeller', () => {
     const s = kosa('for (int i = 0; i < 3; i++) {\n  ilerle();\n}', bolumYap(KORIDOR, { izinliYapilar: [] }));
     expect(s.hata?.kod).toBe('izinsiz-yapi');

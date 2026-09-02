@@ -135,17 +135,19 @@ function denetle(program: Program, bolum: Bolum): Hata | undefined {
     }
   };
 
-  const gez = (d: Dugum) => {
+  // `for (int i = 0; ...)` başlığındaki tanım döngünün parçası sayılır;
+  // bölümün ayrıca "degisken" yapısını açmasını istemiyoruz.
+  const gez = (d: Dugum, forBasligi = false) => {
     if (hata) return;
     switch (d.tip) {
       case 'blok':
-        d.govde.forEach(gez);
+        d.govde.forEach((alt) => gez(alt));
         break;
       case 'cagri':
         adDenetle(d.ad, d);
         break;
       case 'tanim':
-        yapiGerek('degisken', d);
+        if (!forBasligi) yapiGerek('degisken', d);
         ifadeGez(d.deger);
         break;
       case 'atama':
@@ -153,9 +155,9 @@ function denetle(program: Program, bolum: Bolum): Hata | undefined {
         break;
       case 'for':
         yapiGerek('for', d);
-        gez(d.baslangic);
+        gez(d.baslangic, true);
         ifadeGez(d.kosul);
-        gez(d.artis);
+        gez(d.artis, true);
         gez(d.govde);
         break;
       case 'while':
