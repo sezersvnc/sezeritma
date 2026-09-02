@@ -1,54 +1,32 @@
-# Sezeritma
+# React + TypeScript + Vite
 
-Bilgisayar mühendisliğine yeni başlayanlar için tarayıcıda çalışan, C++ ile algoritma öğreten oyun.
+This template provides a minimal setup to get React working in Vite with HMR and some Oxlint rules.
 
-Öğrenci gerçek C++ kodu yazarak çikolata fabrikasındaki stajyer Sezer'i yönetir. Paletlerin arasından geçer, raflardaki çikolataları kapar, vardiya bitmeden mola odasına ulaşır. 16 bölüm boyunca sıralı çalışma, döngü, koşul, değişken ve fonksiyon kavramlarını **kodunun satır satır çalıştığını görerek** öğrenir.
+Currently, two official plugins are available:
 
-Gerçek olaylardan esinlenilmiştir.
+- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
+- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
 
-## Neden
+## React Compiler
 
-Yeni başlayan öğrencinin asıl problemi sözdizimi değil, kodun zamanda aktığını görememesi. `for` döngüsünü ezberliyor ama "şu an 3. tur, `i` iki, karakter burada" resmini kafasında kuramıyor. Bu projenin tek işi o resmi ekrana koymak.
+The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
 
-Bunun için üç şey yapıyoruz:
+## Expanding the Oxlint configuration
 
-1. **Aktif satır vurgusu** — kod çalışırken editörde o an işlenen satır boyanır. Döngünün başa dönüşü görünür hale gelir.
-2. **Değişken izleyici** — `int sayac = 0;` yazıldığı anda yan panelde `sayac: 0 → 1 → 2` akar.
-3. **Adım adım çalıştırma** — kod tek tek adımlanabilir, hız ayarlanabilir. Öğrenci hayatındaki ilk hata ayıklayıcıyı farkında olmadan kullanır.
+If you are developing a production application, we recommend enabling type-aware lint rules by installing `oxlint-tsgolint` and editing `.oxlintrc.json`:
 
-Üçü de ancak C++'ın öğretmemiz gereken alt kümesini kendimiz ayrıştırıp kendimiz yürüttüğümüz için mümkün. Aynı sebeple hata mesajları da öğrencinin anlayacağı dilde: *"3. satırın sonunda noktalı virgül eksik."*
-
-## C++'ın tören yükü
-
-Öğrenci boş bir dosyaya bakmıyor. Editörde kilitli bir iskelet ve içinde kendi alanı var:
-
-```cpp
-#include "sezeritma.h"     // kilitli
-
-int main() {               // kilitli
-    ilerle();              // öğrencinin alanı
-    ilerle();
-    return 0;              // kilitli
+```json
+{
+  "$schema": "./node_modules/oxlint/configuration_schema.json",
+  "plugins": ["react", "typescript", "oxc"],
+  "options": {
+    "typeAware": true
+  },
+  "rules": {
+    "react/rules-of-hooks": "error",
+    "react/only-export-components": ["warn", { "allowConstantExport": true }]
+  }
 }
 ```
 
-`#include` ve `int main()` görünüyor — dersinde karşısına çıktığında yabancı gelmeyecek — ama onları yazmak zorunda değil. 15. bölümde `main()`'in üstünde ikinci bir düzenlenebilir bölme açılıyor ve fonksiyon kavramı orada öğretiliyor.
-
-## Durum
-
-Tasarım aşaması. Kod henüz yok.
-
-| Belge | İçerik |
-|---|---|
-| [docs/baslangic.md](docs/baslangic.md) | Nereden başlanır, kim neyi yazıyor |
-| [docs/tasarim.md](docs/tasarim.md) | Ürün, müfredat, teknik mimari, iş bölümü |
-| [docs/bolum-formati.md](docs/bolum-formati.md) | Bölüm yazma formatı ve kuralları |
-
-## Teknoloji
-
-Vite · React · TypeScript · Tailwind · CodeMirror · Vitest. Yorumlayıcı sıfırdan yazılıyor. Backend yok, veritabanı yok, üyelik yok. İlerleme tarayıcıda saklanır.
-
-## Ekip
-
-- **Sedat** — sözcük ayırıcı, ayrıştırıcı, yürütücü, simülasyon, ızgara ve kod editörü
-- **Sezer** — bölüm tasarımı, müfredat, Türkçe metinler, arayüzün panel tarafı
+See the [Oxlint rules documentation](https://oxc.rs/docs/guide/usage/linter/rules) for the full list of rules and categories.
