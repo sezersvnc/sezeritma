@@ -6,17 +6,22 @@ Bilgisayar mühendisliğine yeni başlayanlar için tarayıcıda çalışan, C++
 
 Gerçek olaylardan esinlenilmiştir.
 
+![Sezeritma oynanış](docs/gorseller/oyun.png)
+
 ## Neden
 
 Yeni başlayan öğrencinin asıl problemi sözdizimi değil, kodun zamanda aktığını görememesi. `for` döngüsünü ezberliyor ama "şu an 3. tur, `i` iki, karakter burada" resmini kafasında kuramıyor. Bu projenin tek işi o resmi ekrana koymak.
 
-Bunun için üç şey yapıyoruz:
+- **Aktif satır vurgusu** — kod çalışırken editörde işlenen satır boyanır. Döngünün başa dönüşü görünür hale gelir.
+- **Değişken izleyici** — `int sayac = 0;` yazıldığı anda yan panelde `sayac: 0 → 1 → 2` akar.
+- **Adım adım çalıştırma** — kod tek tek adımlanabilir, hız ayarlanabilir. Öğrenci hayatındaki ilk hata ayıklayıcıyı farkında olmadan kullanır.
+- **Sezer'in izi** — geçtiği kareler zeminde iz bırakır, "nereye gitti" tek bakışta görünür.
 
-1. **Aktif satır vurgusu** — kod çalışırken editörde o an işlenen satır boyanır. Döngünün başa dönüşü görünür hale gelir.
-2. **Değişken izleyici** — `int sayac = 0;` yazıldığı anda yan panelde `sayac: 0 → 1 → 2` akar.
-3. **Adım adım çalıştırma** — kod tek tek adımlanabilir, hız ayarlanabilir. Öğrenci hayatındaki ilk hata ayıklayıcıyı farkında olmadan kullanır.
+Üçü de C++'ın öğrettiğimiz alt kümesini kendimiz ayrıştırıp kendimiz yürüttüğümüz için mümkün. Aynı sebeple hata mesajları da öğrencinin anlayacağı dilde:
 
-Üçü de ancak C++'ın öğretmemiz gereken alt kümesini kendimiz ayrıştırıp kendimiz yürüttüğümüz için mümkün. Aynı sebeple hata mesajları da öğrencinin anlayacağı dilde: *"3. satırın sonunda noktalı virgül eksik."*
+> 3. satırın sonunda noktalı virgül eksik.
+> 4. satırda palete çarptın. Sağa bakıyordun ve orada bir palet vardı — `onumdePaletVar()` ile önce kontrol etmeyi dene.
+> `iflerle` diye bir komut yok. `ilerle` mi demek istedin?
 
 ## C++'ın tören yükü
 
@@ -34,19 +39,64 @@ int main() {               // kilitli
 
 `#include` ve `int main()` görünüyor — dersinde karşısına çıktığında yabancı gelmeyecek — ama onları yazmak zorunda değil. 15. bölümde `main()`'in üstünde ikinci bir düzenlenebilir bölme açılıyor ve fonksiyon kavramı orada öğretiliyor.
 
-## Durum
+## Nasıl kurulur
 
-Tasarım aşaması. Kod henüz yok.
+```bash
+npm install
+npm run dev
+```
+
+| Komut | Ne yapar |
+|---|---|
+| `npm run dev` | Geliştirme sunucusu |
+| `npm test` | Bütün testler (209 test) |
+| `npm run bolum:dogrula` | Bölüm doğrulayıcı: her bölümü referans çözümüyle otomatik oynatır |
+| `npm run typecheck` | Tip kontrolü |
+| `npm run build` | Yayın derlemesi |
+
+## Bölüm yazmak
+
+Bölümler `src/levels/bolumler/` altında düz metin dosyaları. Bölüm yazmak için React, TypeScript ya da motor hakkında hiçbir şey bilmek gerekmiyor:
+
+```
+## Harita
+######
+#S..M#
+######
+```
+
+`S` Sezer · `C` çikolata · `M` mola odası · `#` palet · `.` zemin
+
+Biçimin tamamı ve kuralları [docs/bolum-formati.md](docs/bolum-formati.md) dosyasında. Yazdıktan sonra `npm run bolum:dogrula` bölümün gerçekten çözülebildiğini, boş kodla geçilemediğini ve hedef satır sayısının tutarlı olduğunu söylüyor.
+
+## Nasıl çalışıyor
+
+Öğrencinin kodu dört aşamadan geçiyor:
+
+1. **Sözcüklere ayır** — her token'ın satır ve sütunu tutulur.
+2. **Ayrıştır** — özyinelemeli inişli ayrıştırıcı sözdizimi ağacını kurar; sözdizimi hatası burada Türkçe ve satır numaralı yakalanır.
+3. **Adım adım yürüt** — ağaç tek tek adımlanır. Her adımda hangi satırdayız, değişkenler ne durumda, Sezer nerede.
+4. **Oynat** — adımlar arayüze akar; ızgara animasyonu, satır vurgusu ve değişken paneli aynı akıştan beslenir.
+
+Tanıdığı C++ alt kümesi: `int`, `bool`, `for`, `while`, `if / else if / else`, `void isim() { }`, aritmetik ve karşılaştırma işleçleri. Tanımadığı her şey öğrenciye anlaşılır bir cümleyle söyleniyor.
+
+Sonsuz döngü sayfayı kilitlemiyor: adım bütçesi dolunca "kodun hiç bitmedi" hatası veriliyor.
+
+## Teknoloji
+
+Vite · React · TypeScript · CodeMirror · Zustand · Vitest. Sözcük ayırıcı, ayrıştırıcı ve yürütücü sıfırdan yazıldı. Backend yok, veritabanı yok, üyelik yok. İlerleme tarayıcıda saklanır.
+
+## Belgeler
 
 | Belge | İçerik |
 |---|---|
 | [docs/baslangic.md](docs/baslangic.md) | Nereden başlanır, kim neyi yazıyor |
 | [docs/tasarim.md](docs/tasarim.md) | Ürün, müfredat, teknik mimari, iş bölümü |
-| [docs/bolum-formati.md](docs/bolum-formati.md) | Bölüm yazma formatı ve kuralları |
+| [docs/bolum-formati.md](docs/bolum-formati.md) | Bölüm yazma biçimi ve kuralları |
 
-## Teknoloji
+## Sonraki sürüm
 
-Vite · React · TypeScript · Tailwind · CodeMirror · Vitest. Yorumlayıcı sıfırdan yazılıyor. Backend yok, veritabanı yok, üyelik yok. İlerleme tarayıcıda saklanır.
+Bonus bölümler (parametreli fonksiyon, dizi, lineer arama), hareketli vardiya amiri, bölüm başına en kısa çözüm tablosu, ses.
 
 ## Ekip
 

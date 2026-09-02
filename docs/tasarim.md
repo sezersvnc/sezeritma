@@ -148,7 +148,7 @@ Desteklenmeyen her şey (pointer, sınıf, dizi, `cout`, `string`) öğrenciye a
 | # | Bölüm | Yeni kavram | Öğrenci ne yapar |
 |---|---|---|---|
 | 13 | Kaç Tane Kaptım? | `int`, `sayac++` | Değişken izleyici burada açılır, sayacın aktığını izler |
-| 14 | Beş Tane Yeter | karşılaştırma, `&&` | `while (sayac < 5 && !molaOdasindaMiyim())` |
+| 14 | Ya Duvar Ya Mola | `&&` ile iki koşul | `while (!molaOdasindaMiyim() && !onumdePaletVar())` |
 | 15 | Kendi Kısayolum | `void isim() { }` | İkinci editör bölmesi açılır, kendi fonksiyonunu yazar |
 | 16 | Büyük Çikolata Soygunu | sentez | Bütün komutlar serbest; üçüncü yıldız için fonksiyon şart |
 
@@ -267,7 +267,8 @@ src/
   components/editor/  -> Sedat.  Kod editörü, kilitli iskelet, çalıştırma kontrolleri.
   store/              -> Sedat.  Oyun durumu.
 
-  levels/             -> Sezer.  Bölüm haritaları ve verileri.
+  levels/bolumler/    -> Sezer.  Bölüm dosyaları: 01.md ... 16.md (düz metin).
+  levels/             -> Sezer.  Bölüm okuyucu ve katalog.
   content/            -> Sezer.  Tüm Türkçe metinler: görevler, ipuçları,
                         hata sözlüğü, vardiya sonu mizah satırları.
   components/panel/   -> Sezer.  Görev kartı, komut listesi, ipucu paneli,
@@ -334,7 +335,10 @@ Sezer motor kodunu hiç okumadan, saniyeler içinde geri bildirim alıyor.
 
 ---
 
-## 10. Açık kararlar
+## 10. Kararlar
 
 - Oyunun adı **Sezeritma**. Sezer + algoritma.
-- Fabrika adı **Neşteli**. Gerçek marka adı kullanılmayacak.
+- Fabrika adı **Neşteli**. Gerçek marka adı kullanılmıyor.
+- Bölümlerin en büyük ölçüsü 16x16. 5. bölümün "acısı" uzun bir koridor gerektirdiği için ilk yazdığımız 12x12 sınırı büyütüldü.
+- Izgarada dış duvar halkası hücre olarak çizilmiyor; çerçevenin kendisi o duvar. Küçük haritalar böylece koridor gibi okunuyor.
+- Yıldız merdiveni: çözdü (1) + ipucu kullanmadı (+1) + hedef satırın altında kaldı (+1).

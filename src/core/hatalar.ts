@@ -5,25 +5,33 @@ import type { Bolme, HataKodu } from './types';
  * nerede olduğunu ve ne denenebileceğini söyler.
  */
 export class DerlemeHatasi extends Error {
-  constructor(
-    readonly kod: HataKodu,
-    readonly mesaj: string,
-    readonly satir: number,
-    readonly bolme: Bolme = 'govde',
-  ) {
+  readonly kod: HataKodu;
+  readonly mesaj: string;
+  readonly satir: number;
+  readonly bolme: Bolme;
+
+  constructor(kod: HataKodu, mesaj: string, satir: number, bolme: Bolme = 'govde') {
     super(mesaj);
     this.name = 'DerlemeHatasi';
+    this.kod = kod;
+    this.mesaj = mesaj;
+    this.satir = satir;
+    this.bolme = bolme;
   }
 }
 
 export class CalismaHatasi extends Error {
-  constructor(
-    readonly kod: HataKodu,
-    readonly mesaj: string,
-    readonly satir: number,
-    readonly bolme: Bolme = 'govde',
-  ) {
+  readonly kod: HataKodu;
+  readonly mesaj: string;
+  readonly satir: number;
+  readonly bolme: Bolme;
+
+  constructor(kod: HataKodu, mesaj: string, satir: number, bolme: Bolme = 'govde') {
     super(mesaj);
     this.name = 'CalismaHatasi';
+    this.kod = kod;
+    this.mesaj = mesaj;
+    this.satir = satir;
+    this.bolme = bolme;
   }
 }

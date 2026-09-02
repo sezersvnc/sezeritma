@@ -17,11 +17,13 @@ const DESTEKLENMEYEN: Record<string, string> = {
 
 class Ayristirici {
   private i = 0;
+  private readonly tokenlar: Token[];
+  private readonly bolme: Bolme;
 
-  constructor(
-    private readonly tokenlar: Token[],
-    private readonly bolme: Bolme,
-  ) {}
+  constructor(tokenlar: Token[], bolme: Bolme) {
+    this.tokenlar = tokenlar;
+    this.bolme = bolme;
+  }
 
   // ---------------------------------------------------------- token yardımcıları
 

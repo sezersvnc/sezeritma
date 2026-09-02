@@ -196,11 +196,12 @@ class Yurutucu {
   private derinlik = 0;
   private sonDonguKonumu: Konum | null = null;
 
-  constructor(
-    private readonly program: Program,
-    private readonly dunya: Dunya,
-    bolum: Bolum,
-  ) {
+  private readonly program: Program;
+  private readonly dunya: Dunya;
+
+  constructor(program: Program, dunya: Dunya, bolum: Bolum) {
+    this.program = program;
+    this.dunya = dunya;
     this.durum = baslangicDurumu(
       {
         izgara: bolum.izgara,
