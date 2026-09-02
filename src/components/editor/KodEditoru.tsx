@@ -14,24 +14,26 @@ import type { Bolme, Bolum, Kod } from '../../core/types';
 
 const tema = EditorView.theme(
   {
-    '&': { color: '#f6efe2', fontSize: '13.5px' },
+    '&': { color: '#e9e8e5', fontSize: '13.5px' },
     '.cm-scroller': { fontFamily: "'JetBrains Mono', ui-monospace, monospace" },
-    '.cm-selectionBackground, ::selection': { background: '#57392a !important' },
-    '.cm-gutterElement': { color: '#6a5445' },
+    '.cm-selectionBackground, ::selection': { background: '#333840 !important' },
+    '.cm-gutterElement': { color: '#5a5f68' },
   },
   { dark: true },
 );
 
+/* Tek aksan: anahtar kelimeler turuncu, gerisi gri tonları.
+   Kod okunacak bir metin, renk şöleni değil. */
 const renkler = HighlightStyle.define([
-  { tag: tags.keyword, color: '#f2c230' },
-  { tag: tags.controlKeyword, color: '#f2c230', fontWeight: '700' },
-  { tag: tags.number, color: '#ff9d5c' },
-  { tag: tags.bool, color: '#ff9d5c' },
-  { tag: tags.comment, color: '#7b6553', fontStyle: 'italic' },
-  { tag: tags.variableName, color: '#f6efe2' },
-  { tag: tags.function(tags.variableName), color: '#8fd0a0' },
-  { tag: tags.operator, color: '#cbc6ba' },
-  { tag: tags.punctuation, color: '#aca596' },
+  { tag: tags.keyword, color: '#e2571f' },
+  { tag: tags.controlKeyword, color: '#e2571f' },
+  { tag: tags.number, color: '#e9e8e5' },
+  { tag: tags.bool, color: '#e9e8e5' },
+  { tag: tags.comment, color: '#6a6f78', fontStyle: 'italic' },
+  { tag: tags.variableName, color: '#e9e8e5' },
+  { tag: tags.function(tags.variableName), color: '#b9c2cc' },
+  { tag: tags.operator, color: '#8a8f98' },
+  { tag: tags.punctuation, color: '#6a6f78' },
 ]);
 
 const aktifSatirEklentisi = (satir: number | null) =>

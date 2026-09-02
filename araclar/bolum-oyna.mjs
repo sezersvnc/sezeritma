@@ -6,7 +6,7 @@ const bolumNo = Number(process.argv[3] ?? 12);
 const bekle = Number(process.argv[4] ?? 4000);
 
 const CR = String.fromCharCode(13);
-const metin = readFileSync(`../src/levels/bolumler/${String(bolumNo).padStart(2, '0')}.md`, 'utf8')
+const metin = readFileSync(`src/levels/bolumler/${String(bolumNo).padStart(2, '0')}.md`, 'utf8')
   .split(CR)
   .join('');
 

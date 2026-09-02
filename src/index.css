@@ -5,22 +5,24 @@
    sarı güvenlik şeridi. Izgara çizgileri dekor değil: zemine boyanmış şerit. */
 
 :root {
-  --beton-1: #e2ded4;
-  --beton-2: #cbc6ba;
-  --beton-3: #aca596;
-  --beton-4: #857d6d;
+  /* Tek aksan turuncu. Geri kalan her şey nötr gri —
+     ekranda göz önce Sezer'i, sonra çalıştır düğmesini bulsun. */
+  --beton-1: #eceae6;
+  --beton-2: #dcd9d4;
+  --beton-3: #b6b2ab;
+  --beton-4: #7d7a76;
 
-  --kakao-1: #1c110b;
-  --kakao-2: #2a1a11;
-  --kakao-3: #3d281c;
-  --kakao-4: #57392a;
+  --kakao-1: #16171a;
+  --kakao-2: #1d1f23;
+  --kakao-3: #2a2d33;
+  --kakao-4: #3d424a;
 
-  --serit: #f2c230;
-  --serit-koyu: #b98d0d;
-  --yelek: #ff6b1a;
-  --folyo: #c2382c;
-  --sut: #f6efe2;
-  --yesil: #6f9b3f;
+  --serit: #8a8f98;
+  --serit-koyu: #6f747c;
+  --yelek: #e2571f;
+  --folyo: #6b4f3c;
+  --sut: #e9e8e5;
+  --yesil: #6f8a5e;
 
   --govde: 'Archivo', system-ui, sans-serif;
   --kod: 'JetBrains Mono', ui-monospace, monospace;
@@ -65,18 +67,14 @@ button {
 }
 
 :focus-visible {
-  outline: 3px solid var(--serit);
+  outline: 2px solid var(--yelek);
   outline-offset: 2px;
 }
 
 /* imza: güvenlik şeridi */
 .serit {
-  height: 7px;
-  background: repeating-linear-gradient(
-    -45deg,
-    var(--serit) 0 10px,
-    var(--kakao-1) 10px 20px
-  );
+  height: 2px;
+  background: var(--yelek);
 }
 
 .etiket {
@@ -123,7 +121,7 @@ button {
 }
 
 .marka span {
-  color: var(--serit);
+  color: var(--yelek);
 }
 
 .ustbar-orta {
@@ -150,7 +148,7 @@ button {
 }
 
 .punch i[data-dolu='1'] {
-  background: var(--serit);
+  background: var(--beton-4);
 }
 
 .punch i[data-dolu='simdi'] {
@@ -161,7 +159,7 @@ button {
   font-family: var(--kod);
   font-size: 13px;
   font-weight: 700;
-  color: var(--serit);
+  color: var(--sut);
 }
 
 .harita-dugmesi {
@@ -184,9 +182,7 @@ button {
   gap: 18px;
   min-width: 0;
   overflow: auto;
-  background:
-    linear-gradient(rgba(255, 255, 255, 0.35), rgba(255, 255, 255, 0)) ,
-    var(--beton-2);
+  background: var(--beton-2);
 }
 
 .gorev-karti {
@@ -238,15 +234,9 @@ button {
 }
 
 .zemin-cerceve {
-  padding: 15px;
-  background: repeating-linear-gradient(
-    90deg,
-    var(--kakao-3) 0 7px,
-    var(--kakao-4) 7px 14px
-  );
-  box-shadow:
-    inset 0 0 0 3px var(--kakao-1),
-    0 18px 44px -24px rgba(28, 17, 11, 0.95);
+  padding: 14px;
+  background: var(--kakao-3);
+  box-shadow: 0 20px 44px -30px rgba(22, 23, 26, 0.9);
 }
 
 .zemin {
@@ -265,21 +255,17 @@ button {
 /* zemin çizgileri dekor değil: betona boyanmış güvenlik şeridi */
 .hucre[data-tip='zemin'],
 .hucre[data-tip='mola'] {
-  box-shadow: inset -1px -1px 0 rgba(185, 141, 13, 0.42);
+  box-shadow: inset -1px -1px 0 rgba(22, 23, 26, 0.12);
 }
 
 .hucre[data-tip='palet'] {
-  background: repeating-linear-gradient(
-    90deg,
-    var(--kakao-3) 0 7px,
-    var(--kakao-4) 7px 14px
-  );
-  box-shadow: inset 0 2px 0 rgba(255, 255, 255, 0.06), inset 0 0 0 1px var(--kakao-1);
+  background: var(--kakao-3);
+  box-shadow: inset 0 0 0 1px var(--kakao-2);
 }
 
 .hucre[data-tip='mola'] {
-  background: #fbf3d8;
-  box-shadow: inset 0 0 0 3px var(--serit);
+  background: var(--beton-1);
+  box-shadow: inset 0 0 0 2px var(--yelek);
 }
 
 .hucre[data-tip='mola']::after {
@@ -291,25 +277,25 @@ button {
   font-family: var(--kod);
   font-size: 9px;
   font-weight: 700;
-  color: var(--serit-koyu);
+  color: var(--yelek);
 }
 
 .hucre[data-iz='1']::before {
   content: '';
   position: absolute;
   inset: 6px;
-  background: rgba(255, 107, 26, 0.16);
+  background: rgba(226, 87, 31, 0.07);
 }
 
 .hucre[data-aktif='1'] {
-  background: #f6e6b8;
+  background: #e3e0da;
 }
 
 .cikolata {
   position: absolute;
-  inset: 25%;
-  background: linear-gradient(150deg, var(--folyo), #8d241b);
-  box-shadow: inset 0 2px 0 rgba(255, 255, 255, 0.4);
+  inset: 22%;
+  background: var(--folyo);
+  box-shadow: inset 0 0 0 1px rgba(22, 23, 26, 0.35);
   transition: transform var(--gecis) ease, opacity var(--gecis) ease;
 }
 
@@ -331,10 +317,10 @@ button {
 }
 
 .sezer-govde {
-  width: 62%;
-  height: 62%;
+  width: 60%;
+  height: 60%;
   background: var(--yelek);
-  border: 2px solid var(--kakao-1);
+  border: 1px solid rgba(22, 23, 26, 0.55);
   border-radius: 3px;
   position: relative;
   display: grid;
@@ -443,7 +429,7 @@ button {
 
 .kilitli-satir {
   padding: 1px 16px 1px 44px;
-  color: #7b6553;
+  color: #5a5f68;
   white-space: pre;
   user-select: none;
 }
@@ -468,7 +454,7 @@ button {
 .cm-gutters {
   background: transparent !important;
   border: none !important;
-  color: #6a5445 !important;
+  color: #5a5f68 !important;
 }
 
 .cm-activeLineGutter {
@@ -476,7 +462,7 @@ button {
 }
 
 .cm-content {
-  caret-color: var(--serit) !important;
+  caret-color: var(--yelek) !important;
 }
 
 .cm-line {
@@ -484,8 +470,8 @@ button {
 }
 
 .cm-aktif-satir {
-  background: rgba(242, 194, 48, 0.16);
-  box-shadow: inset 3px 0 0 var(--serit);
+  background: rgba(226, 87, 31, 0.1);
+  box-shadow: inset 2px 0 0 var(--yelek);
 }
 
 /* ------------------------------------------------------------------ kontroller */
@@ -521,13 +507,13 @@ button {
 .dugme-birincil {
   background: var(--yelek);
   border-color: var(--yelek);
-  color: var(--kakao-1);
-  font-weight: 800;
-  letter-spacing: 0.06em;
+  color: #fff;
+  font-weight: 700;
+  letter-spacing: 0.04em;
 }
 
 .dugme-birincil:hover:not(:disabled) {
-  background: #ff8038;
+  background: #f0682f;
 }
 
 .hiz {
@@ -540,7 +526,7 @@ button {
 
 .hiz input {
   width: 96px;
-  accent-color: var(--serit);
+  accent-color: var(--yelek);
 }
 
 /* ------------------------------------------------------------------ rapor */
@@ -559,15 +545,15 @@ button {
 }
 
 .rapor-hata {
-  background: #3a1512;
-  color: #ffd9c9;
-  border-left: 4px solid var(--folyo);
+  background: #2b1c16;
+  color: #f0d5c8;
+  border-left: 2px solid var(--yelek);
 }
 
 .rapor-iyi {
-  background: #22301a;
-  color: #dcf0c4;
-  border-left: 4px solid var(--yesil);
+  background: #1f271c;
+  color: #d6e3cb;
+  border-left: 2px solid var(--yesil);
 }
 
 /* ------------------------------------------------------------------ alt panel */
@@ -595,7 +581,7 @@ button {
 
 .komut code {
   font-family: var(--kod);
-  color: var(--serit);
+  color: #c9c5be;
   font-size: 12.5px;
   min-width: 208px;
 }
@@ -609,12 +595,12 @@ button {
 }
 
 .ipucu-dugmesi:hover {
-  border-color: var(--serit);
-  color: var(--serit);
+  border-color: var(--yelek);
+  color: var(--yelek);
 }
 
 .ipucu {
-  border-left: 3px solid var(--serit);
+  border-left: 2px solid var(--yelek);
   padding: 8px 0 8px 12px;
   font-size: 13.5px;
   line-height: 1.5;
@@ -623,7 +609,7 @@ button {
 
 .ipucu code {
   font-family: var(--kod);
-  color: var(--serit);
+  color: var(--yelek);
 }
 
 /* ------------------------------------------------------------------ örtü */
@@ -672,7 +658,7 @@ button {
 }
 
 .yildizlar i[data-dolu='1'] {
-  background: var(--serit);
+  background: var(--yelek);
 }
 
 .vardiya-notu {
@@ -771,7 +757,7 @@ button {
 }
 
 .mini-yildiz i[data-dolu='1'] {
-  background: var(--serit-koyu);
+  background: var(--yelek);
 }
 
 /* ------------------------------------------------------------------ dar ekran */
