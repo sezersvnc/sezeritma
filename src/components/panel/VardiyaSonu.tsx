@@ -59,7 +59,7 @@ export function VardiyaSonu({
           {vardiyaOzeti && (
             <section className="vardiya-ozeti">
               <span className="etiket">
-                Vardiya {vardiyaOzeti.no} bitti — {vardiyaOzeti.ad}
+                Vardiya {vardiyaOzeti.no} bitti · {vardiyaOzeti.ad}
               </span>
               <p>{kodluMetin(vardiyaOzeti.ozet)}</p>
             </section>

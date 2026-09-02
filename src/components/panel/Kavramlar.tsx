@@ -55,7 +55,7 @@ export function Kavramlar({ bolumNo, onKapat }: Props) {
             return (
               <section key={v.no} className="kavram-blogu">
                 <h3 className="etiket">
-                  Vardiya {v.no} — {v.ad}
+                  Vardiya {v.no} · {v.ad}
                 </h3>
                 {dersler.map((d) => {
                   const kilitli = d.bolum > bolumNo;

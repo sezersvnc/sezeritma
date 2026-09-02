@@ -67,7 +67,7 @@ export function ilerle(durum: Durum, dunya: Dunya, konum: Konum): Durum {
   if (dunya.paletler.has(anahtar(hedef))) {
     throw new CalismaHatasi(
       'palete-carptin',
-      `${konum.satir}. satırda palete çarptın. ${YON_ADI[durum.yon]} bakıyordun ve orada bir palet vardı — \`onumdePaletVar()\` ile önce kontrol etmeyi dene.`,
+      `${konum.satir}. satırda palete çarptın. ${YON_ADI[durum.yon]} bakıyordun ve orada bir palet vardı. \`onumdePaletVar()\` ile önce kontrol etmeyi deneyebilirsin.`,
       konum.satir,
       konum.bolme,
     );

@@ -13,7 +13,7 @@ yardım ederken kullanılıyor. Yazılan kod tam olarak `main()` gövdesine gire
 
 **Vardiya 1 · ilerle() ve noktalı virgül**
 
-Görev: Vardiya yeni başladı. Sezer bandın başında duruyor — onu sağdaki mola odasına götür.
+Görev: Vardiya yeni başladı. Sezer bandın başında duruyor. Onu sağdaki mola odasına götür.
 
 Hedef 2 satır · bu çözüm 2 satır · çikolata 0 · 2 adım
 
@@ -257,7 +257,7 @@ Vardiya notu: Sezer'in cepleri doluyor. Karar mekanizmaları tıkır tıkır ça
 
 **Vardiya 3 · while ve if birlikte**
 
-Görev: Sevkiyat bölgesi içe doğru kıvrılan tek bir koridor. Yolu ezberlemene gerek yok — bütün dönüşler aynı yöne.
+Görev: Sevkiyat bölgesi içe doğru kıvrılan tek bir koridor. Yolu ezberlemene gerek yok, çünkü bütün dönüşler aynı yöne.
 
 Hedef 5 satır · bu çözüm 5 satır · çikolata 0 · 115 adım
 
@@ -389,7 +389,7 @@ Vardiya notu: Vardiya bitti. Dört çikolata, sıfır tanık. Sezer paydos kart�
 
 **Vardiya 5 · sınır hatası (off-by-one)**
 
-Görev: Bu kodu senin için biri yazdı ama çalışmıyor. Önce çalıştır, ne olduğunu gör, sonra düzelt. Kodu silip baştan yazma — tek bir karakter yetiyor.
+Görev: Bu kodu senin için biri yazdı ama çalışmıyor. Önce çalıştır, ne olduğunu gör, sonra düzelt. Kodu silip baştan yazma; tek bir karakter yetiyor.
 
 Hedef 2 satır · bu çözüm 2 satır · çikolata 0 · 15 adım
 

@@ -4,8 +4,8 @@ import type { KomutAdi } from '../../core/types';
  * Kart modu.
  *
  * Hiç kod yazmamış biri boş bir editöre bakınca donar. Burada yazmıyor:
- * komuta tıklıyor, satır kendiliğinden yazılıyor. Ürettiği şey gerçek C++ —
- * yani ilk günden itibaren doğru kodu görüyor, sadece yazma yükü kalkıyor.
+ * komuta tıklıyor, satır kendiliğinden yazılıyor. Ürettiği şey gerçek C++.
+ * Yani ilk günden itibaren doğru kodu görüyor, sadece yazma yükü kalkıyor.
  */
 
 const ETIKET: Record<KomutAdi, { ad: string; ne: string }> = {
@@ -35,8 +35,8 @@ export function KartModu({ izinliKomutlar, satirSayisi, onEkle, onGeriAl, onTemi
   return (
     <section className="kart-modu">
       <p className="kart-aciklama">
-        Komuta bas, satır yukarıda kendiliğinden yazılsın. Sırayı sen kuruyorsun —
-        bilgisayar tam olarak dizdiğin sırayla çalıştıracak.
+        Komuta bas, satır yukarıda kendiliğinden yazılsın. Sırayı sen kuruyorsun,
+        bilgisayar da tam olarak dizdiğin sırayla çalıştırıyor.
       </p>
 
       <div className="kartlar">

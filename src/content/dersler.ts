@@ -2,9 +2,9 @@
  * Dersler.
  *
  * Oyunun asıl öğretme yükü burada. Bölüm görevleri alıştırma yaptırıyor;
- * bu kartlar kavramın kendisini anlatıyor. Kural: her ders önce **neden**
- * ihtiyaç duyulduğunu söyler, sonra **nasıl** çalıştığını, sonra satır satır
- * bir örnek gösterir. Cevabı vermez — bölümün çözümü hiçbir zaman burada yazmaz.
+ * bu kartlar kavramın kendisini anlatıyor. Kural: her ders önce neden
+ * ihtiyaç duyulduğunu söyler, sonra nasıl çalıştığını, sonra satır satır
+ * bir örnek gösterir. Cevabı vermez; bölümün çözümü hiçbir zaman burada yazmaz.
  */
 
 export interface OrnekSatir {
@@ -47,7 +47,7 @@ export const VARDIYALAR: readonly Vardiya[] = [
     giris:
       'Bir programcının en sevmediği şey aynı şeyi iki kere yazmaktır. Bu vardiya sana neden böyle olduğunu ve döngülerin bunu nasıl çözdüğünü gösterecek.',
     ozet:
-      'Döngü öğrendin: tekrarı sen değil bilgisayar yapıyor. `for` kaç kere döneceğini bildiğinde işe yarar. Ama her zaman bilmezsin — sıradaki vardiya tam olarak bununla ilgili.',
+      'Döngü öğrendin: tekrarı sen değil bilgisayar yapıyor. `for` kaç kere döneceğini bildiğinde işe yarar. Ama her zaman bilmezsin. Sıradaki vardiya tam olarak bununla ilgili.',
   },
   {
     no: 3,
@@ -55,7 +55,7 @@ export const VARDIYALAR: readonly Vardiya[] = [
     giris:
       'Şimdiye kadar her şeyi önceden biliyordun: kaç adım, nereye. Gerçek problemlerde bilmezsin. Bu vardiyada program kendi kararını vermeyi öğrenecek.',
     ozet:
-      'Programın artık karar verebiliyor: `while` bilinmeyen sayıda tekrarı, `if / else` de duruma göre farklı davranmayı sağlıyor. Bu ikisi birleşince ortaya bir **algoritma** çıkıyor — ezberlenmiş bir yol değil, her labirenti çözen bir kural.',
+      'Programın artık karar verebiliyor: `while` bilinmeyen sayıda tekrarı, `if / else` de duruma göre farklı davranmayı sağlıyor. Bu ikisi birleşince ortaya bir algoritma çıkıyor. Algoritma, ezberlenmiş bir yol değil, her labirenti çözen bir kuraldır.',
   },
   {
     no: 4,
@@ -63,7 +63,7 @@ export const VARDIYALAR: readonly Vardiya[] = [
     giris:
       'Son vardiya. Programın bir şey hatırlayabilecek ve kendi komutlarını tanımlayabilecek. Gerçek programcılığa en yakın olduğun yer burası.',
     ozet:
-      'Bitti. Değişkenle bilgi saklamayı, koşulları birleştirmeyi ve kendi fonksiyonunu yazmayı öğrendin. Bu dördü — sıra, tekrar, karar, isimlendirme — bugüne kadar yazılmış her programın temel taşları. Hangi dili öğrenirsen öğren, aynı dördü göreceksin.',
+      'Bitti. Değişkenle bilgi saklamayı, koşulları birleştirmeyi ve kendi fonksiyonunu yazmayı öğrendin. Bu dördü, yani sıra, tekrar, karar ve isimlendirme, bugüne kadar yazılmış her programın temel taşlarıdır. Hangi dili öğrenirsen öğren, aynı dördü göreceksin.',
   },
   {
     no: 5,
@@ -71,7 +71,7 @@ export const VARDIYALAR: readonly Vardiya[] = [
     giris:
       'Şimdiye kadar hep sen yazdın. Bu vardiyada kodu başkası yazdı ve çalışmıyor. Gerçek hayatta bir programcının zamanının büyük kısmı burada geçer: yazmakta değil, neden çalışmadığını bulmakta.',
     ozet:
-      'Artık bozuk bir kodu okuyup düzeltebiliyorsun. Bu, kod yazmaktan daha zor ve daha değerli bir beceri — çünkü kendi yazdığın kod da bir gün çalışmayacak, ve o gün bu bölümlerde öğrendiğin refleksi kullanacaksın.',
+      'Artık bozuk bir kodu okuyup düzeltebiliyorsun. Bu, kod yazmaktan daha zor ve daha değerli bir beceridir, çünkü kendi yazdığın kod da bir gün çalışmayacak ve o gün bu bölümlerde öğrendiğin refleksi kullanacaksın.',
   },
 ];
 
@@ -80,12 +80,12 @@ export const DERSLER: readonly Ders[] = [
     bolum: 1,
     baslik: 'Algoritma nedir?',
     neden: [
-      'Kod yazmayı hiç bilmiyor olabilirsin. Sorun değil — programlamanın özü kod değil, algoritma. Ve algoritma zaten bildiğin bir şey.',
+      'Kod yazmayı hiç bilmiyor olabilirsin. Sorun değil, çünkü programlamanın özü kod değil algoritmadır. Ve algoritma zaten bildiğin bir şey.',
       'Birine çay yapmayı tarif ettiğini düşün: suyu koy, kaynat, demliği yerleştir, beş dakika bekle. Sırayı bozarsan çay olmaz. Adımı atlarsan çay olmaz. İşte bu bir algoritma: bir işi yapan, sırası önemli, eksiksiz adımlar dizisi.',
     ].join('\n\n'),
     nasil: [
       'Bilgisayarın senden tek farkı, hiçbir şeyi kendiliğinden anlamaması. "Çayı demle" demek yetmez; her adımı tek tek söylemen gerekir. Bu oyunda da Sezer\'e ne yapacağını adım adım söyleyeceksin.',
-      'Bu ilk bölümlerde kod yazmayacaksın. Aşağıdaki komut kartlarına basacaksın, satırlar senin yerine yazılacak. Sen sadece sıraya karar vereceksin — yani asıl işi, algoritmayı kuracaksın. Yazmaya sonra geçeceğiz.',
+      'Bu ilk bölümlerde kod yazmayacaksın. Aşağıdaki komut kartlarına basacaksın, satırlar senin yerine yazılacak. Sen sadece sıraya karar vereceksin. Yani asıl işi, algoritmayı kuracaksın. Yazmaya sonra geçeceğiz.',
     ].join('\n\n'),
     ornek: [
       { kod: 'suyu koy;', not: 'Adımlar sırayla yapılır.' },
@@ -140,7 +140,7 @@ export const DERSLER: readonly Ders[] = [
     bolum: 6,
     baslik: 'for döngüsü',
     neden:
-      'Geçen bölümde on iki satır yazdın. Şimdi aynı işi üç satırda yapacaksın. Tekrarı sen değil bilgisayar yapacak — zaten iyi olduğu tek şey bu.',
+      'Geçen bölümde on iki satır yazdın. Şimdi aynı işi üç satırda yapacaksın. Tekrarı sen değil bilgisayar yapacak. Zaten iyi olduğu tek şey bu.',
     nasil:
       'Döngü, süslü parantezlerin içindeki komutları belirlediğin sayıda tekrarlar. `for` başlığındaki üç bölüm sırayla şunu söyler: sayaç nereden başlasın, ne zamana kadar devam etsin, her turda nasıl değişsin.',
     ornek: [
@@ -169,7 +169,7 @@ export const DERSLER: readonly Ders[] = [
     bolum: 8,
     baslik: 'İç içe döngü',
     neden:
-      'Bazen tekrarın kendisi de tekrarlanır. "Her kenarda dört adım at, sonra köşeyi dön — bunu üç kenar için yap" cümlesinde iki ayrı tekrar var, biri diğerinin içinde.',
+      'Bazen tekrarın kendisi de tekrarlanır. "Her kenarda dört adım at, sonra köşeyi dön; bunu üç kenar için yap" cümlesinde iki ayrı tekrar var, biri diğerinin içinde.',
     nasil:
       'Bir döngünün gövdesine başka bir döngü koyabilirsin. Dıştaki her bir turunda, içteki döngü baştan sona çalışır. Yani 3 dış tur × 4 iç tur = 12 kez.',
     ornek: [
@@ -186,7 +186,7 @@ export const DERSLER: readonly Ders[] = [
     bolum: 9,
     baslik: 'while döngüsü',
     neden:
-      '`for` kaç kere döneceğini bildiğinde işe yarar. Ama gerçek problemlerde çoğu zaman bilmezsin. Koridorun uzunluğunu bilmiyorsun — bildiğin tek şey ne zaman durman gerektiği.',
+      '`for` kaç kere döneceğini bildiğinde işe yarar. Ama gerçek problemlerde çoğu zaman bilmezsin. Koridorun uzunluğunu bilmiyorsun. Bildiğin tek şey, ne zaman durman gerektiği.',
     nasil:
       '`while` bir koşula bakar. Koşul doğru olduğu sürece gövdesini tekrarlar; yanlış olduğu anda durur. Sayı saymaz, duruma bakar. `!` işareti "değil" demektir: `!molaOdasindaMiyim()` yani "mola odasında değilken".',
     ornek: [
@@ -216,9 +216,9 @@ export const DERSLER: readonly Ders[] = [
     bolum: 11,
     baslik: 'if / else: iki yol',
     neden:
-      'Bazen "koşul doğruysa şunu yap" yetmez; "değilse de şunu yap" demen gerekir. Çikolata varsa kap, yoksa ilerle — ikisi de bir şey yapmalı.',
+      'Bazen "koşul doğruysa şunu yap" yetmez; "değilse de şunu yap" demen gerekir. Çikolata varsa kap, yoksa ilerle; ikisi de bir şey yapmalı.',
     nasil:
-      '`else`, `if` bloğunun hemen ardına gelir ve koşul yanlış olduğunda çalışır. İkisinden **tam olarak biri** çalışır, asla ikisi birden değil.',
+      '`else`, `if` bloğunun hemen ardına gelir ve koşul yanlış olduğunda çalışır. İkisinden tam olarak biri çalışır, asla ikisi birden değil.',
     ornek: [
       { kod: 'if (ustumdeCikolataVar()) {', not: 'Koşul doğruysa...' },
       { kod: '  kap();', not: '...sadece bu çalışır.' },
@@ -232,9 +232,9 @@ export const DERSLER: readonly Ders[] = [
     bolum: 12,
     baslik: 'Algoritma nedir',
     neden:
-      'Bu labirentin yolunu ezberleyip komutları tek tek yazabilirdin. Ama o çözüm sadece bu labirent için işe yarar. Programcının aradığı şey başka: **bütün labirentleri** çözen bir kural.',
+      'Bu labirentin yolunu ezberleyip komutları tek tek yazabilirdin. Ama o çözüm sadece bu labirent için işe yarar. Programcının aradığı şey başka: bütün labirentleri çözen bir kural.',
     nasil:
-      'Algoritma, bir problemi çözen adım adım kuraldır. Buradaki kural tek cümle: "önünde palet varsa sağa dön, yoksa ilerle." Bu kuralı bir döngünün içine koyduğunda labirentin şeklini hiç bilmene gerek kalmaz — kural her durumda doğru kararı verir.\n\nİşin güzeli şu: bu senin uydurduğun bir numara değil, gerçek bir algoritma. Adı duvar takibi ve gerçek robotlar bunu kullanıyor.',
+      'Algoritma, bir problemi çözen adım adım kuraldır. Buradaki kural tek cümle: "önünde palet varsa sağa dön, yoksa ilerle." Bu kuralı bir döngünün içine koyduğunda labirentin şeklini hiç bilmene gerek kalmaz, çünkü kural her durumda doğru kararı verir.\n\nİşin güzeli şu: bu senin uydurduğun bir numara değil, gerçek bir algoritma. Adı duvar takibi ve gerçek robotlar bunu kullanıyor.',
     ornek: [
       { kod: 'while (bitmedi) {', not: 'Tekrar: kuralı sürekli uygula.' },
       { kod: '  if (engel var) don();', not: 'Karar: duruma göre davran.' },
@@ -259,13 +259,13 @@ export const DERSLER: readonly Ders[] = [
       { kod: '}' },
     ],
     hatirla:
-      'Değişken, programın belleğidir. Döngüden **önce** tanımlanır, döngünün **içinde** değişir.',
+      'Değişken, programın belleğidir. Döngüden önce tanımlanır, döngünün içinde değişir.',
   },
   {
     bolum: 14,
     baslik: 'Koşulları birleştirmek',
     neden:
-      'Bazen durman için tek bir sebep yoktur. "Beş çikolata topladıysam dur, ama mola odasına vardıysam da dur" — iki ayrı sebep, tek döngü.',
+      'Bazen durman için tek bir sebep yoktur. "Beş çikolata topladıysam dur, ama mola odasına vardıysam da dur" cümlesinde iki ayrı sebep ve tek bir döngü var.',
     nasil:
       '`&&` işareti "ve" demektir: iki koşul da doğruysa sonuç doğrudur. Biri bile yanlışsa döngü durur. Kardeşi `||` ise "veya" demektir: birinin doğru olması yeter. `!` ise "değil": doğruyu yanlışa çevirir.',
     ornek: [
@@ -281,7 +281,7 @@ export const DERSLER: readonly Ders[] = [
     neden:
       'Bir hareket dizisini tekrar tekrar yazıyorsan, ona bir isim verebilirsin. O andan itibaren o dizi senin için tek bir komuttur. Programcılığın en güçlü fikri budur: karmaşıklığı isimlerin arkasına saklamak.',
     nasil:
-      'Editörde `main()`\'in üstünde ikinci bir bölme açıldı. Orada `void koseDon() { }` yazıp içine komutları koyarsın. Sonra `main()` içinde `koseDon();` diye çağırırsın — tıpkı `ilerle();` gibi. `void` "geriye bir değer döndürmez, sadece iş yapar" demektir.',
+      'Editörde `main()`\'in üstünde ikinci bir bölme açıldı. Orada `void koseDon() { }` yazıp içine komutları koyarsın. Sonra `main()` içinde `koseDon();` diye çağırırsın; tıpkı `ilerle();` gibi. `void` "geriye bir değer döndürmez, sadece iş yapar" demektir.',
     ornek: [
       { kod: 'void koseDon() {', not: 'Tanım: bu isim ne yapacak?' },
       { kod: '  sagaDon();' },
@@ -297,9 +297,9 @@ export const DERSLER: readonly Ders[] = [
     bolum: 16,
     baslik: 'Hepsi bir arada',
     neden:
-      'Son bölüm yeni bir kavram öğretmiyor. Öğrendiğin dördünü aynı anda kullanman gerekiyor — gerçek programlar da böyledir.',
+      'Son bölüm yeni bir kavram öğretmiyor. Öğrendiğin dördünü aynı anda kullanman gerekiyor. Gerçek programlar da böyledir.',
     nasil:
-      'Şimdiye kadarki her şey aslında dört fikirdi:\n\n**Sıra** — komutlar yazdığın düzende çalışır.\n**Tekrar** — `for` ve `while` aynı işi defalarca yapar.\n**Karar** — `if / else` duruma göre yol ayırır.\n**İsimlendirme** — değişkenler bilgiye, fonksiyonlar davranışa isim verir.\n\nHangi programlama dilini öğrenirsen öğren, aynı dördünü göreceksin. Sözdizimi değişir, bu dört fikir değişmez.',
+      'Şimdiye kadarki her şey aslında dört fikirdi:\n\nSıra: komutlar yazdığın düzende çalışır.\nTekrar: `for` ve `while` aynı işi defalarca yapar.\nKarar: `if / else` duruma göre yol ayırır.\nİsimlendirme: değişkenler bilgiye, fonksiyonlar davranışa isim verir.\n\nHangi programlama dilini öğrenirsen öğren, aynı dördünü göreceksin. Sözdizimi değişir, bu dört fikir değişmez.',
     ornek: [
       { kod: 'while (bitmedi) {', not: 'Tekrar' },
       { kod: '  if (a) ...', not: 'Karar' },
@@ -313,18 +313,18 @@ export const DERSLER: readonly Ders[] = [
     bolum: 17,
     baslik: 'Hata ayıklama',
     neden:
-      'Kod yazmak işin kolay yarısı. Çalışmayan bir kodu okuyup neyin yanlış olduğunu bulmak asıl beceridir — ve kimse bunu doğuştan bilmez, herkes alıştırmayla öğrenir.',
+      'Kod yazmak işin kolay yarısı. Çalışmayan bir kodu okuyup neyin yanlış olduğunu bulmak asıl beceridir. Kimse bunu doğuştan bilmez; herkes alıştırmayla öğrenir.',
     nasil: [
       'Sırası şu ve hiç değişmez.',
-      '1 — Çalıştır. Tahmin etme, gör. Kod gerçekte ne yapıyor?',
-      '2 — Karşılaştır. Ne yapmasını istiyordun, ne yaptı? Fark tam olarak nerede başlıyor?',
-      '3 — Tek şey değiştir. Aynı anda üç yeri düzeltirsen hangisinin işe yaradığını anlayamazsın.',
-      '4 — Tekrar çalıştır. Düzeldi mi, yoksa başka bir yeri mi bozdun?',
+      '1. Çalıştır. Tahmin etme, gör. Kod gerçekte ne yapıyor?',
+      '2. Karşılaştır. Ne yapmasını istiyordun, ne yaptı? Fark tam olarak nerede başlıyor?',
+      '3. Tek şey değiştir. Aynı anda üç yeri düzeltirsen hangisinin işe yaradığını anlayamazsın.',
+      '4. Tekrar çalıştır. Düzeldi mi, yoksa başka bir yeri mi bozdun?',
       'Adım adım düğmesi ve satır vurgusu tam olarak bunun için var: kodun hangi satırda ne yaptığını tek tek izleyebilirsin.',
     ].join('\n\n'),
     ornek: [
       { kod: 'for (int i = 0; i < 5; i++)', not: 'Beklenen 7 tur, yazılan 5. Kod çalışır ama yanlış çalışır.' },
-      { kod: 'while (!bitti) { don(); }', not: 'Konumu değiştiren bir şey yok — sonsuz döngü.' },
+      { kod: 'while (!bitti) { don(); }', not: 'Konumu değiştiren bir şey yok, döngü hiç bitmez.' },
       { kod: 'if (...) { } else { sayac++; }', not: 'Doğru satır, yanlış dal. Sayaç yanlış şeyi sayar.' },
     ],
     hatirla:
@@ -338,6 +338,6 @@ export const dersBul = (bolumNo: number): Ders | undefined =>
 export const vardiyaBul = (no: number): Vardiya | undefined =>
   VARDIYALAR.find((v) => v.no === no);
 
-/** O bölüme kadar açılmış bütün dersler — kavram sözlüğü bunu gösterir. */
+/** O bölüme kadar açılmış bütün dersler. Kavram sözlüğü bunu gösterir. */
 export const acilanDersler = (bolumNo: number): readonly Ders[] =>
   DERSLER.filter((d) => d.bolum <= bolumNo);

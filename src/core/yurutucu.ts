@@ -231,7 +231,7 @@ class Yurutucu {
             bolme: konum?.bolme ?? 'govde',
             satir: konum?.satir ?? 0,
             mesaj:
-              'Kodun hiç bitmedi, sonsuz döngüye girdin. `while` koşulun ne zaman yanlış olacak — koşulu yanlış yapacak bir şey oluyor mu döngünün içinde?',
+              'Kodun hiç bitmedi, sonsuz döngüye girdin. `while` koşulun ne zaman yanlış olacak? Koşulu yanlış yapacak bir şey oluyor mu döngünün içinde?',
           },
         };
       }

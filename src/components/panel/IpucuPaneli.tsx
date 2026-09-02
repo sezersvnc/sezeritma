@@ -12,7 +12,7 @@ export function IpucuPaneli({ ipuclari, acikSayisi, onAc }: IpucuPaneliProps) {
 
       {acikSayisi < 2 && (
         <button className="ipucu-dugmesi etiket" onClick={onAc}>
-          {acikSayisi === 0 ? 'İpucu ver — bir yıldıza mal olur' : 'Hâlâ takıldım, daha fazlasını göster'}
+          {acikSayisi === 0 ? 'İpucu ver, bir yıldıza mal olur' : 'Hâlâ takıldım, daha fazlasını göster'}
         </button>
       )}
     </section>
