@@ -9,8 +9,6 @@ import type { KomutAdi, YapiAdi } from '../core/types';
  * Yeni bölüm yazan kişi motoru hiç okumadan burada geri bildirim alır.
  */
 
-const ACI_BOLUMLERI = new Set([5]); // hedef satır bilerek düşük tutulan bölümler
-
 describe('bölüm kataloğu', () => {
   it('bölümler 1den başlayarak kesintisiz numaralanmış', () => {
     expect(BOLUMLER.map((b) => b.no)).toEqual(
@@ -58,11 +56,11 @@ describe.each(BOLUMLER.map((b) => [b.no, b.ad, b] as const))(
     });
 
     it('hedef satır referans çözümle tutarlı', () => {
-      if (ACI_BOLUMLERI.has(bolum.no)) {
-        expect(bolum.hedefSatir).toBeLessThan(satirSay(kod));
-        return;
-      }
       expect(bolum.hedefSatir).toBe(satirSay(kod));
+    });
+
+    it('referans çözüm üç yıldız alabiliyor', () => {
+      expect(calistir(kod, bolum).yildiz).toBe(3);
     });
 
     it('görev metni ve iki kademe ipucu dolu', () => {

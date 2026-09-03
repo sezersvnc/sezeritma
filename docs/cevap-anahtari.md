@@ -98,7 +98,7 @@ Vardiya notu: İlk çikolata cebe indi. Mesai artık daha tatlı.
 
 Görev: Bu depo koridoru gerçekten çok uzun. Mola odasına ulaşmak için sabırla yürümen gerek.
 
-Hedef 3 satır · bu çözüm 12 satır · çikolata 0 · 12 adım
+Hedef 12 satır · bu çözüm 12 satır · çikolata 0 · 12 adım
 
 ```cpp
 ilerle();

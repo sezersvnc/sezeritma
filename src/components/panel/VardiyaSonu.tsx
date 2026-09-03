@@ -65,11 +65,17 @@ export function VardiyaSonu({
             </section>
           )}
 
-          {!verimli && (
-            <p className="etiket" style={{ color: 'var(--beton-4)', marginBottom: 16 }}>
-              Üçüncü yıldız için {hedefSatir} satır ve altı gerekiyor
-            </p>
-          )}
+          <div className="yildiz-kurali">
+            <div data-alindi="1">
+              <b>1</b> Bölümü çözdün.
+            </div>
+            <div data-alindi={yildiz >= 2 ? '1' : undefined}>
+              <b>2</b> İpucu kullanmadan çözdün.
+            </div>
+            <div data-alindi={verimli ? '1' : undefined}>
+              <b>3</b> {hedefSatir} satır ya da daha azıyla çözdün.
+            </div>
+          </div>
 
           <div className="tabela-dugmeler">
             <button ref={odak} className="dugme-koyu etiket" onClick={onSonraki}>

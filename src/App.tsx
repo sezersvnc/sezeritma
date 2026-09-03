@@ -6,6 +6,7 @@ import { DurumSeridi } from './components/sahne/DurumSeridi';
 import { KodEditoru } from './components/editor/KodEditoru';
 import { Kontroller } from './components/editor/Kontroller';
 import { KartModu } from './components/editor/KartModu';
+import { TurkceOkuma } from './components/editor/TurkceOkuma';
 import { UstBar } from './components/panel/UstBar';
 import { GorevKarti } from './components/panel/GorevKarti';
 import { KomutListesi } from './components/panel/KomutListesi';
@@ -143,26 +144,41 @@ export default function App() {
             onDegis={s.kodYaz}
           />
 
-          {bolum.kartModu && (
-            <div className="yazim-secimi">
+          <div className="yazim-secimi">
+            {bolum.kartModu && (
               <button
                 className="yazim-sekmesi"
-                data-secili={s.kartlaYaz ? '1' : undefined}
-                onClick={() => s.kartlaYazDegistir(true)}
+                data-secili={s.kartlaYaz && !s.turkceAcik ? '1' : undefined}
+                onClick={() => {
+                  s.kartlaYazDegistir(true);
+                  s.turkceAcKapa(false);
+                }}
               >
                 Kartlarla diz
               </button>
-              <button
-                className="yazim-sekmesi"
-                data-secili={!s.kartlaYaz ? '1' : undefined}
-                onClick={() => s.kartlaYazDegistir(false)}
-              >
-                Kendim yazayım
-              </button>
-            </div>
-          )}
+            )}
+            <button
+              className="yazim-sekmesi"
+              data-secili={!s.kartlaYaz && !s.turkceAcik ? '1' : undefined}
+              onClick={() => {
+                s.kartlaYazDegistir(false);
+                s.turkceAcKapa(false);
+              }}
+            >
+              Kendim yazayım
+            </button>
+            <button
+              className="yazim-sekmesi"
+              data-secili={s.turkceAcik ? '1' : undefined}
+              onClick={() => s.turkceAcKapa(!s.turkceAcik)}
+            >
+              Türkçe oku
+            </button>
+          </div>
 
-          {bolum.kartModu && s.kartlaYaz && (
+          {s.turkceAcik && <TurkceOkuma kod={s.kod} />}
+
+          {bolum.kartModu && s.kartlaYaz && !s.turkceAcik && (
             <KartModu
               izinliKomutlar={bolum.izinliKomutlar}
               satirSayisi={kartSatirSayisi(s.kod.govde)}

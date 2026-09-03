@@ -13,6 +13,7 @@ Gerçek olaylardan esinlenilmiştir.
 Yeni başlayan öğrencinin asıl problemi sözdizimi değil, kodun zamanda aktığını görememesi. `for` döngüsünü ezberliyor ama "şu an 3. tur, `i` iki, karakter burada" resmini kafasında kuramıyor. Bu projenin tek işi o resmi ekrana koymak.
 
 - **Kart modu** — ilk bölümlerde öğrenci hiç yazmıyor: komut kartlarına basıyor, C++ satırları editörde kendiliğinden beliriyor. Kod yazmayı bilmeyen biri ilk dakikadan itibaren doğru kodu görüyor, sadece yazma yükü kalkıyor. İstediği an "kendim yazayım" diyebiliyor.
+- **Türkçe okuma** — öğrencinin kendi yazdığı C++, tek tıkla Türkçe adımlara çevriliyor: `while (!molaOdasindaMiyim())` satırı "mola odasında değilsen şunları tekrarla" oluyor. Sözdizimi ezberlenecek bir şey olmaktan çıkıyor.
 - **Ders kartları** — her yeni kavram, ilk kullanıldığı bölümde anlatılıyor: önce hangi problemi çözdüğü, sonra nasıl çalıştığı, sonra satır satır açıklamalı bir örnek. Cevabı vermiyor, kavramı öğretiyor.
 - **Adım anlatıcısı** — kod çalışırken her adımı cümleyle anlatıyor: *"4. satır: Sezer yerinde döndü, artık aşağı bakıyor. Konumu değişmedi."*
 - **Kavram sözlüğü** — öğrenilen her kavram üst bardan her an açılabiliyor; unutunca geri dönülüyor.

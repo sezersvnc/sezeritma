@@ -65,6 +65,8 @@ interface OyunDurumu {
   kavramlarAcik: boolean;
   /** Kart modu açıkken öğrenci klavye yerine komut kartlarıyla kod kuruyor. */
   kartlaYaz: boolean;
+  /** Türkçe okuma paneli açık mı. */
+  turkceAcik: boolean;
   gorulenDersler: number[];
 
   kodYaz: (kod: Partial<Kod>) => void;
@@ -86,6 +88,7 @@ interface OyunDurumu {
   kartGeriAl: () => void;
   kartTemizle: () => void;
   kartlaYazDegistir: (kartla: boolean) => void;
+  turkceAcKapa: (acik: boolean) => void;
 }
 
 /** Ders kartı sadece o bölümde yeni bir kavram varsa ve daha önce görülmediyse açılır. */
@@ -117,6 +120,7 @@ export const useOyun = create<OyunDurumu>((set, get) => ({
   dersAcik: dersGosterilsinMi(ilkBolum.no, ilkKayit.gorulenDersler),
   kavramlarAcik: false,
   kartlaYaz: ilkBolum.kartModu,
+  turkceAcik: false,
   gorulenDersler: ilkKayit.gorulenDersler,
 
   kodYaz: (parca) => {
@@ -186,6 +190,7 @@ export const useOyun = create<OyunDurumu>((set, get) => ({
       haritaAcik: false,
       kavramlarAcik: false,
       kartlaYaz: bolum.kartModu,
+      turkceAcik: false,
       dersAcik: dersGosterilsinMi(no, kayit.gorulenDersler),
     });
   },
@@ -236,6 +241,8 @@ export const useOyun = create<OyunDurumu>((set, get) => ({
   kartTemizle: () => get().kodYaz({ govde: '' }),
 
   kartlaYazDegistir: (kartlaYaz) => set({ kartlaYaz }),
+
+  turkceAcKapa: (turkceAcik) => set({ turkceAcik }),
 }));
 
 export const bolumAcik = acikMi;

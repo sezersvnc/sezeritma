@@ -166,7 +166,7 @@ Motorda ek iş gerektirmeyen, vakit kalırsa eklenecek bölümler: parametreli f
 
 Satır sayılırken kilitli iskelet, boş satırlar ve sadece `{` veya `}` içeren satırlar sayılmıyor. Öğrenci parantez saymakla değil, algoritmayla uğraşıyor.
 
-Üçüncü yıldız verimliliği zorunlu kılıyor. 5. bölümde 12 satır yazan öğrenci 6. bölümde aynı işi 3 satırda yapınca döngünün ne işe yaradığını kimse anlatmadan kavrıyor. Ürünün tek pedagojik numarası bu.
+Üçüncü yıldız verimliliği ödüllendiriyor ve her bölümde ulaşılabilir. 5. bölümde 12 satır yazan öğrenci üç yıldızını alıyor, ama 6. bölümde aynı koridoru 2 satırda geçince döngünün ne işe yaradığını kimse anlatmadan kavrıyor. Ders, ceza vermekten değil karşılaştırmadan doğuyor.
 
 ---
 

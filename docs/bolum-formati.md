@@ -108,7 +108,7 @@ for (int i = 0; i < 12; i++) {   // 1
 
 Emin olamadığında `npm run bolum:gelen` sana kaç çıktığını söylüyor.
 
-Bölüm 5 istisna: orada hedef satırı bilerek düşük tutuyoruz (örneğin `3`), böylece öğrenci 12 satır yazıp üçüncü yıldızı alamıyor ve bir sonraki bölümde döngüyü öğrenince geri dönüp alıyor.
+Hedef satır her zaman ulaşılabilir olmalı. Öğrenciye erişemeyeceği bir sayı gösterip yıldızı esirgemek onu cezalandırır; dersi, bir sonraki bölümün aynı işi daha kısa yapması versin.
 
 ### `## Harita`
 
