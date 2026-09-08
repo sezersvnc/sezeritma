@@ -11,7 +11,13 @@ const VARDIYA_ADI: Record<number, string> = {
   6: 'Usta İşi',
 };
 
-export function BolumHaritasi({ bolumler, suAnki, onSec, onKapat }: BolumHaritasiProps) {
+export function BolumHaritasi({
+  bolumler,
+  suAnki,
+  onSec,
+  onKapat,
+  onKarsilama,
+}: BolumHaritasiProps & { onKarsilama: () => void }) {
   useEffect(() => {
     const kapat = (e: KeyboardEvent) => e.key === 'Escape' && onKapat();
     window.addEventListener('keydown', kapat);
@@ -28,6 +34,9 @@ export function BolumHaritasi({ bolumler, suAnki, onSec, onKapat }: BolumHaritas
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'baseline' }}>
             <h2 style={{ fontSize: 22 }}>Vardiya çizelgesi</h2>
             <div style={{ display: 'flex', gap: 8 }}>
+              <button className="dugme-cizgili etiket" onClick={onKarsilama}>
+                Tanıtımı tekrar izle
+              </button>
               <a className="dugme-cizgili etiket" href="#serbest">
                 Serbest harita
               </a>

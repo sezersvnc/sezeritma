@@ -1,10 +1,14 @@
+import type { Yon } from '../core/types';
+
 /**
  * Dersler.
  *
- * Oyunun asıl öğretme yükü burada. Bölüm görevleri alıştırma yaptırıyor;
- * bu kartlar kavramın kendisini anlatıyor. Kural: her ders önce neden
- * ihtiyaç duyulduğunu söyler, sonra nasıl çalıştığını, sonra satır satır
- * bir örnek gösterir. Cevabı vermez; bölümün çözümü hiçbir zaman burada yazmaz.
+ * Oyunun asıl öğretme yükü burada. Üç kural:
+ * 1. Kısa cümle. Bir cümlede tek fikir.
+ * 2. Önce sorun, sonra çözüm. Kavram, ihtiyaç hissedilmeden anlatılmaz.
+ * 3. Her derste çalışan bir örnek. Öğrenci okumakla kalmaz, izler.
+ *
+ * Ders hiçbir zaman bölümün cevabını vermez.
  */
 
 export interface OrnekSatir {
@@ -12,16 +16,25 @@ export interface OrnekSatir {
   not?: string;
 }
 
+/** Ders kartında oynatılan küçük gösteri. Gerçek motorda çalışır. */
+export interface Demo {
+  harita: readonly string[];
+  yon: Yon;
+  kod: string;
+  /** Gösteride neye dikkat edileceğini tek cümleyle söyler. */
+  anlat: string;
+}
+
 export interface Ders {
-  /** Bu ders hangi bölüm açılırken gösterilir. */
   bolum: number;
   baslik: string;
-  /** Hangi problemi çözüyor. Kavramdan önce problem gelir. */
+  /** Hangi sorunu çözüyor. En fazla iki kısa cümle. */
   neden: string;
-  /** Nasıl çalışıyor. */
-  nasil: string;
-  ornek: OrnekSatir[];
-  /** Tek cümlelik kalıcı özet. Kavram sözlüğünde de bu görünür. */
+  /** Nasıl çalışıyor. Kısa maddeler. */
+  nasil: readonly string[];
+  ornek: readonly OrnekSatir[];
+  demo?: Demo;
+  /** Tek cümlelik kalıcı özet. */
   hatirla: string;
 }
 
@@ -37,147 +50,213 @@ export const VARDIYALAR: readonly Vardiya[] = [
     no: 1,
     ad: 'Üretim Hattı',
     giris:
-      'Bilgisayar kendi başına hiçbir şey bilmez. Ona ne yapacağını tek tek, sırayla söylemen gerekir. Bu vardiyada Sezer\'i elle yönetmeyi öğreneceksin.',
+      'Bilgisayar hiçbir şeyi kendiliğinden bilmez. Ne yapacağını ona tek tek söylersin. Bu vardiyada Sezer\'i elle yönetmeyi öğreneceksin.',
     ozet:
-      'Artık bir bilgisayara komut verebiliyorsun: komutlar yazdığın sırayla, yukarıdan aşağıya çalışır ve her birinin sonunda noktalı virgül vardır. Bir sonraki vardiyada aynı komutu tekrar tekrar yazmanın neden kötü bir fikir olduğunu göreceksin.',
+      'Artık bilgisayara komut verebiliyorsun. Komutlar yukarıdan aşağıya, yazdığın sırayla çalışır. Sıradaki vardiyada aynı komutu tekrar tekrar yazmanın ne kadar can sıkıcı olduğunu göreceksin.',
   },
   {
     no: 2,
     ad: 'İstif Deposu',
     giris:
-      'Bir programcının en sevmediği şey aynı şeyi iki kere yazmaktır. Bu vardiya sana neden böyle olduğunu ve döngülerin bunu nasıl çözdüğünü gösterecek.',
+      'Programcılar aynı şeyi iki kere yazmayı sevmez. Bu vardiya sana nedenini gösterecek ve döngüyü öğretecek.',
     ozet:
-      'Döngü öğrendin: tekrarı sen değil bilgisayar yapıyor. `for` kaç kere döneceğini bildiğinde işe yarar. Ama her zaman bilmezsin. Sıradaki vardiya tam olarak bununla ilgili.',
+      'Döngüyü öğrendin. Tekrarı artık sen değil bilgisayar yapıyor. `for`, kaç kere döneceğini bildiğinde işine yarar. Ama her zaman bilemezsin. Sıradaki vardiya tam olarak bununla ilgili.',
   },
   {
     no: 3,
     ad: 'Sevkiyat Bölgesi',
     giris:
-      'Şimdiye kadar her şeyi önceden biliyordun: kaç adım, nereye. Gerçek problemlerde bilmezsin. Bu vardiyada program kendi kararını vermeyi öğrenecek.',
+      'Şimdiye kadar her şeyi önceden biliyordun. Gerçek problemlerde bilemezsin. Bu vardiyada programın kendi kararını vermeyi öğrenecek.',
     ozet:
-      'Programın artık karar verebiliyor: `while` bilinmeyen sayıda tekrarı, `if / else` de duruma göre farklı davranmayı sağlıyor. Bu ikisi birleşince ortaya bir algoritma çıkıyor. Algoritma, ezberlenmiş bir yol değil, her labirenti çözen bir kuraldır.',
+      'Programın artık karar verebiliyor. `while` bilinmeyen sayıda tekrar yapar, `if` ve `else` duruma göre yol ayırır. Bu ikisi birleşince ortaya algoritma çıkar. Algoritma ezberlenmiş bir yol değildir, her labirenti çözen bir kuraldır.',
   },
   {
     no: 4,
     ad: 'Gece Vardiyası',
     giris:
-      'Son vardiya. Programın bir şey hatırlayabilecek ve kendi komutlarını tanımlayabilecek. Gerçek programcılığa en yakın olduğun yer burası.',
+      'Programın bu vardiyada bir şey hatırlayabilecek. Kendi komutlarını da yazabilecek. Gerçek programcılığa en yakın olduğun yer burası.',
     ozet:
-      'Bitti. Değişkenle bilgi saklamayı, koşulları birleştirmeyi ve kendi fonksiyonunu yazmayı öğrendin. Bu dördü, yani sıra, tekrar, karar ve isimlendirme, bugüne kadar yazılmış her programın temel taşlarıdır. Hangi dili öğrenirsen öğren, aynı dördü göreceksin.',
+      'Değişkenle bilgi saklamayı, koşulları birleştirmeyi ve kendi fonksiyonunu yazmayı öğrendin. Dört temel fikir bunlar: sıra, tekrar, karar, isimlendirme. Hangi dili öğrenirsen öğren aynı dördünü göreceksin.',
   },
   {
     no: 5,
     ad: 'Hata Ayıklama',
     giris:
-      'Şimdiye kadar hep sen yazdın. Bu vardiyada kodu başkası yazdı ve çalışmıyor. Gerçek hayatta bir programcının zamanının büyük kısmı burada geçer: yazmakta değil, neden çalışmadığını bulmakta.',
+      'Şimdiye kadar hep sen yazdın. Bu vardiyada kodu başkası yazdı ve çalışmıyor. Bir programcının zamanının çoğu burada geçer.',
     ozet:
-      'Artık bozuk bir kodu okuyup düzeltebiliyorsun. Bu, kod yazmaktan daha zor ve daha değerli bir beceridir, çünkü kendi yazdığın kod da bir gün çalışmayacak ve o gün bu bölümlerde öğrendiğin refleksi kullanacaksın.',
+      'Artık bozuk bir kodu okuyup düzeltebiliyorsun. Bu, kod yazmaktan daha zor bir beceridir. Senin yazdığın kod da bir gün çalışmayacak ve o gün burada öğrendiğin refleksi kullanacaksın.',
   },
   {
     no: 6,
     ad: 'Usta İşi',
     giris:
-      'Buraya kadar geldiysen temel dördü biliyorsun: sıra, tekrar, karar, isimlendirme. Bu vardiya onların üzerine kuruluyor. Bölümler daha uzun düşünmeni isteyecek ve çoğunda tek bir doğru cevap yok.',
+      'Temel dördünü biliyorsun: sıra, tekrar, karar, isimlendirme. Bu vardiya onların üzerine kuruluyor. Bölümler daha uzun düşünmeni isteyecek.',
     ozet:
-      'Bitti. Artık evet-hayır saklayabiliyor, komutlarını birbirinin içinde kullanabiliyor, ritim kurabiliyor, bir komuta kendini çağırtabiliyor ve döngünün sayacını fonksiyona geçirebiliyorsun. Bunlar süs değil: gerçek programların çoğu bu beş fikrin birleşiminden ibaret.',
+      'Bitti. Evet-hayır saklayabiliyor, komutlarını birbirinin içinde kullanabiliyor, ritim kurabiliyor ve bir komuta kendini çağırtabiliyorsun. Gerçek programların çoğu bu fikirlerin birleşiminden ibaret.',
   },
 ];
 
+/** Ders gösterileri için düz koridor üretir. */
+const koridor = (uzunluk: number): string[] => {
+  const orta = `#S${'.'.repeat(uzunluk)}M#`;
+  const duvar = '#'.repeat(orta.length);
+  return [duvar, orta, duvar];
+};
+
 export const DERSLER: readonly Ders[] = [
   {
-    bolum: 27,
-    baslik: 'bool: evet mi hayır mı',
+    bolum: 1,
+    baslik: 'Algoritma nedir?',
     neden:
-      'Sayaçlar "kaç tane" sorusunu cevaplar. Ama bazı sorular sayıyla değil, evet ya da hayırla cevaplanır: kapıyı açtım mı, ilk dönüşü yaptım mı, çikolatayı buldum mu?',
-    nasil:
-      '`bool` yalnızca iki değer alır: `true` ve `false`. Bir `bool` değişkeni doğrudan koşulun içine yazabilirsin, karşılaştırmaya gerek yoktur. `if (ilkDonus)` demek, `if (ilkDonus == true)` demekle aynı şeydir ve daha okunaklıdır.',
-    ornek: [
-      { kod: 'bool ilkDonus = true;', not: 'Başlangıçta evet.' },
-      { kod: 'if (ilkDonus) {', not: 'Değeri doğruysa buraya girer.' },
-      { kod: '  sagaDon();' },
-      { kod: '  ilkDonus = false;', not: 'Bir daha girmesin diye hayıra çevir.' },
-      { kod: '}' },
+      'Kod yazmayı bilmiyor olabilirsin, sorun değil. Programlamanın özü kod değil, algoritmadır. Algoritmayı zaten biliyorsun.',
+    nasil: [
+      'Birine çay yapmayı tarif ettiğini düşün. Suyu koy, kaynat, demle, bekle.',
+      'Sırayı bozarsan çay olmaz. Bir adımı atlarsan yine olmaz.',
+      'İşte bu bir algoritma: sırası önemli, eksiksiz adımlar.',
+      'Bilgisayar da böyledir. Ne yapacağını tek tek söylemen gerekir.',
+      'İlk bölümlerde kod yazmayacaksın. Komut kartlarına basacaksın, satırlar senin yerine yazılacak.',
     ],
-    hatirla:
-      '`bool` iki değerli bir bellektir: `true` ya da `false`. Bir olayın olup olmadığını hatırlamanın en sade yolu.',
+    ornek: [
+      { kod: 'suyu koy;', not: 'Önce bu.' },
+      { kod: 'kaynat;', not: 'Sonra bu.' },
+      { kod: 'demle;', not: 'Sıra değişirse çay olmaz.' },
+    ],
+    demo: {
+      harita: ['#####', '#S.M#', '#####'],
+      yon: 'dogu',
+      kod: 'ilerle();\nilerle();',
+      anlat: 'İki komut, iki adım. Sezer yazdığın sırayla hareket ediyor.',
+    },
+    hatirla: 'Algoritma, bir işi yapan sıralı ve eksiksiz adımlardır.',
   },
   {
-    bolum: 28,
-    baslik: 'Komutların birbirini çağırması',
+    bolum: 2,
+    baslik: 'Komut ve sıra',
     neden:
-      'Kendi komutunu yazmayı öğrendin. Şimdi asıl güç geliyor: yazdığın komut, yine senin yazdığın başka bir komutu çağırabilir. Büyük programlar tam olarak böyle kurulur.',
-    nasil:
-      'Bir fonksiyonun gövdesinde `ilerle();` çağırabiliyorsan, `koseDon();` de çağırabilirsin. Oyunun komutlarıyla senin komutların arasında hiçbir fark yoktur; ikisi de aynı biçimde çağrılır.\n\nBöylece küçük parçalardan daha büyük parçalar kurarsın: köşe dönüşü bir komut olur, basamak inişi köşe dönüşünü kullanan başka bir komut olur.',
-    ornek: [
-      { kod: 'void koseDon() {', not: 'Küçük parça.' },
-      { kod: '  sagaDon();' },
-      { kod: '  ilerle();' },
-      { kod: '}' },
-      { kod: '', not: '' },
-      { kod: 'void basamak() {', not: 'Büyük parça.' },
-      { kod: '  ilerle();' },
-      { kod: '  koseDon();', not: 'Kendi yazdığın komutu kullanıyor.' },
-      { kod: '}' },
+      'Bilgisayar tahmin yürütmez. "Mola odasına git" demek işe yaramaz. Her adımı söylemen gerekir.',
+    nasil: [
+      'Her komut bir satırdır.',
+      'Satırlar yukarıdan aşağıya, yazdığın sırayla çalışır.',
+      'Her satırın sonunda noktalı virgül vardır.',
+      'Noktalı virgül cümlenin noktası gibidir. "Bu komut bitti" demektir.',
     ],
-    hatirla:
-      'Fonksiyonlar birbirini çağırabilir. Karmaşık bir işi çözmenin yolu, onu isimlendirilmiş küçük işlere bölmektir.',
+    ornek: [
+      { kod: 'ilerle();', not: 'Bir kare gidersin.' },
+      { kod: 'ilerle();', not: 'Bir kare daha. İki satır, iki adım.' },
+    ],
+    demo: {
+      harita: koridor(2),
+      yon: 'dogu',
+      kod: 'ilerle();\nilerle();\nilerle();',
+      anlat: 'Üç satır alt alta. Bilgisayar hiçbirini atlamıyor, sırasını değiştirmiyor.',
+    },
+    hatirla: 'Komutlar yazdığın sırayla çalışır. Her satırın sonunda noktalı virgül vardır.',
   },
   {
-    bolum: 29,
-    baslik: '% ile ritim kurmak',
+    bolum: 3,
+    baslik: 'Yön: nereye baktığın önemli',
     neden:
-      '"Üçüncü adımda dön" demek kolay. Peki "her üç adımda bir dön"? Altıncıda, dokuzuncuda, on ikincide de dönmesi gerekiyor ve hepsini tek tek yazamazsın.',
-    nasil:
-      '`%` işleci bölmeden kalanı verir. `9 % 3` sıfırdır, çünkü dokuz üçe tam bölünür. `10 % 3` ise birdir. Bu yüzden `adim % 3 == 0` ifadesi tam olarak üçün katlarında doğru olur.\n\nSayının kendisiyle değil, bıraktığı kalanla ilgilendiğin her yerde bu işleç işine yarar.',
-    ornek: [
-      { kod: '6 % 3', not: 'Kalan sıfır. Altı, üçün katı.' },
-      { kod: '7 % 3', not: 'Kalan bir. Katı değil.' },
-      { kod: 'if (adim % 3 == 0)', not: 'Her üçüncü turda doğru olur.' },
+      '`ilerle();` "sağa git" demek değildir. "Baktığın yöne git" demektir. Aynı komut, farklı yöne bakarken farklı sonuç verir.',
+    nasil: [
+      '`sagaDon();` Sezer\'i yerinde çevirir.',
+      'Bir kare bile ilerlemez. Sadece bakış yönü değişir.',
+      'Ondan sonraki `ilerle();` artık yeni yöne gider.',
     ],
-    hatirla:
-      '`%` bölmeden kalanı verir. Tekrar eden bir düzeni yakalamanın en kısa yolu, kalana bakmaktır.',
+    ornek: [
+      { kod: 'ilerle();', not: 'Doğuya bakıyor, doğuya gidiyor.' },
+      { kod: 'sagaDon();', not: 'Yerinde döndü. Konumu aynı, yönü güney.' },
+      { kod: 'ilerle();', not: 'Aynı komut, bu sefer aşağı gidiyor.' },
+    ],
+    demo: {
+      harita: ['#####', '#S.##', '##.##', '##M##', '#####'],
+      yon: 'dogu',
+      kod: 'ilerle();\nsagaDon();\nilerle();\nilerle();',
+      anlat: 'İkinci satırda Sezer kıpırdamıyor, sadece dönüyor. Fark ondan sonra ortaya çıkıyor.',
+    },
+    hatirla: 'Dönmek ilerlemek değildir. Aynı komut, farklı yönde farklı sonuç verir.',
   },
   {
-    bolum: 30,
-    baslik: 'Özyineleme: kendini çağıran komut',
-    neden:
-      'Bir işi tekrarlamanın döngüden başka bir yolu daha var: komut, işi bitmediyse kendini yeniden çağırır. Buna özyineleme denir ve ilk bakışta imkânsız görünür.',
-    nasil:
-      'İki parçası vardır ve ikisi de şart. **Durma noktası:** işin bittiği durum, orada kendini çağırmaz. **Küçültme:** her çağrıda probleme biraz daha yaklaşır.\n\nDurma noktasını unutursan program hiç bitmez, tıpkı koşulu yanlış yazılmış bir `while` gibi. Oyun bunu yakalar ve sana söyler.',
-    ornek: [
-      { kod: 'void yuru() {' },
-      { kod: '  if (!molaOdasindaMiyim()) {', not: 'Durma noktası: molaya vardıysak hiçbir şey yapma.' },
-      { kod: '    ilerle();', not: 'Küçültme: hedefe bir adım yaklaş.' },
-      { kod: '    yuru();', not: 'Kalan işi aynı komuta devret.' },
-      { kod: '  }' },
-      { kod: '}' },
+    bolum: 6,
+    baslik: 'Tekrar can sıkıcıdır',
+    neden: 'Bu bölümde aynı komutu on iki kere yazacaksın. Sıkılacaksın. Bu kasıtlı.',
+    nasil: [
+      'Yazarken şunu düşün: koridor iki yüz kare olsaydı ne yapardın?',
+      'Ya uzunluğunu hiç bilmeseydin?',
+      'Kopyala yapıştır çözüm değildir. On iki ayrı hata yeri demektir.',
+      'Bir sonraki bölüm bunu iki satıra indirecek.',
     ],
-    hatirla:
-      'Özyinelemede zor olan başlamak değil, durmayı hatırlamaktır. Her kendini çağıran komutun bir çıkış kapısı olmalı.',
+    ornek: [
+      { kod: 'ilerle();' },
+      { kod: 'ilerle();' },
+      { kod: '...', not: 'Ve böyle on iki kere.' },
+    ],
+    demo: {
+      harita: koridor(5),
+      yon: 'dogu',
+      kod: 'ilerle();\nilerle();\nilerle();\nilerle();\nilerle();\nilerle();',
+      anlat: 'Altı satır, altı adım. Aynı satırı kopyalamak dışında yaptığın bir şey yok.',
+    },
+    hatirla: 'Aynı şeyi iki kere yazıyorsan, daha iyi bir yolu vardır.',
   },
   {
-    bolum: 31,
-    baslik: 'Döngü sayacını parametreye vermek',
+    bolum: 7,
+    baslik: 'for döngüsü',
     neden:
-      'Döngünün sayacını şimdiye kadar sadece "kaç kere döneceğim" diye kullandın. Oysa o bir sayı ve her turda değişiyor. Onu bir değer olarak kullanabilirsin.',
-    nasil:
-      '`for (int i = 1; i <= 3; i++)` döngüsünde `i` sırayla 1, 2, 3 olur. `ilerleN(i);` yazdığında fonksiyon her turda farklı bir sayı alır: önce bir adım, sonra iki, sonra üç.\n\nDöngü ile parametre birleşince tek bir satır büyüyen bir desen üretir. Az kodla çok iş yapmanın en tipik örneği budur.',
+      'Geçen bölümde on iki satır yazdın. Şimdi aynı işi iki satırda yapacaksın. Tekrarı bilgisayar yapacak.',
+    nasil: [
+      'Döngü, süslü parantezin içindekileri belirlediğin sayıda tekrarlar.',
+      '`for` başlığındaki üç bölüm sırayla şunu söyler:',
+      'Sayaç nereden başlasın, ne zamana kadar sürsün, her turda nasıl değişsin.',
+      '`i < 12` yazdığında döngü on iki kere döner.',
+    ],
     ornek: [
-      { kod: 'for (int i = 1; i <= 3; i++) {', not: 'i sırayla 1, 2, 3 olur.' },
-      { kod: '  ilerleN(i);', not: 'Her turda farklı uzunlukta bir kenar.' },
-      { kod: '  sagaDon();' },
+      {
+        kod: 'for (int i = 0; i < 12; i++) {',
+        not: 'Sıfırdan başla, 12 olana kadar sür, birer birer art.',
+      },
+      { kod: '  ilerle();', not: 'Bu satır her turda çalışır.' },
+      { kod: '}', not: 'Buraya gelince başa döner.' },
+    ],
+    demo: {
+      harita: koridor(5),
+      yon: 'dogu',
+      kod: 'for (int i = 0; i < 6; i++) {\n  ilerle();\n}',
+      anlat: 'İki satır, altı adım. Sağdaki i sayacının nasıl arttığına bak.',
+    },
+    hatirla: '`for`, kaç kere tekrarlanacağını önceden bildiğin durumlar içindir.',
+  },
+  {
+    bolum: 8,
+    baslik: 'Döngünün gövdesi',
+    neden: 'Tekrarlanan şey her zaman tek komut değildir. Çoğu zaman bir hareket dizisidir.',
+    nasil: [
+      'Süslü parantezin arasına istediğin kadar komut koyabilirsin.',
+      'Hepsi her turda, yazdığın sırayla çalışır.',
+      'Buna döngünün gövdesi denir.',
+    ],
+    ornek: [
+      { kod: 'for (int i = 0; i < 3; i++) {' },
+      { kod: '  ilerle();', not: 'Her turda önce bu,' },
+      { kod: '  kap();', not: 'sonra bu. Üç turda altı komut.' },
       { kod: '}' },
     ],
-    hatirla:
-      'Döngünün sayacı sadece tekrar sayısı değil, kullanabileceğin bir değerdir. Fonksiyona verdiğinde desen üretir.',
+    demo: {
+      harita: ['#########', '#S.C.C.M#', '#########'],
+      yon: 'dogu',
+      kod: 'for (int i = 0; i < 2; i++) {\n  ilerle();\n  ilerle();\n  kap();\n}\nilerle();\nilerle();',
+      anlat: 'Her turda üç komut çalışıyor: iki adım ve bir toplama.',
+    },
+    hatirla: 'Döngü tek komutu değil, gövdesindeki bütün diziyi tekrarlar.',
   },
   {
     bolum: 9,
     baslik: 'Döngünün içinde dönmek',
     neden:
-      'Şimdiye kadar döngü hep aynı yöne ilerledi. Ama tekrarlanan şey bazen bir yön değişikliği de içerir: bir kenarı yürü, köşeyi dön, sonra baştan.',
-    nasil:
-      'Döngünün gövdesine `sagaDon();` koyduğunda, dönüş de her turda tekrarlanır. Bir kare çizmek tam olarak budur: kenar, dönüş, kenar, dönüş.',
+      'Şimdiye kadar döngü hep aynı yöne gitti. Bazen tekrarlanan şey bir dönüş de içerir.',
+    nasil: [
+      'Gövdeye `sagaDon();` koyarsan dönüş de her turda tekrarlanır.',
+      'Kare çizmek tam olarak budur: kenar, dönüş, kenar, dönüş.',
+    ],
     ornek: [
       { kod: 'for (int i = 0; i < 4; i++) {', not: 'Dört kenar, dört tur.' },
       { kod: '  ilerle();' },
@@ -185,50 +264,227 @@ export const DERSLER: readonly Ders[] = [
       { kod: '  sagaDon();', not: 'Köşe. Her turun sonunda bir kere.' },
       { kod: '}' },
     ],
+    demo: {
+      harita: ['#####', '#S..#', '#.M.#', '#...#', '#####'],
+      yon: 'dogu',
+      kod: 'for (int i = 0; i < 2; i++) {\n  ilerle();\n  sagaDon();\n}',
+      anlat: 'İki tur, iki kenar. Dönüş de tekrarlandığı için yön her turda değişiyor.',
+    },
+    hatirla: 'Döngü sadece hareketi değil, dönüşü de tekrarlar.',
+  },
+  {
+    bolum: 10,
+    baslik: 'İç içe döngü',
+    neden:
+      'Bazen tekrarın kendisi de tekrarlanır. "Her kenarda dört adım at, sonra köşeyi dön" cümlesinde iki tekrar var.',
+    nasil: [
+      'Bir döngünün gövdesine başka bir döngü koyabilirsin.',
+      'Dıştaki her turda, içteki döngü baştan sona çalışır.',
+      'Üç dış tur çarpı dört iç tur, toplam on iki kere.',
+    ],
+    ornek: [
+      { kod: 'for (int i = 0; i < 3; i++) {', not: 'Dış döngü: kenarları sayar.' },
+      { kod: '  for (int j = 0; j < 4; j++) {', not: 'İç döngü: o kenardaki kareleri sayar.' },
+      { kod: '    ilerle();' },
+      { kod: '  }' },
+      { kod: '  sagaDon();', not: 'İç döngü bitince, her dış turda bir kere.' },
+      { kod: '}' },
+    ],
+    demo: {
+      harita: ['#####', '#S..#', '#...#', '#..M#', '#####'],
+      yon: 'dogu',
+      kod: 'for (int i = 0; i < 2; i++) {\n  for (int j = 0; j < 2; j++) {\n    ilerle();\n  }\n  sagaDon();\n}',
+      anlat: 'i dışta, j içte. j her seferinde sıfırdan başlıyor.',
+    },
+    hatirla: 'İç içe döngüde iç kısım, dıştaki her tur için baştan sona çalışır.',
+  },
+  {
+    bolum: 11,
+    baslik: 'while döngüsü',
+    neden:
+      '`for` kaç kere döneceğini bildiğinde işe yarar. Koridorun uzunluğunu bilmiyorsun. Ama ne zaman duracağını biliyorsun.',
+    nasil: [
+      '`while` bir koşula bakar.',
+      'Koşul doğru olduğu sürece gövdesini tekrarlar.',
+      'Koşul yanlış olduğu an durur.',
+      '`!` işareti "değil" demektir. `!molaOdasindaMiyim()` yani "mola odasında değilken".',
+    ],
+    ornek: [
+      { kod: 'while (!molaOdasindaMiyim()) {', not: 'Her turun başında koşula bakar.' },
+      { kod: '  ilerle();', not: 'Koşul doğruysa çalışır, sonra tekrar bakar.' },
+      { kod: '}', not: 'Koşul yanlış olunca biter.' },
+    ],
+    demo: {
+      harita: koridor(5),
+      yon: 'dogu',
+      kod: 'while (!molaOdasindaMiyim()) {\n  ilerle();\n}',
+      anlat: 'Kaç adım olduğunu kod bilmiyor. Sadece ne zaman duracağını biliyor.',
+    },
     hatirla:
-      'Döngü sadece hareketi değil, dönüşü de tekrarlar. Kapalı bir şekil çizmenin yolu budur.',
+      '`while` sayıya değil koşula bakar. Koşulu yanlış yapacak bir şey olmazsa program hiç bitmez.',
   },
   {
     bolum: 12,
     baslik: 'Durma koşulunu seçmek',
     neden:
-      'Bir döngünün ne zaman duracağını sen seçersin, ve aynı problemde birden fazla doğru cevap olabilir. Yanlış koşul, doğru koddan daha çok baş ağrıtır.',
-    nasil:
-      '`while (!molaOdasindaMiyim())` "hedefe varana kadar" demektir. `while (!onumdePaletVar())` ise "yol kapanana kadar". İkisi de geçerli; hangisini seçeceğin problemin ne olduğuna bağlı.\n\nHedefin nerede olduğunu bilmiyorsan ama önünün kapandığını görebiliyorsan, ikincisi işini görür.',
+      'Döngünün ne zaman duracağını sen seçersin. Aynı problemde birden fazla doğru cevap olabilir.',
+    nasil: [
+      '`!molaOdasindaMiyim()` demek "hedefe varana kadar" demektir.',
+      '`!onumdePaletVar()` demek "yol kapanana kadar" demektir.',
+      'İkisi de geçerlidir. Hangisini seçeceğin probleme bağlıdır.',
+      'Hedefin nerede olduğunu bilmiyorsan ikincisi işini görür.',
+    ],
     ornek: [
       { kod: 'while (!molaOdasindaMiyim())', not: 'Hedefe varınca dur.' },
       { kod: 'while (!onumdePaletVar())', not: 'Yol kapanınca dur.' },
-      { kod: 'while (sayac < 5)', not: 'Belli bir sayıya ulaşınca dur.' },
+      { kod: 'while (sayac < 5)', not: 'Beşe ulaşınca dur.' },
     ],
-    hatirla:
-      'Döngüyü kurmadan önce şu soruyu cevapla: bu ne zaman bitmeli? Koşul o cevabın kodudur.',
+    demo: {
+      harita: ['#######', '#S...M#', '#######'],
+      yon: 'dogu',
+      kod: 'while (!onumdePaletVar()) {\n  ilerle();\n}',
+      anlat: 'Bu kod mola odasını hiç sormuyor. Sadece önü kapanınca duruyor.',
+    },
+    hatirla: 'Döngüyü kurmadan önce sor: bu ne zaman bitmeli?',
+  },
+  {
+    bolum: 13,
+    baslik: 'if: karar vermek',
+    neden:
+      'Şimdiye kadar programın hep aynı şeyi yaptı. Ama önünde palet olup olmaması duruma göre değişir. Programın bakması ve ona göre davranması gerekir.',
+    nasil: [
+      '`if` parantezin içindeki koşula bakar.',
+      'Koşul doğruysa süslü parantezin içini çalıştırır.',
+      'Yanlışsa hiç uğramadan geçer.',
+      'Bu, programın ilk kez düşünmesidir.',
+    ],
+    ornek: [
+      { kod: 'if (onumdePaletVar()) {', not: 'Sadece palet varsa içeri girer.' },
+      { kod: '  sagaDon();', not: 'Palet yoksa bu satır hiç çalışmaz.' },
+      { kod: '}' },
+      { kod: 'ilerle();', not: 'Bu satır her durumda çalışır.' },
+    ],
+    demo: {
+      harita: ['######', '#S..##', '###.##', '###M##', '######'],
+      yon: 'dogu',
+      kod: 'while (!molaOdasindaMiyim()) {\n  if (onumdePaletVar()) {\n    sagaDon();\n  }\n  ilerle();\n}',
+      anlat: 'Üçüncü karede palet çıkıyor ve `if` devreye giriyor. Öncekilerde hiç çalışmıyor.',
+    },
+    hatirla: '`if` koşul doğruysa çalışır, yanlışsa atlanır.',
+  },
+  {
+    bolum: 14,
+    baslik: 'if ve else: iki yol',
+    neden: 'Bazen "doğruysa şunu yap" yetmez. "Değilse de şunu yap" demen gerekir.',
+    nasil: [
+      '`else`, `if` bloğunun hemen ardına gelir.',
+      'Koşul yanlış olduğunda çalışır.',
+      'İkisinden tam olarak biri çalışır. Asla ikisi birden değil.',
+    ],
+    ornek: [
+      { kod: 'if (ustumdeCikolataVar()) {', not: 'Koşul doğruysa...' },
+      { kod: '  kap();', not: '...sadece bu çalışır.' },
+      { kod: '} else {', not: 'Koşul yanlışsa...' },
+      { kod: '  ilerle();', not: '...sadece bu çalışır.' },
+      { kod: '}' },
+    ],
+    demo: {
+      harita: ['########', '#S.CC.M#', '########'],
+      yon: 'dogu',
+      kod: 'while (!molaOdasindaMiyim()) {\n  if (ustumdeCikolataVar()) {\n    kap();\n  } else {\n    ilerle();\n  }\n}',
+      anlat: 'Her turda ya kapıyor ya ilerliyor. İkisini birden asla yapmıyor.',
+    },
+    hatirla: '`if` ve `else` iki yoldan birini seçer.',
   },
   {
     bolum: 15,
     baslik: 'else if: üçüncü yol',
     neden:
-      '`if / else` iki yol açar: ya öyle ya böyle. Ama gerçek durumlar çoğu zaman ikiden fazladır. Çikolata mı var, palet mi var, yoksa yol açık mı?',
-    nasil:
-      '`else if` araya girer ve yeni bir soru sorar. Sırayla denenir: ilk doğru olan çalışır, gerisi hiç bakılmaz. Bu yüzden sıralama önemlidir; en özel durumu en başa yazarsın.',
+      '`if` ve `else` iki yol açar. Ama durumlar çoğu zaman ikiden fazladır. Çikolata mı var, palet mi var, yoksa yol açık mı?',
+    nasil: [
+      '`else if` araya girer ve yeni bir soru sorar.',
+      'Sırayla denenir. İlk doğru olan çalışır, gerisine bakılmaz.',
+      'Bu yüzden sıralama önemlidir.',
+    ],
     ornek: [
       { kod: 'if (ustumdeCikolataVar()) {', not: 'Önce buna bakar.' },
       { kod: '  kap();' },
       { kod: '} else if (onumdePaletVar()) {', not: 'Birincisi yanlışsa buna bakar.' },
       { kod: '  sagaDon();' },
-      { kod: '} else {', not: 'Hiçbiri değilse burası çalışır.' },
+      { kod: '} else {', not: 'Hiçbiri değilse burası.' },
       { kod: '  ilerle();' },
       { kod: '}' },
     ],
-    hatirla:
-      '`else if` zincirinde yalnızca ilk doğru dal çalışır. Sıralamayı değiştirmek programı değiştirir.',
+    demo: {
+      harita: ['#######', '#S.C.##', '####.##', '####M##', '#######'],
+      yon: 'dogu',
+      kod: 'while (!molaOdasindaMiyim()) {\n  if (ustumdeCikolataVar()) {\n    kap();\n  } else if (onumdePaletVar()) {\n    sagaDon();\n  } else {\n    ilerle();\n  }\n}',
+      anlat: 'Üç dal da sırası gelince çalışıyor: önce toplama, sonra dönüş, sonra ilerleme.',
+    },
+    hatirla: '`else if` zincirinde yalnızca ilk doğru dal çalışır.',
+  },
+  {
+    bolum: 16,
+    baslik: 'Algoritma nedir',
+    neden:
+      'Bu labirentin yolunu ezberleyip komutları tek tek yazabilirdin. Ama o çözüm sadece bu labirentte işe yarar.',
+    nasil: [
+      'Algoritma, bir problemi çözen adım adım kuraldır.',
+      'Buradaki kural tek cümle: önünde palet varsa sağa dön, yoksa ilerle.',
+      'Bu kuralı bir döngüye koyduğunda labirentin şeklini bilmen gerekmez.',
+      'Bu senin uydurduğun bir numara değil. Adı duvar takibi ve gerçek robotlar kullanıyor.',
+    ],
+    ornek: [
+      { kod: 'while (bitmedi) {', not: 'Tekrar: kuralı sürekli uygula.' },
+      { kod: '  if (engel var) don();', not: 'Karar: duruma göre davran.' },
+      { kod: '  else ilerle();', not: 'Üç satır, sınırsız labirent.' },
+      { kod: '}' },
+    ],
+    demo: {
+      harita: ['######', '#S..##', '###.##', '###M##', '######'],
+      yon: 'dogu',
+      kod: 'while (!molaOdasindaMiyim()) {\n  if (onumdePaletVar()) {\n    sagaDon();\n  } else {\n    ilerle();\n  }\n}',
+      anlat: 'Bu kod bu haritaya özel değil. Aynı kural başka labirentlerde de çalışır.',
+    },
+    hatirla: 'Algoritma tek bir problemi değil, bir problem ailesini çözer.',
+  },
+  {
+    bolum: 17,
+    baslik: 'Değişken: hatırlamak',
+    neden:
+      'Şimdiye kadar programın hiçbir şey hatırlamıyordu. Kaç çikolata topladığını soramazdın.',
+    nasil: [
+      '`int sayac = 0;` bellekte `sayac` adında bir kutu açar ve içine sıfır koyar.',
+      '`int` "içine tam sayı girer" demektir.',
+      '`sayac++` kutudaki sayıyı bir artırır.',
+      'Izgaranın altındaki panelde değerin canlı değiştiğini görürsün.',
+    ],
+    ornek: [
+      { kod: 'int sayac = 0;', not: 'Kutuyu aç. Bir kere, döngüden önce.' },
+      { kod: 'while (...) {' },
+      { kod: '  kap();' },
+      { kod: '  sayac++;', not: 'Her toplamada bir artır.' },
+      { kod: '}' },
+    ],
+    demo: {
+      harita: ['#######', '#SC.CM#', '#######'],
+      yon: 'dogu',
+      kod: 'int sayac = 0;\nwhile (!molaOdasindaMiyim()) {\n  if (ustumdeCikolataVar()) {\n    kap();\n    sayac++;\n  } else {\n    ilerle();\n  }\n}',
+      anlat: 'Sağdaki sayacın sıfırdan ikiye çıkışını izle.',
+    },
+    hatirla: 'Değişken programın belleğidir. Döngüden önce tanımlanır, içinde değişir.',
   },
   {
     bolum: 18,
     baslik: 'Değişkenle karar vermek',
     neden:
-      'Şimdiye kadar değişken sadece sayıyordu. Asıl gücü, o sayının programın ne yapacağını belirlemesi. Etrafta hiçbir ipucu yokken bile doğru anda dönebilirsin.',
-    nasil:
-      'Sayacı bir koşulun içinde kullanırsın: `if (adim == 3)`. Buradaki `==` "eşit mi" diye sorar; tek `=` ise atama yapar, ikisi farklı şeydir ve karıştırmak klasik bir hatadır.',
+      'Şimdiye kadar değişken sadece sayıyordu. Asıl gücü, o sayının programın ne yapacağını belirlemesi.',
+    nasil: [
+      'Sayacı bir koşulun içinde kullanırsın: `if (adim == 3)`.',
+      '`==` "eşit mi" diye sorar.',
+      'Tek `=` ise atama yapar. İkisi farklı şeydir, karıştırmak klasik bir hatadır.',
+      'Etrafta hiç ipucu yokken bile doğru anda dönebilirsin.',
+    ],
     ornek: [
       { kod: 'int adim = 0;', not: 'Sayacı kur.' },
       { kod: 'while (...) {' },
@@ -237,16 +493,76 @@ export const DERSLER: readonly Ders[] = [
       { kod: '  adim++;', not: 'Her turda bir artır.' },
       { kod: '}' },
     ],
-    hatirla:
-      'Sensörler dış dünyayı görür, değişkenler geçmişi hatırlar. Bazı kararlar yalnızca hatırlayarak verilir.',
+    demo: {
+      harita: ['#####', '#S..#', '#...#', '#..M#', '#####'],
+      yon: 'dogu',
+      kod: 'int adim = 0;\nwhile (!molaOdasindaMiyim()) {\n  if (adim == 2) {\n    sagaDon();\n  }\n  ilerle();\n  adim++;\n}',
+      anlat: 'Ortalık açık, hiçbir duvar yol göstermiyor. Dönüş kararını sayaç veriyor.',
+    },
+    hatirla: 'Sensörler dış dünyayı görür, değişkenler geçmişi hatırlar.',
+  },
+  {
+    bolum: 19,
+    baslik: 'Koşulları birleştirmek',
+    neden:
+      'Bazen durman için tek sebep yoktur. Hem hedefe varmak hem yolun kapanması durmanı gerektirebilir.',
+    nasil: [
+      '`&&` "ve" demektir. İki koşul da doğruysa sonuç doğrudur.',
+      'Biri bile yanlışsa döngü durur.',
+      '`||` "veya" demektir. Birinin doğru olması yeter.',
+      '`!` "değil" demektir. Doğruyu yanlışa çevirir.',
+    ],
+    ornek: [
+      { kod: 'while (sayac < 5 && !molaOdasindaMiyim()) {', not: 'İkisi de doğruyken devam.' },
+      { kod: '  ...', not: 'Biri bozulunca döngü biter.' },
+      { kod: '}' },
+    ],
+    demo: {
+      harita: ['######', '#S..##', '###.##', '###M##', '######'],
+      yon: 'dogu',
+      kod: 'while (!molaOdasindaMiyim() && !onumdePaletVar()) {\n  ilerle();\n}\nsagaDon();\nwhile (!molaOdasindaMiyim()) {\n  ilerle();\n}',
+      anlat: 'İlk döngü palete rastlayınca duruyor, mola odasına varmadan.',
+    },
+    hatirla: '`&&` ikisi de, `||` biri yeter, `!` tersi.',
+  },
+  {
+    bolum: 20,
+    baslik: 'Fonksiyon: kendi komutun',
+    neden:
+      'Bir hareket dizisini tekrar tekrar yazıyorsan ona bir isim verebilirsin. O andan sonra o dizi senin için tek bir komuttur.',
+    nasil: [
+      'Editörde `main()` üstünde ikinci bir bölme açıldı.',
+      'Orada `void koseDon() { }` yazıp içine komutları koyarsın.',
+      'Sonra `main()` içinde `koseDon();` diye çağırırsın.',
+      'Tanımlamak onu çalıştırmaz. Çağırmak çalıştırır.',
+    ],
+    ornek: [
+      { kod: 'void koseDon() {', not: 'Tanım: bu isim ne yapacak?' },
+      { kod: '  sagaDon();' },
+      { kod: '  ilerle();' },
+      { kod: '}', not: 'Tanım bitti. Henüz hiçbir şey çalışmadı.' },
+      { kod: '', not: '' },
+      { kod: 'koseDon();', not: 'Çağrı: içindeki iki komut şimdi çalışıyor.' },
+    ],
+    demo: {
+      harita: ['#####', '#S.##', '##M##', '#####'],
+      yon: 'dogu',
+      kod: 'void koseDon() {\n  sagaDon();\n  ilerle();\n}\n--- main ---\nilerle();\nkoseDon();',
+      anlat: 'Üstteki tanım kendiliğinden çalışmıyor. Aşağıdaki çağrı onu çalıştırıyor.',
+    },
+    hatirla: 'Fonksiyon tanımlamak onu çalıştırmaz. Çağırmak çalıştırır.',
   },
   {
     bolum: 21,
     baslik: 'Parametre: komuta bilgi vermek',
     neden:
-      'Yazdığın `koseDon()` her seferinde tam olarak aynı işi yapıyordu. Ama çoğu zaman "aynı iş, farklı sayıda" gerekir: üç adım, sonra iki adım, sonra beş adım.',
-    nasil:
-      'Fonksiyonun parantezine bir parametre koyarsın: `void ilerleN(int n)`. Buradaki `n`, çağrılırken verdiğin sayının fonksiyon içindeki adıdır. `ilerleN(3);` yazdığında fonksiyon `n` yerine 3 görür.\n\nParametre fonksiyonun içinde yaşar; dışarıdaki değişkenleri etkilemez.',
+      'Yazdığın `koseDon()` her seferinde aynı işi yapıyordu. Çoğu zaman "aynı iş, farklı sayıda" gerekir.',
+    nasil: [
+      'Fonksiyonun parantezine bir parametre koyarsın: `void ilerleN(int n)`.',
+      '`n`, çağrılırken verdiğin sayının fonksiyon içindeki adıdır.',
+      '`ilerleN(3);` yazdığında fonksiyon `n` yerine üç görür.',
+      'Parametre fonksiyonun içinde yaşar. Dışarıdaki değişkenleri etkilemez.',
+    ],
     ornek: [
       { kod: 'void ilerleN(int n) {', not: 'n, dışarıdan gelecek sayının adı.' },
       { kod: '  for (int i = 0; i < n; i++) {', not: 'Kaç kere döneceğini n söyler.' },
@@ -255,235 +571,27 @@ export const DERSLER: readonly Ders[] = [
       { kod: '}' },
       { kod: '', not: '' },
       { kod: 'ilerleN(3);', not: 'Bu çağrıda n üçtür.' },
-      { kod: 'ilerleN(2);', not: 'Bu çağrıda ikidir. Tek tanım, farklı işler.' },
     ],
-    hatirla:
-      'Parametre, bir komuta iş yaparken kullanacağı bilgiyi vermenin yoludur. Aynı isim, sonsuz farklı davranış.',
-  },
-  {
-    bolum: 1,
-    baslik: 'Algoritma nedir?',
-    neden: [
-      'Kod yazmayı hiç bilmiyor olabilirsin. Sorun değil, çünkü programlamanın özü kod değil algoritmadır. Ve algoritma zaten bildiğin bir şey.',
-      'Birine çay yapmayı tarif ettiğini düşün: suyu koy, kaynat, demliği yerleştir, beş dakika bekle. Sırayı bozarsan çay olmaz. Adımı atlarsan çay olmaz. İşte bu bir algoritma: bir işi yapan, sırası önemli, eksiksiz adımlar dizisi.',
-    ].join('\n\n'),
-    nasil: [
-      'Bilgisayarın senden tek farkı, hiçbir şeyi kendiliğinden anlamaması. "Çayı demle" demek yetmez; her adımı tek tek söylemen gerekir. Bu oyunda da Sezer\'e ne yapacağını adım adım söyleyeceksin.',
-      'Bu ilk bölümlerde kod yazmayacaksın. Aşağıdaki komut kartlarına basacaksın, satırlar senin yerine yazılacak. Sen sadece sıraya karar vereceksin. Yani asıl işi, algoritmayı kuracaksın. Yazmaya sonra geçeceğiz.',
-    ].join('\n\n'),
-    ornek: [
-      { kod: 'suyu koy;', not: 'Adımlar sırayla yapılır.' },
-      { kod: 'kaynat;', not: 'Sırayı bozarsan sonuç bozulur.' },
-      { kod: 'demle;', not: 'Bilgisayar tam olarak dediğini yapar, fazlasını değil.' },
-    ],
-    hatirla:
-      'Algoritma, bir işi yapan sıralı ve eksiksiz adımlar dizisidir. Programlama, o adımları bilgisayarın anlayacağı dilde yazmaktır.',
-  },
-  {
-    bolum: 2,
-    baslik: 'Komut ve sıra',
-    neden:
-      'Bilgisayar sezgi kullanmaz. "Mola odasına git" demek işe yaramaz; oraya nasıl gidileceğini adım adım söylemen gerekir. Programlama tam olarak budur: bir işi bilgisayarın yapabileceği kadar küçük parçalara bölmek.',
-    nasil:
-      'Her komut bir satırdır ve sonunda noktalı virgül bulunur. Noktalı virgül C++ için cümlenin noktası gibidir: "bu komut bitti" demektir. Unutursan bilgisayar iki satırı tek cümle sanır ve şaşırır.',
-    ornek: [
-      { kod: 'ilerle();', not: 'Baktığın yöne bir kare gidersin.' },
-      { kod: 'ilerle();', not: 'Bir kare daha. İki satır, iki adım.' },
-    ],
-    hatirla: 'Komutlar yazdığın sırayla, yukarıdan aşağıya çalışır. Her satırın sonunda noktalı virgül vardır.',
-  },
-  {
-    bolum: 3,
-    baslik: 'Durum: nereye baktığın önemli',
-    neden:
-      '`ilerle();` "sağa git" demek değil, "baktığın yöne git" demektir. Yani aynı komut, Sezer\'in o anki durumuna göre farklı sonuç verir. Bu, programlamanın en önemli fikirlerinden biri: komutun etkisi duruma bağlıdır.',
-    nasil:
-      '`sagaDon();` ve `solaDon();` Sezer\'i yerinde çevirir. Bir kare bile ilerlemez, sadece bakış yönü değişir. Sonraki `ilerle();` artık yeni yöne gider.',
-    ornek: [
-      { kod: 'ilerle();', not: 'Doğuya bakıyor, doğuya gider.' },
-      { kod: 'sagaDon();', not: 'Yerinde döner. Konumu aynı, yönü artık güney.' },
-      { kod: 'ilerle();', not: 'Aynı komut, bu sefer aşağı gider.' },
-    ],
-    hatirla: 'Dönmek ilerlemek değildir. Aynı komut, farklı durumda farklı sonuç verir.',
-  },
-  {
-    bolum: 6,
-    baslik: 'Tekrarın problemi',
-    neden:
-      'Bu bölümde aynı komutu on iki kere yazacaksın ve sıkılacaksın. Bu kasıtlı. Sıkılman gerekiyor, çünkü bir sonraki bölümde öğreneceğin şeyin neden var olduğunu ancak böyle anlarsın.',
-    nasil:
-      'Yazarken şunu düşün: koridor on iki değil de iki yüz kare olsaydı ne yapacaktın? Ya da uzunluğunu bilmeseydin? Kopyala-yapıştır bir çözüm değildir; hata yapılacak on iki ayrı yer demektir.',
-    ornek: [
-      { kod: 'ilerle();' },
-      { kod: 'ilerle();' },
-      { kod: '...', not: 've böyle on iki kere. Sıkıcı, uzun, hataya açık.' },
-    ],
-    hatirla: 'Aynı şeyi iki kere yazıyorsan, muhtemelen daha iyi bir yolu vardır.',
-  },
-  {
-    bolum: 7,
-    baslik: 'for döngüsü',
-    neden:
-      'Geçen bölümde on iki satır yazdın. Şimdi aynı işi üç satırda yapacaksın. Tekrarı sen değil bilgisayar yapacak. Zaten iyi olduğu tek şey bu.',
-    nasil:
-      'Döngü, süslü parantezlerin içindeki komutları belirlediğin sayıda tekrarlar. `for` başlığındaki üç bölüm sırayla şunu söyler: sayaç nereden başlasın, ne zamana kadar devam etsin, her turda nasıl değişsin.',
-    ornek: [
-      { kod: 'for (int i = 0; i < 12; i++) {', not: 'i sıfırdan başlar, 12 olana kadar sürer, her turda bir artar. Yani 12 tur.' },
-      { kod: '  ilerle();', not: 'Süslü parantezin içindekiler her turda çalışır.' },
-      { kod: '}', not: 'Döngünün sonu. Buraya gelince başa döner.' },
-    ],
-    hatirla: '`for`, kaç kere tekrarlanacağını önceden bildiğin durumlar içindir.',
-  },
-  {
-    bolum: 8,
-    baslik: 'Döngü gövdesi',
-    neden:
-      'Tekrarlanan şey her zaman tek bir komut değildir. Çoğu zaman bir hareket dizisidir: iki adım at, bir şey al, tekrar. Döngü bunu da yapabilir.',
-    nasil:
-      'Süslü parantezlerin arasına istediğin kadar komut koyabilirsin. Hepsi, yazdığın sırayla, her turda baştan sona çalışır. Döngünün "gövdesi" denen şey budur.',
-    ornek: [
-      { kod: 'for (int i = 0; i < 3; i++) {' },
-      { kod: '  ilerle();', not: 'Her turda önce bu,' },
-      { kod: '  kap();', not: 'sonra bu çalışır. Üç turda altı komut.' },
-      { kod: '}' },
-    ],
-    hatirla: 'Döngü tek komutu değil, gövdesindeki bütün komut dizisini tekrarlar.',
-  },
-  {
-    bolum: 10,
-    baslik: 'İç içe döngü',
-    neden:
-      'Bazen tekrarın kendisi de tekrarlanır. "Her kenarda dört adım at, sonra köşeyi dön; bunu üç kenar için yap" cümlesinde iki ayrı tekrar var, biri diğerinin içinde.',
-    nasil:
-      'Bir döngünün gövdesine başka bir döngü koyabilirsin. Dıştaki her bir turunda, içteki döngü baştan sona çalışır. Yani 3 dış tur × 4 iç tur = 12 kez.',
-    ornek: [
-      { kod: 'for (int i = 0; i < 3; i++) {', not: 'Dış döngü: kenarları sayar.' },
-      { kod: '  for (int j = 0; j < 4; j++) {', not: 'İç döngü: o kenardaki kareleri sayar.' },
-      { kod: '    ilerle();', not: 'Toplam 12 kere çalışır.' },
-      { kod: '  }' },
-      { kod: '  sagaDon();', not: 'İç döngü bitince, her dış turda bir kez.' },
-      { kod: '}' },
-    ],
-    hatirla: 'İç içe döngüde iç kısım, dıştaki her tur için baştan sona çalışır.',
-  },
-  {
-    bolum: 11,
-    baslik: 'while döngüsü',
-    neden:
-      '`for` kaç kere döneceğini bildiğinde işe yarar. Ama gerçek problemlerde çoğu zaman bilmezsin. Koridorun uzunluğunu bilmiyorsun. Bildiğin tek şey, ne zaman durman gerektiği.',
-    nasil:
-      '`while` bir koşula bakar. Koşul doğru olduğu sürece gövdesini tekrarlar; yanlış olduğu anda durur. Sayı saymaz, duruma bakar. `!` işareti "değil" demektir: `!molaOdasindaMiyim()` yani "mola odasında değilken".',
-    ornek: [
-      { kod: 'while (!molaOdasindaMiyim()) {', not: 'Her turun başında koşulu kontrol eder.' },
-      { kod: '  ilerle();', not: 'Koşul doğruysa çalışır, sonra tekrar kontrole döner.' },
-      { kod: '}', not: 'Koşul yanlış olduğu an döngü biter.' },
-    ],
-    hatirla:
-      '`while` sayıya değil koşula bakar. Koşulu yanlış yapacak bir şey döngü içinde olmazsa program hiç bitmez.',
-  },
-  {
-    bolum: 13,
-    baslik: 'if: karar vermek',
-    neden:
-      'Şimdiye kadar programın hep aynı şeyi yapıyordu. Ama önünde palet olup olmaması duruma göre değişir. Programın bakması, görmesi ve ona göre davranması gerekir.',
-    nasil:
-      '`if` parantezin içindeki koşula bakar. Doğruysa süslü parantezin içini çalıştırır, yanlışsa hiç uğramadan geçer. Bu, programın ilk kez "düşünmesi"dir.',
-    ornek: [
-      { kod: 'if (onumdePaletVar()) {', not: 'Sadece palet varsa içeri girer.' },
-      { kod: '  sagaDon();', not: 'Palet yoksa bu satır hiç çalışmaz.' },
-      { kod: '}' },
-      { kod: 'ilerle();', not: 'Bu satır her durumda çalışır, if\'in dışında.' },
-    ],
-    hatirla: '`if` koşul doğruysa çalışır, yanlışsa atlanır. Girinti kimin nereye ait olduğunu gösterir.',
-  },
-  {
-    bolum: 14,
-    baslik: 'if / else: iki yol',
-    neden:
-      'Bazen "koşul doğruysa şunu yap" yetmez; "değilse de şunu yap" demen gerekir. Çikolata varsa kap, yoksa ilerle; ikisi de bir şey yapmalı.',
-    nasil:
-      '`else`, `if` bloğunun hemen ardına gelir ve koşul yanlış olduğunda çalışır. İkisinden tam olarak biri çalışır, asla ikisi birden değil.',
-    ornek: [
-      { kod: 'if (ustumdeCikolataVar()) {', not: 'Koşul doğruysa...' },
-      { kod: '  kap();', not: '...sadece bu çalışır.' },
-      { kod: '} else {', not: 'Koşul yanlışsa...' },
-      { kod: '  ilerle();', not: '...sadece bu çalışır.' },
-      { kod: '}' },
-    ],
-    hatirla: '`if / else` iki yoldan birini seçer. Üçüncü bir durum varsa `else if` eklersin.',
-  },
-  {
-    bolum: 16,
-    baslik: 'Algoritma nedir',
-    neden:
-      'Bu labirentin yolunu ezberleyip komutları tek tek yazabilirdin. Ama o çözüm sadece bu labirent için işe yarar. Programcının aradığı şey başka: bütün labirentleri çözen bir kural.',
-    nasil:
-      'Algoritma, bir problemi çözen adım adım kuraldır. Buradaki kural tek cümle: "önünde palet varsa sağa dön, yoksa ilerle." Bu kuralı bir döngünün içine koyduğunda labirentin şeklini hiç bilmene gerek kalmaz, çünkü kural her durumda doğru kararı verir.\n\nİşin güzeli şu: bu senin uydurduğun bir numara değil, gerçek bir algoritma. Adı duvar takibi ve gerçek robotlar bunu kullanıyor.',
-    ornek: [
-      { kod: 'while (bitmedi) {', not: 'Tekrar: kuralı sürekli uygula.' },
-      { kod: '  if (engel var) don();', not: 'Karar: duruma göre davran.' },
-      { kod: '  else ilerle();', not: 'Üç satır, sınırsız labirent.' },
-      { kod: '}' },
-    ],
-    hatirla:
-      'Algoritma tek bir problemi değil, bir problem ailesini çözer. "Bu labirent" için değil, "her labirent" için yazarsın.',
-  },
-  {
-    bolum: 17,
-    baslik: 'Değişken: hatırlamak',
-    neden:
-      'Şimdiye kadar programın hiçbir şey hatırlamıyordu. Kaç çikolata topladığını sorsan bilemezdi. Ama çoğu problem bir şeyi akılda tutmayı gerektirir.',
-    nasil:
-      '`int sayac = 0;` bilgisayarın belleğinde `sayac` adında bir kutu açar ve içine 0 koyar. `int` "içine tam sayı girer" demektir. `sayac++` kutudaki sayıyı bir artırır. Sağdaki panelden değerin canlı değiştiğini görebilirsin.',
-    ornek: [
-      { kod: 'int sayac = 0;', not: 'Kutuyu aç, sıfırla. Bir kere, döngüden önce.' },
-      { kod: 'while (...) {' },
-      { kod: '  kap();' },
-      { kod: '  sayac++;', not: 'Her kaptığında bir artır. 0 → 1 → 2 ...' },
-      { kod: '}' },
-    ],
-    hatirla:
-      'Değişken, programın belleğidir. Döngüden önce tanımlanır, döngünün içinde değişir.',
-  },
-  {
-    bolum: 19,
-    baslik: 'Koşulları birleştirmek',
-    neden:
-      'Bazen durman için tek bir sebep yoktur. "Beş çikolata topladıysam dur, ama mola odasına vardıysam da dur" cümlesinde iki ayrı sebep ve tek bir döngü var.',
-    nasil:
-      '`&&` işareti "ve" demektir: iki koşul da doğruysa sonuç doğrudur. Biri bile yanlışsa döngü durur. Kardeşi `||` ise "veya" demektir: birinin doğru olması yeter. `!` ise "değil": doğruyu yanlışa çevirir.',
-    ornek: [
-      { kod: 'while (sayac < 5 && !molaOdasindaMiyim()) {', not: 'İki koşul da doğruyken devam.' },
-      { kod: '  ...', not: 'Beş oldu ya da molaya varıldıysa döngü biter.' },
-      { kod: '}' },
-    ],
-    hatirla: '`&&` ikisi de, `||` biri yeter, `!` tersi. Karmaşık kararlar bu üçünden kurulur.',
-  },
-  {
-    bolum: 20,
-    baslik: 'Fonksiyon: kendi komutun',
-    neden:
-      'Bir hareket dizisini tekrar tekrar yazıyorsan, ona bir isim verebilirsin. O andan itibaren o dizi senin için tek bir komuttur. Programcılığın en güçlü fikri budur: karmaşıklığı isimlerin arkasına saklamak.',
-    nasil:
-      'Editörde `main()`\'in üstünde ikinci bir bölme açıldı. Orada `void koseDon() { }` yazıp içine komutları koyarsın. Sonra `main()` içinde `koseDon();` diye çağırırsın; tıpkı `ilerle();` gibi. `void` "geriye bir değer döndürmez, sadece iş yapar" demektir.',
-    ornek: [
-      { kod: 'void koseDon() {', not: 'Tanım: bu isim ne yapacak?' },
-      { kod: '  sagaDon();' },
-      { kod: '  ilerle();' },
-      { kod: '}', not: 'Tanım burada biter. Henüz hiçbir şey çalışmadı.' },
-      { kod: '', not: '' },
-      { kod: 'koseDon();', not: 'Çağrı: içindeki iki komut şimdi çalışır.' },
-    ],
-    hatirla:
-      'Fonksiyon tanımlamak onu çalıştırmaz; çağırmak çalıştırır. İsmi ne yaptığını anlatsın.',
+    demo: {
+      harita: koridor(2),
+      yon: 'dogu',
+      kod: 'void ilerleN(int n) {\n  for (int i = 0; i < n; i++) {\n    ilerle();\n  }\n}\n--- main ---\nilerleN(3);',
+      anlat: 'Tek satırlık çağrı üç adıma dönüşüyor. Sayıyı sen veriyorsun.',
+    },
+    hatirla: 'Parametre, bir komuta iş yaparken kullanacağı bilgiyi vermenin yoludur.',
   },
   {
     bolum: 22,
     baslik: 'Hepsi bir arada',
     neden:
-      'Son bölüm yeni bir kavram öğretmiyor. Öğrendiğin dördünü aynı anda kullanman gerekiyor. Gerçek programlar da böyledir.',
-    nasil:
-      'Şimdiye kadarki her şey aslında dört fikirdi:\n\nSıra: komutlar yazdığın düzende çalışır.\nTekrar: `for` ve `while` aynı işi defalarca yapar.\nKarar: `if / else` duruma göre yol ayırır.\nİsimlendirme: değişkenler bilgiye, fonksiyonlar davranışa isim verir.\n\nHangi programlama dilini öğrenirsen öğren, aynı dördünü göreceksin. Sözdizimi değişir, bu dört fikir değişmez.',
+      'Son bölüm yeni bir kavram öğretmiyor. Öğrendiklerini aynı anda kullanman gerekiyor. Gerçek programlar da böyledir.',
+    nasil: [
+      'Sıra: komutlar yazdığın düzende çalışır.',
+      'Tekrar: `for` ve `while` aynı işi defalarca yapar.',
+      'Karar: `if` ve `else` duruma göre yol ayırır.',
+      'İsimlendirme: değişkenler bilgiye, fonksiyonlar davranışa isim verir.',
+      'Hangi dili öğrenirsen öğren aynı dördünü göreceksin.',
+    ],
     ornek: [
       { kod: 'while (bitmedi) {', not: 'Tekrar' },
       { kod: '  if (a) ...', not: 'Karar' },
@@ -497,24 +605,153 @@ export const DERSLER: readonly Ders[] = [
     bolum: 23,
     baslik: 'Hata ayıklama',
     neden:
-      'Kod yazmak işin kolay yarısı. Çalışmayan bir kodu okuyup neyin yanlış olduğunu bulmak asıl beceridir. Kimse bunu doğuştan bilmez; herkes alıştırmayla öğrenir.',
+      'Kod yazmak işin kolay yarısı. Çalışmayan bir kodu okuyup neyin yanlış olduğunu bulmak asıl beceridir.',
     nasil: [
-      'Sırası şu ve hiç değişmez.',
-      '1. Çalıştır. Tahmin etme, gör. Kod gerçekte ne yapıyor?',
-      '2. Karşılaştır. Ne yapmasını istiyordun, ne yaptı? Fark tam olarak nerede başlıyor?',
-      '3. Tek şey değiştir. Aynı anda üç yeri düzeltirsen hangisinin işe yaradığını anlayamazsın.',
-      '4. Tekrar çalıştır. Düzeldi mi, yoksa başka bir yeri mi bozdun?',
-      'Adım adım düğmesi ve satır vurgusu tam olarak bunun için var: kodun hangi satırda ne yaptığını tek tek izleyebilirsin.',
-    ].join('\n\n'),
-    ornek: [
-      { kod: 'for (int i = 0; i < 5; i++)', not: 'Beklenen 7 tur, yazılan 5. Kod çalışır ama yanlış çalışır.' },
-      { kod: 'while (!bitti) { don(); }', not: 'Konumu değiştiren bir şey yok, döngü hiç bitmez.' },
-      { kod: 'if (...) { } else { sayac++; }', not: 'Doğru satır, yanlış dal. Sayaç yanlış şeyi sayar.' },
+      'Bir: çalıştır. Tahmin etme, gör. Kod gerçekte ne yapıyor?',
+      'İki: karşılaştır. Ne olmasını istiyordun? Fark nerede başlıyor?',
+      'Üç: tek şey değiştir. Aynı anda üç yeri düzeltirsen hangisinin işe yaradığını anlayamazsın.',
+      'Dört: tekrar çalıştır.',
+      'Adım adım düğmesi ve satır vurgusu tam olarak bunun için var.',
     ],
-    hatirla:
-      'Önce çalıştır, sonra karşılaştır, sonra tek bir şey değiştir. Hata mesajını okumak, tahmin etmekten her zaman hızlıdır.',
+    ornek: [
+      { kod: 'for (int i = 0; i < 5; i++)', not: 'Beklenen yedi tur, yazılan beş.' },
+      { kod: 'while (!bitti) { don(); }', not: 'Konum değişmiyor, döngü hiç bitmiyor.' },
+      { kod: 'if (...) { } else { sayac++; }', not: 'Doğru satır, yanlış dal.' },
+    ],
+    hatirla: 'Önce çalıştır, sonra karşılaştır, sonra tek bir şey değiştir.',
   },
-].sort((a, b) => a.bolum - b.bolum);
+  {
+    bolum: 27,
+    baslik: 'bool: evet mi hayır mı',
+    neden:
+      'Sayaçlar "kaç tane" sorusunu cevaplar. Bazı sorular ise evet ya da hayırla cevaplanır.',
+    nasil: [
+      '`bool` yalnızca iki değer alır: `true` ve `false`.',
+      'Bir `bool` değişkenini doğrudan koşula yazabilirsin.',
+      '`if (ilkDonus)` demek `if (ilkDonus == true)` ile aynıdır ve daha okunaklıdır.',
+    ],
+    ornek: [
+      { kod: 'bool ilkDonus = true;', not: 'Başlangıçta evet.' },
+      { kod: 'if (ilkDonus) {', not: 'Değeri doğruysa buraya girer.' },
+      { kod: '  sagaDon();' },
+      { kod: '  ilkDonus = false;', not: 'Bir daha girmesin diye hayıra çevir.' },
+      { kod: '}' },
+    ],
+    demo: {
+      harita: ['######', '#S..##', '###.##', '###M##', '######'],
+      yon: 'dogu',
+      kod: 'bool dondum = false;\nwhile (!molaOdasindaMiyim()) {\n  if (onumdePaletVar() && !dondum) {\n    sagaDon();\n    dondum = true;\n  }\n  ilerle();\n}',
+      anlat: 'Dönüş bir kere yapılıyor. İkinci kez olmaması `dondum` sayesinde.',
+    },
+    hatirla: '`bool` iki değerli bir bellektir. Bir olayın olup olmadığını hatırlar.',
+  },
+  {
+    bolum: 28,
+    baslik: 'Komutların birbirini çağırması',
+    neden:
+      'Kendi komutunu yazmayı öğrendin. Şimdi asıl güç geliyor: yazdığın komut, yine senin yazdığın başka bir komutu çağırabilir.',
+    nasil: [
+      'Bir fonksiyonun içinde `ilerle();` çağırabiliyorsan `koseDon();` de çağırabilirsin.',
+      'Oyunun komutlarıyla senin komutların arasında fark yoktur.',
+      'Küçük parçalardan daha büyük parçalar kurarsın.',
+    ],
+    ornek: [
+      { kod: 'void koseDon() {', not: 'Küçük parça.' },
+      { kod: '  sagaDon();' },
+      { kod: '  ilerle();' },
+      { kod: '}' },
+      { kod: '', not: '' },
+      { kod: 'void basamak() {', not: 'Büyük parça.' },
+      { kod: '  ilerle();' },
+      { kod: '  koseDon();', not: 'Kendi yazdığın komutu kullanıyor.' },
+      { kod: '}' },
+    ],
+    demo: {
+      harita: ['######', '#S.###', '##..##', '###M##', '######'],
+      yon: 'dogu',
+      kod: 'void koseDon() {\n  sagaDon();\n  ilerle();\n  solaDon();\n}\nvoid basamak() {\n  ilerle();\n  koseDon();\n}\n--- main ---\nbasamak();\nbasamak();',
+      anlat: 'Tek bir `basamak();` çağrısı, içindeki `koseDon();` sayesinde dört komut çalıştırıyor.',
+    },
+    hatirla:
+      'Fonksiyonlar birbirini çağırabilir. Karmaşık iş, isimlendirilmiş küçük işlere bölünür.',
+  },
+  {
+    bolum: 29,
+    baslik: 'Kalanla ritim kurmak',
+    neden:
+      '"Üçüncü adımda dön" demek kolay. Peki "her üç adımda bir dön"? Altıncıda, dokuzuncuda da dönmesi gerekiyor.',
+    nasil: [
+      '`%` işleci bölmeden kalanı verir.',
+      '`9 % 3` sıfırdır, çünkü dokuz üçe tam bölünür.',
+      '`10 % 3` ise birdir.',
+      'Bu yüzden `adim % 3 == 0` tam olarak üçün katlarında doğru olur.',
+    ],
+    ornek: [
+      { kod: '6 % 3', not: 'Kalan sıfır. Altı, üçün katı.' },
+      { kod: '7 % 3', not: 'Kalan bir. Katı değil.' },
+      { kod: 'if (adim % 3 == 0)', not: 'Her üçüncü turda doğru.' },
+    ],
+    demo: {
+      harita: ['#####', '#S..#', '#...#', '#..M#', '#####'],
+      yon: 'dogu',
+      kod: 'int adim = 0;\nwhile (!molaOdasindaMiyim()) {\n  if (adim > 0 && adim % 2 == 0) {\n    sagaDon();\n  }\n  ilerle();\n  adim++;\n}',
+      anlat: 'Bu örnekte her iki adımda bir dönüyor. Tek satır, tekrar eden bir düzen.',
+    },
+    hatirla: '`%` bölmeden kalanı verir. Tekrar eden düzeni yakalamanın en kısa yolu.',
+  },
+  {
+    bolum: 30,
+    baslik: 'Özyineleme: kendini çağıran komut',
+    neden:
+      'Tekrarlamanın döngüden başka bir yolu daha var. Komut, işi bitmediyse kendini yeniden çağırır.',
+    nasil: [
+      'İki parçası vardır ve ikisi de şarttır.',
+      'Durma noktası: işin bittiği durum. Orada kendini çağırmaz.',
+      'Küçültme: her çağrıda hedefe biraz daha yaklaşır.',
+      'Durma noktasını unutursan program hiç bitmez.',
+    ],
+    ornek: [
+      { kod: 'void yuru() {' },
+      { kod: '  if (!molaOdasindaMiyim()) {', not: 'Durma noktası.' },
+      { kod: '    ilerle();', not: 'Küçültme: bir adım yaklaş.' },
+      { kod: '    yuru();', not: 'Kalan işi aynı komuta devret.' },
+      { kod: '  }' },
+      { kod: '}' },
+    ],
+    demo: {
+      harita: koridor(4),
+      yon: 'dogu',
+      kod: 'void yuru() {\n  if (!molaOdasindaMiyim()) {\n    ilerle();\n    yuru();\n  }\n}\n--- main ---\nyuru();',
+      anlat: 'Tek bir çağrı bütün koridoru yürüyor. Hiçbir yerde döngü yok.',
+    },
+    hatirla: 'Özyinelemede zor olan başlamak değil, durmayı hatırlamaktır.',
+  },
+  {
+    bolum: 31,
+    baslik: 'Döngü sayacını parametreye vermek',
+    neden:
+      'Döngünün sayacını şimdiye kadar sadece "kaç kere döneceğim" diye kullandın. O bir sayı ve her turda değişiyor.',
+    nasil: [
+      '`for (int i = 1; i <= 3; i++)` döngüsünde `i` sırayla bir, iki, üç olur.',
+      '`ilerleN(i);` yazdığında fonksiyon her turda farklı sayı alır.',
+      'Önce bir adım, sonra iki, sonra üç.',
+      'Az kodla çok iş yapmanın en tipik örneği budur.',
+    ],
+    ornek: [
+      { kod: 'for (int i = 1; i <= 3; i++) {', not: 'i sırayla 1, 2, 3.' },
+      { kod: '  ilerleN(i);', not: 'Her turda farklı uzunlukta kenar.' },
+      { kod: '  sagaDon();' },
+      { kod: '}' },
+    ],
+    demo: {
+      harita: ['#####', '#S..#', '#...#', '#.M.#', '#####'],
+      yon: 'dogu',
+      kod: 'void ilerleN(int n) {\n  for (int i = 0; i < n; i++) {\n    ilerle();\n  }\n}\n--- main ---\nfor (int i = 1; i <= 2; i++) {\n  ilerleN(i);\n  sagaDon();\n}',
+      anlat: 'İlk turda bir adım, ikinci turda iki. Kenar her turda uzuyor.',
+    },
+    hatirla: 'Döngünün sayacı sadece tekrar sayısı değil, kullanabileceğin bir değerdir.',
+  },
+];
 
 export const dersBul = (bolumNo: number): Ders | undefined =>
   DERSLER.find((d) => d.bolum === bolumNo);

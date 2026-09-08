@@ -15,8 +15,10 @@ const kartSatirlari = (govde: string): string[] =>
 interface Kayit {
   yildizlar: Record<number, 0 | 1 | 2 | 3>;
   kodlar: Record<number, Kod>;
-  /** Gösterilmiş ders kartları — aynı ders iki kere zorla açılmasın. */
+  /** Gösterilmiş ders kartları. Aynı ders iki kere zorla açılmaz. */
   gorulenDersler: number[];
+  /** Karşılama ekranı bir kere gösterilir. */
+  karsilamaGorundu?: boolean;
 }
 
 const bosKayit: Kayit = { yildizlar: {}, kodlar: {}, gorulenDersler: [] };
@@ -68,6 +70,7 @@ interface OyunDurumu {
   /** Türkçe okuma paneli açık mı. */
   turkceAcik: boolean;
   gorulenDersler: number[];
+  karsilamaAcik: boolean;
 
   kodYaz: (kod: Partial<Kod>) => void;
   calistirBasla: () => void;
@@ -89,6 +92,8 @@ interface OyunDurumu {
   kartTemizle: () => void;
   kartlaYazDegistir: (kartla: boolean) => void;
   turkceAcKapa: (acik: boolean) => void;
+  karsilamayiBitir: () => void;
+  karsilamayiAc: () => void;
 }
 
 /** Ders kartı sadece o bölümde yeni bir kavram varsa ve daha önce görülmediyse açılır. */
@@ -122,6 +127,7 @@ export const useOyun = create<OyunDurumu>((set, get) => ({
   kartlaYaz: ilkBolum.kartModu,
   turkceAcik: false,
   gorulenDersler: ilkKayit.gorulenDersler,
+  karsilamaAcik: !ilkKayit.karsilamaGorundu,
 
   kodYaz: (parca) => {
     const kod = { ...get().kod, ...parca };
@@ -243,6 +249,14 @@ export const useOyun = create<OyunDurumu>((set, get) => ({
   kartlaYazDegistir: (kartlaYaz) => set({ kartlaYaz }),
 
   turkceAcKapa: (turkceAcik) => set({ turkceAcik }),
+
+  karsilamayiAc: () => set({ karsilamaAcik: true, haritaAcik: false }),
+
+  karsilamayiBitir: () => {
+    const kayit = kayitOku();
+    kayitYaz({ ...kayit, karsilamaGorundu: true });
+    set({ karsilamaAcik: false });
+  },
 }));
 
 export const bolumAcik = acikMi;

@@ -15,6 +15,7 @@ import { VardiyaSonu } from './components/panel/VardiyaSonu';
 import { BolumHaritasi } from './components/panel/BolumHaritasi';
 import { DersKarti } from './components/panel/DersKarti';
 import { Kavramlar } from './components/panel/Kavramlar';
+import { Karsilama } from './components/panel/Karsilama';
 import { kodluMetin } from './components/panel/metin';
 import { dersBul, vardiyaBul } from './content/dersler';
 import { adimAnlat } from './content/anlatici';
@@ -239,7 +240,9 @@ export default function App() {
         />
       )}
 
-      {s.dersAcik && (
+      {s.karsilamaAcik && <Karsilama onBitir={s.karsilamayiBitir} />}
+
+      {!s.karsilamaAcik && s.dersAcik && (
         <DersKarti
           ders={ders}
           vardiya={vardiyaGirisi}
@@ -265,6 +268,7 @@ export default function App() {
           suAnki={bolum.no}
           onSec={s.bolumSec}
           onKapat={() => s.haritaAcKapa(false)}
+          onKarsilama={s.karsilamayiAc}
         />
       )}
     </div>

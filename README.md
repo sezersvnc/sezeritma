@@ -15,7 +15,8 @@ Yeni başlayan öğrencinin asıl problemi sözdizimi değil, kodun zamanda akt�
 - **Serbest mod** — kendi haritanı çizip kendi kodunu deneyebileceğin, yıldızsız ve hedefsiz bir alan. Adres satırına `#serbest` yazarak ya da vardiya çizelgesindeki bağlantıdan açılır.
 - **Kart modu** — ilk bölümlerde öğrenci hiç yazmıyor: komut kartlarına basıyor, C++ satırları editörde kendiliğinden beliriyor. Kod yazmayı bilmeyen biri ilk dakikadan itibaren doğru kodu görüyor, sadece yazma yükü kalkıyor. İstediği an "kendim yazayım" diyebiliyor.
 - **Türkçe okuma** — öğrencinin kendi yazdığı C++, tek tıkla Türkçe adımlara çevriliyor: `while (!molaOdasindaMiyim())` satırı "mola odasında değilsen şunları tekrarla" oluyor. Sözdizimi ezberlenecek bir şey olmaktan çıkıyor.
-- **Ders kartları** — her yeni kavram, ilk kullanıldığı bölümde anlatılıyor: önce hangi problemi çözdüğü, sonra nasıl çalıştığı, sonra satır satır açıklamalı bir örnek. Cevabı vermiyor, kavramı öğretiyor.
+- **Karşılama** — oyunu ilk açan kişi için sağ okla ilerleyen beş kısa sayfa: bu nedir, algoritma nedir, ekran nasıl çalışır, nasıl öğreneceksin, nasıl başlanır. Üçüncü sayfada küçük bir örnek canlı çalışıyor.
+- **Öğren, izle, uygula** — her yeni kavram üç adımda geliyor. Önce kısa maddelerle anlatım, sonra o kavramın **çalışırken izlendiği** mini bir gösteri, sonra bölümün kendisi. Gösteri gerçek motorda koşuyor: aynı animasyon, aynı satır vurgusu, canlı değişken değeri.
 - **Adım anlatıcısı** — kod çalışırken her adımı cümleyle anlatıyor: *"4. satır: Sezer yerinde döndü, artık aşağı bakıyor. Konumu değişmedi."*
 - **Kavram sözlüğü** — öğrenilen her kavram üst bardan her an açılabiliyor; unutunca geri dönülüyor.
 - **Vardiya girişi ve özeti** — her bölümde ne öğreneceğini önce, ne öğrendiğini sonra söylüyor.
