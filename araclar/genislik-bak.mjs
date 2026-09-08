@@ -1,0 +1,13 @@
+import { chromium } from 'playwright';
+const [cikti, g, y] = [process.argv[2], Number(process.argv[3]), Number(process.argv[4] ?? 1000)];
+const tarayici = await chromium.launch();
+const sayfa = await tarayici.newPage({ viewport: { width: g, height: y } });
+const hatalar = [];
+sayfa.on('pageerror', (e) => hatalar.push(String(e)));
+await sayfa.goto('http://localhost:5177/');
+await sayfa.evaluate(() => localStorage.setItem('sezeritma.ilerleme.v1', JSON.stringify({ yildizlar: {1:3,2:3,3:3,4:3,5:3,6:3,7:3,8:3,9:3,10:3,11:3}, kodlar: {}, gorulenDersler: [1,5,9,12] })));
+await sayfa.reload({ waitUntil: 'networkidle' });
+await sayfa.waitForTimeout(500);
+await sayfa.screenshot({ path: cikti });
+console.log('hata:', hatalar.length ? hatalar : 'yok');
+await tarayici.close();

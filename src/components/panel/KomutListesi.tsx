@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import type { KomutAdi, KomutListesiProps, YapiAdi } from '../../core/types';
 
 const IMZA: Record<KomutAdi, string> = {
@@ -29,30 +30,54 @@ const YAPI: Record<YapiAdi, { imza: string; ne: string }> = {
   fonksiyon: { imza: 'void isim() { }', ne: 'Kendi komutunu tanımlarsın, adıyla çağırırsın.' },
 };
 
+/**
+ * Elindeki komutların referansı.
+ *
+ * Bu bir başvuru listesi, yapılacak iş değil. Geniş ekranda hep açık duruyor;
+ * yer dar olduğunda kapalı başlıyor ki oyun alanını ve kod editörünü ezmesin.
+ * Gizlemiyoruz, sadece istendiğinde açılıyor.
+ */
 export function KomutListesi({ izinliKomutlar, izinliYapilar }: KomutListesiProps) {
+  const [acik, setAcik] = useState(
+    () => typeof window === 'undefined' || window.innerWidth >= 1180,
+  );
+
+  const sayi = izinliKomutlar.length + izinliYapilar.length;
+
   return (
-    <section>
-      <div className="etiket" style={{ color: 'var(--beton-4)', marginBottom: 8 }}>
-        Bu bölümde elindekiler
-      </div>
+    <section className="komut-bolumu">
+      <button
+        className="komut-basligi"
+        aria-expanded={acik}
+        onClick={() => setAcik((a) => !a)}
+      >
+        <span className="etiket">Bu bölümde elindekiler</span>
+        <span className="komut-sayaci etiket">
+          {sayi} madde {acik ? '−' : '+'}
+        </span>
+      </button>
 
-      <div className="komut-listesi">
-        {izinliKomutlar.map((k) => (
-          <div key={k} className="komut">
-            <code>{IMZA[k]}</code>
-            <span>{ACIKLAMA[k]}</span>
+      {acik && (
+        <div className="komut-govdesi">
+          <div className="komut-listesi">
+            {izinliKomutlar.map((k) => (
+              <div key={k} className="komut">
+                <code>{IMZA[k]}</code>
+                <span>{ACIKLAMA[k]}</span>
+              </div>
+            ))}
           </div>
-        ))}
-      </div>
 
-      {izinliYapilar.length > 0 && (
-        <div className="komut-listesi" style={{ marginTop: 12 }}>
-          {izinliYapilar.map((y) => (
-            <div key={y} className="komut">
-              <code>{YAPI[y].imza}</code>
-              <span>{YAPI[y].ne}</span>
+          {izinliYapilar.length > 0 && (
+            <div className="komut-listesi" style={{ marginTop: 12 }}>
+              {izinliYapilar.map((y) => (
+                <div key={y} className="komut">
+                  <code>{YAPI[y].imza}</code>
+                  <span>{YAPI[y].ne}</span>
+                </div>
+              ))}
             </div>
-          ))}
+          )}
         </div>
       )}
     </section>

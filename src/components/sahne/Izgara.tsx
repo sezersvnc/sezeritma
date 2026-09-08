@@ -1,12 +1,16 @@
-import { useMemo } from 'react';
+import { useMemo, type CSSProperties } from 'react';
 import type { Bolum, Durum, Kare, Yon } from '../../core/types';
 
 const ACI: Record<Yon, number> = { kuzey: 0, dogu: 90, guney: 180, bati: 270 };
 
 const anahtar = (k: Kare) => `${k.x},${k.y}`;
 
-/** Depo ne kadar büyükse kareler o kadar küçülür, ızgara hep aynı alana sığar. */
-const kareBoyu = (genislik: number, yukseklik: number) =>
+/**
+ * Karenin alabileceği en büyük boy. Gerçek boy bundan küçük olabilir:
+ * ızgara sütun sayısına göre esniyor, dar ekranda kareler kendiliğinden
+ * küçülüyor. Bu yüzden boy piksel olarak sabitlenmiyor, tavan olarak veriliyor.
+ */
+const enBuyukKare = (genislik: number, yukseklik: number) =>
   Math.round(Math.max(30, Math.min(64, 620 / Math.max(genislik, yukseklik))));
 
 interface Props {
@@ -51,20 +55,23 @@ export function Izgara({ bolum, durum, iz }: Props) {
   return (
     <div
       className="zemin-cerceve"
-      style={{ ['--kare' as string]: `${kareBoyu(icGenislik, icYukseklik)}px` }}
+      style={
+        {
+          '--kare': `${enBuyukKare(icGenislik, icYukseklik)}px`,
+          '--sutun': icGenislik,
+          '--satir': icYukseklik,
+        } as CSSProperties
+      }
     >
       <div
         className="zemin"
-        style={{ gridTemplateColumns: `repeat(${icGenislik}, var(--kare))` }}
         role="img"
         aria-label={`${icGenislik}e ${icYukseklik} depo zemini. Sezer ${durum.kare.x}. sütun, ${durum.kare.y}. satırda, ${durum.yon} yönüne bakıyor.`}
       >
         {hucreler}
         <div
           className="sezer"
-          style={{
-            transform: `translate(calc(${durum.kare.x - 1} * var(--kare)), calc(${durum.kare.y - 1} * var(--kare)))`,
-          }}
+          style={{ '--x': durum.kare.x - 1, '--y': durum.kare.y - 1 } as CSSProperties}
         >
           <div className="sezer-govde" style={{ transform: `rotate(${ACI[durum.yon]}deg)` }}>
             <span className="sezer-burun" />
