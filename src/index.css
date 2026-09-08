@@ -1495,3 +1495,170 @@ button {
 .karsilama-orti {
   background: rgba(22, 23, 26, 0.85);
 }
+
+/* ------------------------------------------------------------------ tahmin */
+
+.tahmin {
+  background: var(--kakao-1);
+  border-top: 1px solid var(--kakao-3);
+  padding: 12px 16px 14px;
+  display: grid;
+  gap: 9px;
+}
+
+.tahmin-bas {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 12px;
+  color: var(--beton-4);
+}
+
+.tahmin-kapat {
+  color: var(--kakao-4);
+}
+
+.tahmin-kapat:hover {
+  color: var(--beton-3);
+}
+
+.tahmin-secenekler {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 6px;
+}
+
+.tahmin-secenek {
+  border: 1px solid var(--kakao-4);
+  color: var(--beton-3);
+  padding: 8px 11px;
+  font-size: 12.5px;
+  text-align: left;
+  line-height: 1.3;
+}
+
+.tahmin-secenek:hover {
+  border-color: var(--beton-4);
+  color: var(--sut);
+}
+
+.tahmin-secenek[data-secili='1'] {
+  border-color: var(--yelek);
+  color: var(--sut);
+}
+
+/* Sonuç geldiğinde gerçek cevap işaretlenir. */
+.tahmin[data-sonuc] .tahmin-secenek[data-gercek='1'] {
+  border-color: var(--yesil);
+  color: #d6e3cb;
+  box-shadow: inset 0 0 0 1px var(--yesil);
+}
+
+.tahmin[data-sonuc='yanlis'] .tahmin-secenek[data-secili='1']:not([data-gercek='1']) {
+  border-color: var(--folyo);
+  color: #f0d5c8;
+}
+
+.tahmin-sonuc {
+  margin: 0;
+  font-size: 13px;
+  line-height: 1.5;
+  color: var(--beton-3);
+  border-left: 2px solid var(--kakao-4);
+  padding-left: 11px;
+}
+
+.tahmin[data-sonuc='dogru'] .tahmin-sonuc {
+  border-left-color: var(--yesil);
+}
+
+.tahmin[data-sonuc='yanlis'] .tahmin-sonuc {
+  border-left-color: var(--yelek);
+}
+
+/* Çizim ızgarasında parmak hareketi sayfayı kaydırmasın. */
+.zemin[data-duzenlenebilir='1'] {
+  touch-action: none;
+}
+
+/* ------------------------------------------------------------------ bitiş */
+
+.bitis-fikirler {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+  gap: 10px;
+  margin: 18px 0;
+}
+
+.bitis-fikir {
+  border-left: 2px solid var(--yelek);
+  padding: 2px 0 2px 12px;
+  display: grid;
+  gap: 3px;
+}
+
+.bitis-fikir strong {
+  font-size: 15px;
+  font-weight: 800;
+  font-variation-settings: 'wdth' 110;
+}
+
+.bitis-fikir span {
+  font-size: 13.5px;
+  line-height: 1.5;
+  color: var(--kakao-2);
+}
+
+.bitis-fikir code {
+  font-family: var(--kod);
+  font-size: 12.5px;
+  background: rgba(22, 23, 26, 0.07);
+  padding: 1px 5px;
+}
+
+.bitis-olcumler {
+  display: flex;
+  gap: 12px;
+  margin-top: 18px;
+}
+
+.ogrenilenler {
+  margin-top: 14px;
+  display: grid;
+  gap: 7px;
+}
+
+.ogrenilenler .etiket {
+  color: var(--beton-4);
+}
+
+.ogrenilen-rozetler {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.ogrenilen {
+  font-size: 12.5px;
+  border: 1px solid var(--beton-3);
+  padding: 3px 9px;
+  color: var(--kakao-2);
+}
+
+/* Üst bar, düğmeler sığmayınca daha erken sarılır. */
+@media (max-width: 1000px) {
+  .ustbar {
+    flex-wrap: wrap;
+    gap: 10px 14px;
+  }
+
+  .ustbar-orta {
+    margin-left: 0;
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+
+  .punch {
+    display: none;
+  }
+}

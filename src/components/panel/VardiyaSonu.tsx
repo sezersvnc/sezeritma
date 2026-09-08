@@ -1,6 +1,6 @@
 import { useEffect, useRef } from 'react';
 import type { VardiyaSonuProps } from '../../core/types';
-import { vardiyaBul } from '../../content/dersler';
+import { DERSLER, vardiyaBul } from '../../content/dersler';
 import { kodluMetin } from './metin';
 
 export function VardiyaSonu({
@@ -22,6 +22,12 @@ export function VardiyaSonu({
   // Vardiyanın son bölümü geçildiğinde ne öğrenildiğini toparlıyoruz.
   const VARDIYA_SONLARI: Record<number, number> = { 5: 1, 10: 2, 16: 3, 22: 4, 26: 5, 32: 6 };
   const vardiyaOzeti = vardiyaBul(VARDIYA_SONLARI[bolumNo]);
+  // O vardiyada açılan kavramları hatırlatıyoruz.
+  const VARDIYA_BASLARI: Record<number, number> = { 1: 1, 2: 6, 3: 11, 4: 17, 5: 23, 6: 27 };
+  const bas = vardiyaOzeti ? VARDIYA_BASLARI[vardiyaOzeti.no] : 0;
+  const ogrenilenler = vardiyaOzeti
+    ? DERSLER.filter((d) => d.bolum >= bas && d.bolum <= bolumNo)
+    : [];
 
   return (
     <div className="orti" role="dialog" aria-modal="true" aria-label={`Bölüm ${bolumNo} tamamlandı`}>
@@ -61,6 +67,19 @@ export function VardiyaSonu({
                 Vardiya {vardiyaOzeti.no} bitti · {vardiyaOzeti.ad}
               </span>
               <p>{kodluMetin(vardiyaOzeti.ozet)}</p>
+
+              {ogrenilenler.length > 0 && (
+                <div className="ogrenilenler">
+                  <span className="etiket">Bu vardiyada öğrendiklerin</span>
+                  <div className="ogrenilen-rozetler">
+                    {ogrenilenler.map((d) => (
+                      <span key={d.bolum} className="ogrenilen">
+                        {d.baslik}
+                      </span>
+                    ))}
+                  </div>
+                </div>
+              )}
             </section>
           )}
 
@@ -78,7 +97,7 @@ export function VardiyaSonu({
 
           <div className="tabela-dugmeler">
             <button ref={odak} className="dugme-koyu etiket" onClick={onSonraki}>
-              {sonBolumMu ? 'Çizelgeye dön' : 'Sonraki vardiya'}
+              {sonBolumMu ? 'Vardiyayı bitir' : 'Sonraki bölüm'}
             </button>
             <button className="dugme-cizgili etiket" onClick={onTekrar}>
               Daha kısa yaz

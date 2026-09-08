@@ -16,6 +16,8 @@ import { BolumHaritasi } from './components/panel/BolumHaritasi';
 import { DersKarti } from './components/panel/DersKarti';
 import { Kavramlar } from './components/panel/Kavramlar';
 import { Karsilama } from './components/panel/Karsilama';
+import { Bitis } from './components/panel/Bitis';
+import { TahminSeridi } from './components/editor/TahminSeridi';
 import { kodluMetin } from './components/panel/metin';
 import { dersBul, vardiyaBul } from './content/dersler';
 import { adimAnlat } from './content/anlatici';
@@ -189,6 +191,15 @@ export default function App() {
             />
           )}
 
+          {!s.tahminKapali && (
+            <TahminSeridi
+              secilen={s.tahmin}
+              gercek={s.gercekSonuc}
+              onSec={s.tahminSec}
+              onKapat={s.tahminiKapat}
+            />
+          )}
+
           <Kontroller
             oynatiliyor={s.oynatiliyor}
             calisti={adimlar.length > 0 || sonuc !== null}
@@ -241,6 +252,15 @@ export default function App() {
       )}
 
       {s.karsilamaAcik && <Karsilama onBitir={s.karsilamayiBitir} />}
+
+      {s.bitisAcik && (
+        <Bitis
+          toplamYildiz={toplamYildiz}
+          enFazlaYildiz={EN_FAZLA_YILDIZ}
+          toplamBolum={TOPLAM_BOLUM}
+          onKapat={s.bitisKapat}
+        />
+      )}
 
       {!s.karsilamaAcik && s.dersAcik && (
         <DersKarti

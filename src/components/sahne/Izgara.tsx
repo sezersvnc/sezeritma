@@ -60,12 +60,14 @@ export function Izgara({ bolum, durum, iz, duzenlenebilir = false, onHucre }: Pr
             {...ortak}
             type="button"
             aria-label={`${x}. sütun, ${y}. satır`}
-            onMouseDown={() => {
+            onPointerDown={(e) => {
+              // Parmakla sürükleyince tarayıcı sayfayı kaydırmasın.
+              e.currentTarget.releasePointerCapture?.(e.pointerId);
               setBoyaniyor(true);
               onHucre?.(x, y);
             }}
-            onMouseUp={() => setBoyaniyor(false)}
-            onMouseEnter={() => boyaniyor && onHucre?.(x, y)}
+            onPointerUp={() => setBoyaniyor(false)}
+            onPointerEnter={() => boyaniyor && onHucre?.(x, y)}
           >
             {icerik}
           </button>
@@ -92,7 +94,8 @@ export function Izgara({ bolum, durum, iz, duzenlenebilir = false, onHucre }: Pr
       <div
         className="zemin"
         data-duzenlenebilir={duzenlenebilir ? '1' : undefined}
-        onMouseLeave={() => setBoyaniyor(false)}
+        onPointerLeave={() => setBoyaniyor(false)}
+        onPointerCancel={() => setBoyaniyor(false)}
         role={duzenlenebilir ? 'group' : 'img'}
         aria-label={`${icGenislik}e ${icYukseklik} depo zemini. Sezer ${durum.kare.x}. sütun, ${durum.kare.y}. satırda, ${durum.yon} yönüne bakıyor.`}
       >

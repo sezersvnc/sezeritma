@@ -2,6 +2,7 @@ import { create } from 'zustand';
 import { BOLUMLER, TOPLAM_BOLUM } from '../levels';
 import { calistir } from '../core/yurutucu';
 import { dersBul } from '../content/dersler';
+import { sonucTuru, type TahminTuru } from '../content/tahmin';
 import type { Adim, Bolum, CalismaSonucu, Kod, KomutAdi } from '../core/types';
 
 const KAYIT = 'sezeritma.ilerleme.v1';
@@ -19,6 +20,8 @@ interface Kayit {
   gorulenDersler: number[];
   /** Karşılama ekranı bir kere gösterilir. */
   karsilamaGorundu?: boolean;
+  /** Tahmin şeridini kapatan öğrenciye bir daha gösterilmez. */
+  tahminKapali?: boolean;
 }
 
 const bosKayit: Kayit = { yildizlar: {}, kodlar: {}, gorulenDersler: [] };
@@ -71,6 +74,12 @@ interface OyunDurumu {
   turkceAcik: boolean;
   gorulenDersler: number[];
   karsilamaAcik: boolean;
+  bitisAcik: boolean;
+  /** Çalıştırmadan önce seçilen tahmin. */
+  tahmin: TahminTuru | null;
+  /** Son çalıştırmanın gerçek sonucu. Tahminle karşılaştırılır. */
+  gercekSonuc: TahminTuru | null;
+  tahminKapali: boolean;
 
   kodYaz: (kod: Partial<Kod>) => void;
   calistirBasla: () => void;
@@ -94,6 +103,9 @@ interface OyunDurumu {
   turkceAcKapa: (acik: boolean) => void;
   karsilamayiBitir: () => void;
   karsilamayiAc: () => void;
+  bitisKapat: () => void;
+  tahminSec: (tur: TahminTuru) => void;
+  tahminiKapat: () => void;
 }
 
 /** Ders kartı sadece o bölümde yeni bir kavram varsa ve daha önce görülmediyse açılır. */
@@ -128,18 +140,28 @@ export const useOyun = create<OyunDurumu>((set, get) => ({
   turkceAcik: false,
   gorulenDersler: ilkKayit.gorulenDersler,
   karsilamaAcik: !ilkKayit.karsilamaGorundu,
+  bitisAcik: false,
+  tahmin: null,
+  gercekSonuc: null,
+  tahminKapali: ilkKayit.tahminKapali === true,
 
   kodYaz: (parca) => {
     const kod = { ...get().kod, ...parca };
     const kayit = kayitOku();
     kayitYaz({ ...kayit, kodlar: { ...kayit.kodlar, [get().bolum.no]: kod } });
-    set({ kod, adimlar: [], adimIndex: -1, oynatiliyor: false, sonuc: null });
+    set({ kod, adimlar: [], adimIndex: -1, oynatiliyor: false, sonuc: null, gercekSonuc: null });
   },
 
   calistirBasla: () => {
     const { kod, bolum, ipucuKullanildi } = get();
     const sonuc = calistir(kod, bolum, { ipucuKullanildi });
-    set({ sonuc, adimlar: sonuc.adimlar, adimIndex: -1, oynatiliyor: sonuc.adimlar.length > 0 });
+    set({
+      sonuc,
+      gercekSonuc: sonucTuru(sonuc),
+      adimlar: sonuc.adimlar,
+      adimIndex: -1,
+      oynatiliyor: sonuc.adimlar.length > 0,
+    });
     if (sonuc.adimlar.length === 0) get().tik();
   },
 
@@ -197,6 +219,9 @@ export const useOyun = create<OyunDurumu>((set, get) => ({
       kavramlarAcik: false,
       kartlaYaz: bolum.kartModu,
       turkceAcik: false,
+      tahmin: null,
+      gercekSonuc: null,
+      bitisAcik: false,
       dersAcik: dersGosterilsinMi(no, kayit.gorulenDersler),
     });
   },
@@ -204,7 +229,8 @@ export const useOyun = create<OyunDurumu>((set, get) => ({
   sonrakiBolum: () => {
     const sonraki = get().bolum.no + 1;
     if (sonraki > TOPLAM_BOLUM) {
-      set({ basariAcik: false, haritaAcik: true });
+      const hepsiGecildi = BOLUMLER.every((b) => (get().yildizlar[b.no] ?? 0) > 0);
+      set({ basariAcik: false, bitisAcik: hepsiGecildi, haritaAcik: !hepsiGecildi });
       return;
     }
     get().bolumSec(sonraki);
@@ -251,6 +277,16 @@ export const useOyun = create<OyunDurumu>((set, get) => ({
   turkceAcKapa: (turkceAcik) => set({ turkceAcik }),
 
   karsilamayiAc: () => set({ karsilamaAcik: true, haritaAcik: false }),
+
+  bitisKapat: () => set({ bitisAcik: false, haritaAcik: true }),
+
+  tahminSec: (tahmin) => set({ tahmin }),
+
+  tahminiKapat: () => {
+    const kayit = kayitOku();
+    kayitYaz({ ...kayit, tahminKapali: true });
+    set({ tahminKapali: true });
+  },
 
   karsilamayiBitir: () => {
     const kayit = kayitOku();
