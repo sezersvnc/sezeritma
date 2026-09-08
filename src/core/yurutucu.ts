@@ -102,10 +102,32 @@ function denetle(program: Program, bolum: Bolum): Hata | undefined {
     };
   };
 
-  const adDenetle = (ad: string, konum: Konum) => {
+  const fonksiyonlar = new Map(program.fonksiyonlar.map((f) => [f.ad, f]));
+
+  const adDenetle = (ad: string, konum: Konum, argumanSayisi = 0) => {
     if (hata) return;
-    if (fonksiyonAdlari.includes(ad)) return;
+    const fonksiyon = fonksiyonlar.get(ad);
+    if (fonksiyon) {
+      if (fonksiyon.parametreler.length !== argumanSayisi) {
+        hata = {
+          kod: 'sozdizimi',
+          bolme: konum.bolme,
+          satir: konum.satir,
+          mesaj: `${konum.satir}. satırda \`${ad}\` komutu ${fonksiyon.parametreler.length} değer bekliyor ama ${argumanSayisi} tane verilmiş.`,
+        };
+      }
+      return;
+    }
     if (KOMUT_SETI.has(ad)) {
+      if (argumanSayisi > 0) {
+        hata = {
+          kod: 'sozdizimi',
+          bolme: konum.bolme,
+          satir: konum.satir,
+          mesaj: `${konum.satir}. satırda \`${ad}()\` parantezinin içine değer yazılmaz, o komut değer almıyor.`,
+        };
+        return;
+      }
       if (izinliKomut.has(ad as KomutAdi)) return;
       hata = {
         kod: 'izinsiz-komut',
@@ -144,7 +166,8 @@ function denetle(program: Program, bolum: Bolum): Hata | undefined {
         d.govde.forEach((alt) => gez(alt));
         break;
       case 'cagri':
-        adDenetle(d.ad, d);
+        adDenetle(d.ad, d, d.argumanlar.length);
+        d.argumanlar.forEach(ifadeGez);
         break;
       case 'tanim':
         if (!forBasligi) yapiGerek('degisken', d);
@@ -316,7 +339,7 @@ class Yurutucu {
         return;
 
       case 'cagri':
-        this.cagriYap(d.ad, d);
+        this.cagriYap(d.ad, d, d.argumanlar);
         return;
 
       case 'tanim': {
@@ -386,12 +409,22 @@ class Yurutucu {
     this.deyim(d);
   }
 
-  private cagriYap(ad: string, konum: Konum): void {
+  private cagriYap(ad: string, konum: Konum, argumanlar: readonly Ifade[] = []): void {
     const fonksiyon = this.fonksiyonlar.get(ad);
     if (fonksiyon) {
       if (++this.derinlik > CAGRI_DERINLIGI) throw new Durduruldu();
+      // Değerler çağrı yerinde hesaplanır, sonra fonksiyonun kendi kapsamına konur.
+      const degerler = argumanlar.map((i) => this.ifade(i));
+      const kapsam = new Map<string, number | boolean>();
+      fonksiyon.parametreler.forEach((p, i) => kapsam.set(p, degerler[i] ?? 0));
+
       this.adimEkle(konum, 'giris');
-      this.blok(fonksiyon.govde);
+      this.kapsamlar.push(kapsam);
+      try {
+        this.blok(fonksiyon.govde);
+      } finally {
+        this.kapsamlar.pop();
+      }
       this.derinlik--;
       return;
     }

@@ -15,7 +15,9 @@ const hataYakala = (govde: string, fonksiyonlar = '') => {
 describe('ayristir — temel ifadeler', () => {
   it('tek komut cagrisini okur', () => {
     const p = ayristir('ilerle();');
-    expect(p.main.govde).toEqual([{ tip: 'cagri', ad: 'ilerle', satir: 1, bolme: 'govde' }]);
+    expect(p.main.govde).toEqual([
+      { tip: 'cagri', ad: 'ilerle', argumanlar: [], satir: 1, bolme: 'govde' },
+    ]);
   });
 
   it('birden fazla komutu sirayla okur', () => {
@@ -132,5 +134,34 @@ describe('ayristir — hata mesajlari', () => {
     const h = hataYakala('', 'void koseDon() {\n  sagaDon()\n}');
     expect(h.bolme).toBe('fonksiyon');
     expect(h.satir).toBe(2);
+  });
+});
+
+describe('ayristir — parametreli fonksiyon', () => {
+  it('parametre listesini okur', () => {
+    const p = ayristir('ilerleN(3);', 'void ilerleN(int n) {\n  ilerle();\n}');
+    expect(p.fonksiyonlar[0]).toMatchObject({ ad: 'ilerleN', parametreler: ['n'] });
+  });
+
+  it('birden fazla parametreyi okur', () => {
+    const p = ayristir('', 'void git(int a, int b) {\n}');
+    expect(p.fonksiyonlar[0].parametreler).toEqual(['a', 'b']);
+  });
+
+  it('parametresiz fonksiyonda boş liste verir', () => {
+    const p = ayristir('', 'void dur() {\n}');
+    expect(p.fonksiyonlar[0].parametreler).toEqual([]);
+  });
+
+  it('cagri argumanlarini okur', () => {
+    const p = ayristir('ilerleN(2 + 1);', 'void ilerleN(int n) {\n}');
+    const cagri = p.main.govde[0] as { tip: string; argumanlar: unknown[] };
+    expect(cagri.tip).toBe('cagri');
+    expect(cagri.argumanlar).toHaveLength(1);
+  });
+
+  it('argumansiz cagrida bos dizi verir', () => {
+    const p = ayristir('ilerle();');
+    expect((p.main.govde[0] as { argumanlar: unknown[] }).argumanlar).toEqual([]);
   });
 });

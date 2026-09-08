@@ -86,7 +86,7 @@ Yorumlayıcı bütün C++'ı değil, öğretmemiz gereken kadarını tanıyor:
 | Değişken | `int sayac = 0;`, `sayac = sayac + 1;`, `sayac++`, `sayac += 2` |
 | Döngü | `for (int i = 0; i < 10; i++) { }`, `while (kosul) { }` |
 | Koşul | `if (kosul) { }`, `else { }`, `else if` |
-| Fonksiyon | `void isim() { }` ve çağrısı |
+| Fonksiyon | `void isim() { }`, parametreli `void isim(int n) { }` ve çağrıları |
 | Operatörler | `+ - * / %`, `< > <= >= == !=`, `&& \|\| !` |
 | Sabitler | tam sayılar, `true`, `false` |
 

@@ -122,7 +122,7 @@ export function bolumOku(metin: string, no: number): Bolum {
     izinliYapilar,
     hedefSatir,
     fonksiyonBolmesi,
-    kartModu: izinliYapilar.length === 0,
+    kartModu: izinliYapilar.length === 0 && vardiya === 1,
 
     baslangicKodu: parcalar.get('BaslangicKodu') ?? '',
     referansCozum: al('Cozum'),

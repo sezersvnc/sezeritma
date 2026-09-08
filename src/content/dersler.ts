@@ -77,6 +77,95 @@ export const VARDIYALAR: readonly Vardiya[] = [
 
 export const DERSLER: readonly Ders[] = [
   {
+    bolum: 9,
+    baslik: 'Döngünün içinde dönmek',
+    neden:
+      'Şimdiye kadar döngü hep aynı yöne ilerledi. Ama tekrarlanan şey bazen bir yön değişikliği de içerir: bir kenarı yürü, köşeyi dön, sonra baştan.',
+    nasil:
+      'Döngünün gövdesine `sagaDon();` koyduğunda, dönüş de her turda tekrarlanır. Bir kare çizmek tam olarak budur: kenar, dönüş, kenar, dönüş.',
+    ornek: [
+      { kod: 'for (int i = 0; i < 4; i++) {', not: 'Dört kenar, dört tur.' },
+      { kod: '  ilerle();' },
+      { kod: '  ilerle();', not: 'Kenarın uzunluğu.' },
+      { kod: '  sagaDon();', not: 'Köşe. Her turun sonunda bir kere.' },
+      { kod: '}' },
+    ],
+    hatirla:
+      'Döngü sadece hareketi değil, dönüşü de tekrarlar. Kapalı bir şekil çizmenin yolu budur.',
+  },
+  {
+    bolum: 12,
+    baslik: 'Durma koşulunu seçmek',
+    neden:
+      'Bir döngünün ne zaman duracağını sen seçersin, ve aynı problemde birden fazla doğru cevap olabilir. Yanlış koşul, doğru koddan daha çok baş ağrıtır.',
+    nasil:
+      '`while (!molaOdasindaMiyim())` "hedefe varana kadar" demektir. `while (!onumdePaletVar())` ise "yol kapanana kadar". İkisi de geçerli; hangisini seçeceğin problemin ne olduğuna bağlı.\n\nHedefin nerede olduğunu bilmiyorsan ama önünün kapandığını görebiliyorsan, ikincisi işini görür.',
+    ornek: [
+      { kod: 'while (!molaOdasindaMiyim())', not: 'Hedefe varınca dur.' },
+      { kod: 'while (!onumdePaletVar())', not: 'Yol kapanınca dur.' },
+      { kod: 'while (sayac < 5)', not: 'Belli bir sayıya ulaşınca dur.' },
+    ],
+    hatirla:
+      'Döngüyü kurmadan önce şu soruyu cevapla: bu ne zaman bitmeli? Koşul o cevabın kodudur.',
+  },
+  {
+    bolum: 15,
+    baslik: 'else if: üçüncü yol',
+    neden:
+      '`if / else` iki yol açar: ya öyle ya böyle. Ama gerçek durumlar çoğu zaman ikiden fazladır. Çikolata mı var, palet mi var, yoksa yol açık mı?',
+    nasil:
+      '`else if` araya girer ve yeni bir soru sorar. Sırayla denenir: ilk doğru olan çalışır, gerisi hiç bakılmaz. Bu yüzden sıralama önemlidir; en özel durumu en başa yazarsın.',
+    ornek: [
+      { kod: 'if (ustumdeCikolataVar()) {', not: 'Önce buna bakar.' },
+      { kod: '  kap();' },
+      { kod: '} else if (onumdePaletVar()) {', not: 'Birincisi yanlışsa buna bakar.' },
+      { kod: '  sagaDon();' },
+      { kod: '} else {', not: 'Hiçbiri değilse burası çalışır.' },
+      { kod: '  ilerle();' },
+      { kod: '}' },
+    ],
+    hatirla:
+      '`else if` zincirinde yalnızca ilk doğru dal çalışır. Sıralamayı değiştirmek programı değiştirir.',
+  },
+  {
+    bolum: 18,
+    baslik: 'Değişkenle karar vermek',
+    neden:
+      'Şimdiye kadar değişken sadece sayıyordu. Asıl gücü, o sayının programın ne yapacağını belirlemesi. Etrafta hiçbir ipucu yokken bile doğru anda dönebilirsin.',
+    nasil:
+      'Sayacı bir koşulun içinde kullanırsın: `if (adim == 3)`. Buradaki `==` "eşit mi" diye sorar; tek `=` ise atama yapar, ikisi farklı şeydir ve karıştırmak klasik bir hatadır.',
+    ornek: [
+      { kod: 'int adim = 0;', not: 'Sayacı kur.' },
+      { kod: 'while (...) {' },
+      { kod: '  if (adim == 3) sagaDon();', not: 'Sayı karara dönüşüyor.' },
+      { kod: '  ilerle();' },
+      { kod: '  adim++;', not: 'Her turda bir artır.' },
+      { kod: '}' },
+    ],
+    hatirla:
+      'Sensörler dış dünyayı görür, değişkenler geçmişi hatırlar. Bazı kararlar yalnızca hatırlayarak verilir.',
+  },
+  {
+    bolum: 21,
+    baslik: 'Parametre: komuta bilgi vermek',
+    neden:
+      'Yazdığın `koseDon()` her seferinde tam olarak aynı işi yapıyordu. Ama çoğu zaman "aynı iş, farklı sayıda" gerekir: üç adım, sonra iki adım, sonra beş adım.',
+    nasil:
+      'Fonksiyonun parantezine bir parametre koyarsın: `void ilerleN(int n)`. Buradaki `n`, çağrılırken verdiğin sayının fonksiyon içindeki adıdır. `ilerleN(3);` yazdığında fonksiyon `n` yerine 3 görür.\n\nParametre fonksiyonun içinde yaşar; dışarıdaki değişkenleri etkilemez.',
+    ornek: [
+      { kod: 'void ilerleN(int n) {', not: 'n, dışarıdan gelecek sayının adı.' },
+      { kod: '  for (int i = 0; i < n; i++) {', not: 'Kaç kere döneceğini n söyler.' },
+      { kod: '    ilerle();' },
+      { kod: '  }' },
+      { kod: '}' },
+      { kod: '', not: '' },
+      { kod: 'ilerleN(3);', not: 'Bu çağrıda n üçtür.' },
+      { kod: 'ilerleN(2);', not: 'Bu çağrıda ikidir. Tek tanım, farklı işler.' },
+    ],
+    hatirla:
+      'Parametre, bir komuta iş yaparken kullanacağı bilgiyi vermenin yoludur. Aynı isim, sonsuz farklı davranış.',
+  },
+  {
     bolum: 1,
     baslik: 'Algoritma nedir?',
     neden: [
@@ -123,7 +212,7 @@ export const DERSLER: readonly Ders[] = [
     hatirla: 'Dönmek ilerlemek değildir. Aynı komut, farklı durumda farklı sonuç verir.',
   },
   {
-    bolum: 5,
+    bolum: 6,
     baslik: 'Tekrarın problemi',
     neden:
       'Bu bölümde aynı komutu on iki kere yazacaksın ve sıkılacaksın. Bu kasıtlı. Sıkılman gerekiyor, çünkü bir sonraki bölümde öğreneceğin şeyin neden var olduğunu ancak böyle anlarsın.',
@@ -137,7 +226,7 @@ export const DERSLER: readonly Ders[] = [
     hatirla: 'Aynı şeyi iki kere yazıyorsan, muhtemelen daha iyi bir yolu vardır.',
   },
   {
-    bolum: 6,
+    bolum: 7,
     baslik: 'for döngüsü',
     neden:
       'Geçen bölümde on iki satır yazdın. Şimdi aynı işi üç satırda yapacaksın. Tekrarı sen değil bilgisayar yapacak. Zaten iyi olduğu tek şey bu.',
@@ -151,7 +240,7 @@ export const DERSLER: readonly Ders[] = [
     hatirla: '`for`, kaç kere tekrarlanacağını önceden bildiğin durumlar içindir.',
   },
   {
-    bolum: 7,
+    bolum: 8,
     baslik: 'Döngü gövdesi',
     neden:
       'Tekrarlanan şey her zaman tek bir komut değildir. Çoğu zaman bir hareket dizisidir: iki adım at, bir şey al, tekrar. Döngü bunu da yapabilir.',
@@ -166,7 +255,7 @@ export const DERSLER: readonly Ders[] = [
     hatirla: 'Döngü tek komutu değil, gövdesindeki bütün komut dizisini tekrarlar.',
   },
   {
-    bolum: 8,
+    bolum: 10,
     baslik: 'İç içe döngü',
     neden:
       'Bazen tekrarın kendisi de tekrarlanır. "Her kenarda dört adım at, sonra köşeyi dön; bunu üç kenar için yap" cümlesinde iki ayrı tekrar var, biri diğerinin içinde.',
@@ -183,7 +272,7 @@ export const DERSLER: readonly Ders[] = [
     hatirla: 'İç içe döngüde iç kısım, dıştaki her tur için baştan sona çalışır.',
   },
   {
-    bolum: 9,
+    bolum: 11,
     baslik: 'while döngüsü',
     neden:
       '`for` kaç kere döneceğini bildiğinde işe yarar. Ama gerçek problemlerde çoğu zaman bilmezsin. Koridorun uzunluğunu bilmiyorsun. Bildiğin tek şey, ne zaman durman gerektiği.',
@@ -198,7 +287,7 @@ export const DERSLER: readonly Ders[] = [
       '`while` sayıya değil koşula bakar. Koşulu yanlış yapacak bir şey döngü içinde olmazsa program hiç bitmez.',
   },
   {
-    bolum: 10,
+    bolum: 13,
     baslik: 'if: karar vermek',
     neden:
       'Şimdiye kadar programın hep aynı şeyi yapıyordu. Ama önünde palet olup olmaması duruma göre değişir. Programın bakması, görmesi ve ona göre davranması gerekir.',
@@ -213,7 +302,7 @@ export const DERSLER: readonly Ders[] = [
     hatirla: '`if` koşul doğruysa çalışır, yanlışsa atlanır. Girinti kimin nereye ait olduğunu gösterir.',
   },
   {
-    bolum: 11,
+    bolum: 14,
     baslik: 'if / else: iki yol',
     neden:
       'Bazen "koşul doğruysa şunu yap" yetmez; "değilse de şunu yap" demen gerekir. Çikolata varsa kap, yoksa ilerle; ikisi de bir şey yapmalı.',
@@ -229,7 +318,7 @@ export const DERSLER: readonly Ders[] = [
     hatirla: '`if / else` iki yoldan birini seçer. Üçüncü bir durum varsa `else if` eklersin.',
   },
   {
-    bolum: 12,
+    bolum: 16,
     baslik: 'Algoritma nedir',
     neden:
       'Bu labirentin yolunu ezberleyip komutları tek tek yazabilirdin. Ama o çözüm sadece bu labirent için işe yarar. Programcının aradığı şey başka: bütün labirentleri çözen bir kural.',
@@ -245,7 +334,7 @@ export const DERSLER: readonly Ders[] = [
       'Algoritma tek bir problemi değil, bir problem ailesini çözer. "Bu labirent" için değil, "her labirent" için yazarsın.',
   },
   {
-    bolum: 13,
+    bolum: 17,
     baslik: 'Değişken: hatırlamak',
     neden:
       'Şimdiye kadar programın hiçbir şey hatırlamıyordu. Kaç çikolata topladığını sorsan bilemezdi. Ama çoğu problem bir şeyi akılda tutmayı gerektirir.',
@@ -262,7 +351,7 @@ export const DERSLER: readonly Ders[] = [
       'Değişken, programın belleğidir. Döngüden önce tanımlanır, döngünün içinde değişir.',
   },
   {
-    bolum: 14,
+    bolum: 19,
     baslik: 'Koşulları birleştirmek',
     neden:
       'Bazen durman için tek bir sebep yoktur. "Beş çikolata topladıysam dur, ama mola odasına vardıysam da dur" cümlesinde iki ayrı sebep ve tek bir döngü var.',
@@ -276,7 +365,7 @@ export const DERSLER: readonly Ders[] = [
     hatirla: '`&&` ikisi de, `||` biri yeter, `!` tersi. Karmaşık kararlar bu üçünden kurulur.',
   },
   {
-    bolum: 15,
+    bolum: 20,
     baslik: 'Fonksiyon: kendi komutun',
     neden:
       'Bir hareket dizisini tekrar tekrar yazıyorsan, ona bir isim verebilirsin. O andan itibaren o dizi senin için tek bir komuttur. Programcılığın en güçlü fikri budur: karmaşıklığı isimlerin arkasına saklamak.',
@@ -294,7 +383,7 @@ export const DERSLER: readonly Ders[] = [
       'Fonksiyon tanımlamak onu çalıştırmaz; çağırmak çalıştırır. İsmi ne yaptığını anlatsın.',
   },
   {
-    bolum: 16,
+    bolum: 22,
     baslik: 'Hepsi bir arada',
     neden:
       'Son bölüm yeni bir kavram öğretmiyor. Öğrendiğin dördünü aynı anda kullanman gerekiyor. Gerçek programlar da böyledir.',
@@ -310,7 +399,7 @@ export const DERSLER: readonly Ders[] = [
     hatirla: 'Sıra, tekrar, karar, isimlendirme. Bütün programlar bu dördünden kuruludur.',
   },
   {
-    bolum: 17,
+    bolum: 23,
     baslik: 'Hata ayıklama',
     neden:
       'Kod yazmak işin kolay yarısı. Çalışmayan bir kodu okuyup neyin yanlış olduğunu bulmak asıl beceridir. Kimse bunu doğuştan bilmez; herkes alıştırmayla öğrenir.',
@@ -330,7 +419,7 @@ export const DERSLER: readonly Ders[] = [
     hatirla:
       'Önce çalıştır, sonra karşılaştır, sonra tek bir şey değiştir. Hata mesajını okumak, tahmin etmekten her zaman hızlıdır.',
   },
-];
+].sort((a, b) => a.bolum - b.bolum);
 
 export const dersBul = (bolumNo: number): Ders | undefined =>
   DERSLER.find((d) => d.bolum === bolumNo);

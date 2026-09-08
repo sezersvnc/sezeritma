@@ -225,3 +225,47 @@ describe('DUZ haritasi', () => {
     expect(() => bolumYap(DUZ)).not.toThrow();
   });
 });
+
+describe('parametreli fonksiyon', () => {
+  it('gecirilen degeri fonksiyon icinde kullanir', () => {
+    const s = kosa(
+      'ilerleN(3);',
+      bolumYap(KORIDOR),
+      'void ilerleN(int n) {\n  for (int i = 0; i < n; i++) {\n    ilerle();\n  }\n}',
+    );
+    expect(s.hata?.mesaj ?? '').toBe('');
+    expect(s.basarili).toBe(true);
+  });
+
+  it('her cagrida farkli deger alir', () => {
+    const s = kosa(
+      'ilerleN(1);\nilerleN(2);',
+      bolumYap(KORIDOR),
+      'void ilerleN(int n) {\n  for (int i = 0; i < n; i++) {\n    ilerle();\n  }\n}',
+    );
+    expect(s.basarili).toBe(true);
+  });
+
+  it('parametre disaridaki ayni isimli degiskeni bozmaz', () => {
+    const s = kosa(
+      ['int n = 9;', 'ilerleN(3);', 'n++;'].join('\n'),
+      bolumYap(KORIDOR),
+      ['void ilerleN(int n) {', '  for (int i = 0; i < n; i++) {', '    ilerle();', '  }', '}'].join(
+        '\n',
+      ),
+    );
+    // Fonksiyondan çıkınca dışarıdaki n hâlâ 9 olmalı; artırılınca 10 görünür.
+    expect(s.adimlar.at(-1)?.degiskenler.n).toBe(10);
+  });
+
+  it('eksik arguman verilirse anlasilir sekilde soyler', () => {
+    const s = kosa('ilerleN();', bolumYap(KORIDOR), 'void ilerleN(int n) {\n  ilerle();\n}');
+    expect(s.hata?.kod).toBe('sozdizimi');
+    expect(s.hata?.mesaj).toContain('1 değer');
+  });
+
+  it('oyunun kendi komutlarina deger verilmesini reddeder', () => {
+    const s = kosa('ilerle(3);', bolumYap(KORIDOR));
+    expect(s.hata?.mesaj).toContain('ilerle');
+  });
+});

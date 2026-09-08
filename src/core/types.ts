@@ -62,9 +62,10 @@ export interface Bolum {
   /** 15. bölümden itibaren main() üstünde ikinci düzenlenebilir bölme açılır. */
   fonksiyonBolmesi: boolean;
   /**
-   * Kart modu: hiçbir C++ yapısı açılmamış bölümlerde öğrenci klavyeye
-   * dokunmadan, komut kartlarına tıklayarak program kurar. Kartlar kodu
-   * gözünün önünde yazar — yazmaya geçiş kademeli olur.
+   * Kart modu: birinci vardiyada, henüz hiçbir C++ yapısı açılmamışken
+   * öğrenci klavyeye dokunmadan komut kartlarına tıklayarak program kurar.
+   * Kartlar kodu gözünün önünde yazar, yazmaya geçiş kademeli olur.
+   * İkinci vardiyada kapanır: tekrarın yorucu olduğunu hissetmesi gerekiyor.
    */
   kartModu: boolean;
 

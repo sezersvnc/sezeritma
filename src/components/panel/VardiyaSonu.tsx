@@ -20,9 +20,8 @@ export function VardiyaSonu({
 
   const verimli = kullanilanSatir <= hedefSatir;
   // Vardiyanın son bölümü geçildiğinde ne öğrenildiğini toparlıyoruz.
-  const vardiyaOzeti = [4, 8, 12, 16, 19].includes(bolumNo)
-    ? vardiyaBul(bolumNo === 19 ? 5 : Math.ceil(bolumNo / 4))
-    : undefined;
+  const VARDIYA_SONLARI: Record<number, number> = { 5: 1, 10: 2, 16: 3, 22: 4, 26: 5 };
+  const vardiyaOzeti = vardiyaBul(VARDIYA_SONLARI[bolumNo]);
 
   return (
     <div className="orti" role="dialog" aria-modal="true" aria-label={`Bölüm ${bolumNo} tamamlandı`}>

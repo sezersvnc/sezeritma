@@ -56,9 +56,9 @@ Bölüm adı kısa ve akılda kalıcı olsun. "Döngü Alıştırması 3" değil
 
 ### `vardiya`
 
-1'den 5'e kadar. Bölüm 1-4 birinci vardiya, 5-8 ikinci, 9-12 üçüncü, 13-16 dördüncü, 17-19 beşinci (hata ayıklama).
+1'den 5'e kadar. Bölüm 1-5 birinci vardiya, 6-10 ikinci, 11-16 üçüncü, 17-22 dördüncü, 23-26 beşinci (hata ayıklama).
 
-`izinliYapilar` boş (`-`) olan bölümlerde **kart modu** kendiliğinden açılır: öğrenci klavyeye dokunmadan, komut kartlarına basarak program kurar. Bu yüzden ilk bölümlerde yapı açmamaya dikkat et.
+Birinci vardiyada `izinliYapilar` boş (`-`) olan bölümlerde **kart modu** kendiliğinden açılır: öğrenci klavyeye dokunmadan, komut kartlarına basarak program kurar. Bu yüzden ilk bölümlerde yapı açmamaya dikkat et.
 
 ### `kavram`
 
@@ -203,7 +203,7 @@ Bölüm geçildiğinde çıkan tek satırlık mizah. Oyunun karakterini bu satı
 | Değişken | `int sayac = 0;`, `sayac = sayac + 1;`, `sayac++`, `sayac += 2` |
 | Döngü | `for (int i = 0; i < 10; i++) { }`, `while (kosul) { }` |
 | Koşul | `if (kosul) { }`, `else { }`, `else if` |
-| Fonksiyon | `void isim() { }` ve çağrısı |
+| Fonksiyon | `void isim() { }` ve `void isim(int n) { }` ile çağrıları |
 | Operatörler | `+ - * / %`, `< > <= >= == !=`, `&& \|\| !` |
 | Sabitler | tam sayılar, `true`, `false` |
 

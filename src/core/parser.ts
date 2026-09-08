@@ -98,10 +98,47 @@ class Ayristirici {
         this.hata('sozdizimi', `${satir}. satırda fonksiyona bir isim vermelisin.`, satir);
       }
       this.bekle('(', `${satir}. satırda fonksiyon isminden sonra parantez açmalısın.`);
+      const parametreler = this.parametreListesi(satir);
       this.bekle(')', `${satir}. satırda parantezi kapatmalısın.`);
-      liste.push({ ad: ad.deger, govde: this.blok(), ...this.konum(satir) });
+      liste.push({ ad: ad.deger, parametreler, govde: this.blok(), ...this.konum(satir) });
     }
     return liste;
+  }
+
+  /** `void ilerleN(int n, int m)` başlığındaki parametre adları. */
+  private parametreListesi(satir: number): string[] {
+    const adlar: string[] = [];
+    while (!this.bakiyor(')') && this.simdiki.tip !== 'son') {
+      if (adlar.length > 0) {
+        this.bekle(',', `${satir}. satırda parametreleri virgülle ayırmalısın.`, satir);
+      }
+      if (!this.bakiyor('int') && !this.bakiyor('bool')) {
+        this.hata(
+          'sozdizimi',
+          `${satir}. satırda her parametrenin başına tipini yazmalısın: \`void isim(int n)\``,
+          satir,
+        );
+      }
+      this.ilerle();
+      const ad = this.ilerle();
+      if (ad.tip !== 'ad') {
+        this.hata('sozdizimi', `${satir}. satırda parametreye bir isim vermelisin.`, satir);
+      }
+      adlar.push(ad.deger);
+    }
+    return adlar;
+  }
+
+  /** Çağrı parantezinin içindeki değerler. */
+  private argumanListesi(satir: number): Ifade[] {
+    const degerler: Ifade[] = [];
+    while (!this.bakiyor(')') && this.simdiki.tip !== 'son') {
+      if (degerler.length > 0) {
+        this.bekle(',', `${satir}. satırda değerleri virgülle ayırmalısın.`, satir);
+      }
+      degerler.push(this.ifade());
+    }
+    return degerler;
   }
 
   // ---------------------------------------------------------- deyimler
@@ -196,8 +233,9 @@ class Ayristirici {
     if (acikla) this.hata('desteklenmeyen', acikla, ad.satir);
 
     if (this.yediysen('(')) {
+      const argumanlar = this.argumanListesi(ad.satir);
       this.bekle(')', `${ad.satir}. satırda açtığın parantezi kapatmalısın.`, ad.satir);
-      return { tip: 'cagri', ad: ad.deger, ...this.konum(ad.satir) };
+      return { tip: 'cagri', ad: ad.deger, argumanlar, ...this.konum(ad.satir) };
     }
 
     const konum = this.konum(ad.satir);

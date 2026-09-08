@@ -33,15 +33,15 @@ Yeni başlayan öğrencinin asıl problemi sözdizimi değil, kodun zamanda akt�
 
 ## Müfredat
 
-Beş vardiya, on dokuz bölüm. Her bölüm tek bir yeni fikir öğretiyor ve öncekini tekrar ettiriyor.
+Beş vardiya, yirmi altı bölüm. Her bölüm tek bir yeni fikir öğretiyor ve öncekini tekrar ettiriyor.
 
 | Vardiya | Ne öğretiyor |
 |---|---|
-| 1 — Üretim Hattı | Komut, sıra, durum: bilgisayara adım adım iş anlatmak |
-| 2 — İstif Deposu | Tekrarın problemi, `for`, döngü gövdesi, iç içe döngü |
-| 3 — Sevkiyat Bölgesi | `while`, `if`, `if / else`, ve **algoritma** kavramının kendisi |
-| 4 — Gece Vardiyası | Değişken, mantıksal koşullar, fonksiyon, sentez |
-| 5 — Hata Ayıklama | Bozuk kodu okuyup düzeltmek: sınır hatası, sonsuz döngü, yanlış yerdeki satır |
+| 1 — Üretim Hattı (1-5) | Komut, sıra, durum ve yön: bilgisayara adım adım iş anlatmak |
+| 2 — İstif Deposu (6-10) | Tekrarın problemi, `for`, döngü gövdesi, döngü içinde dönüş, iç içe döngü |
+| 3 — Sevkiyat Bölgesi (11-16) | `while`, durma koşulu seçmek, `if`, `if / else`, `else if`, ve algoritma kavramının kendisi |
+| 4 — Gece Vardiyası (17-22) | Değişken, değişkenle karar, `&&`, fonksiyon, parametre, sentez |
+| 5 — Hata Ayıklama (23-26) | Bozuk kodu okuyup düzeltmek: sınır hatası, sonsuz döngü, yanlış yerdeki satır, ters koşul |
 
 Vardiya 5 tersine çalışıyor: kodu başkası yazmış ve bozuk. Öğrenci okuyor, çalıştırıyor, karşılaştırıyor, tek bir şey değiştiriyor. Gerçek bir programcının zamanının çoğu burada geçtiği için ayrı bir vardiya hak ediyor.
 
@@ -104,7 +104,7 @@ Biçimin tamamı ve kuralları [docs/bolum-formati.md](docs/bolum-formati.md) do
 3. **Adım adım yürüt** — ağaç tek tek adımlanır. Her adımda hangi satırdayız, değişkenler ne durumda, Sezer nerede.
 4. **Oynat** — adımlar arayüze akar; ızgara animasyonu, satır vurgusu ve değişken paneli aynı akıştan beslenir.
 
-Tanıdığı C++ alt kümesi: `int`, `bool`, `for`, `while`, `if / else if / else`, `void isim() { }`, aritmetik ve karşılaştırma işleçleri. Tanımadığı her şey öğrenciye anlaşılır bir cümleyle söyleniyor.
+Tanıdığı C++ alt kümesi: `int`, `bool`, `for`, `while`, `if / else if / else`, parametre alabilen `void isim(int n) { }`, aritmetik ve karşılaştırma işleçleri. Tanımadığı her şey öğrenciye anlaşılır bir cümleyle söyleniyor.
 
 Sonsuz döngü sayfayı kilitlemiyor: adım bütçesi dolunca "kodun hiç bitmedi" hatası veriliyor.
 

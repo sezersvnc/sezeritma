@@ -53,7 +53,7 @@ afterAll(() => {
   const metin = [
     '# Cevap anahtarı',
     '',
-    'Bütün bölümlerin çalıştığı doğrulanmış çözümleri. `npm run cevap-anahtari` ile yeniden üretilir —',
+    'Bütün bölümlerin çalıştığı doğrulanmış çözümleri. `npm run cevap-anahtari` ile yeniden üretilir;',
     'yani bölüm değişirse buradaki çözüm de otomatik güncellenir, elle düzeltmeye gerek yok.',
     '',
     'Öğrenciye gösterilecek bir belge değil: oyunu anlatırken, demo yaparken ve takılan birine',

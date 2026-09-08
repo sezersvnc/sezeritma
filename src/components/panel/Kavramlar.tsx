@@ -43,11 +43,11 @@ export function Kavramlar({ bolumNo, onKapat }: Props) {
             const dersler = DERSLER.filter((d) => {
               const bolum = d.bolum;
               return (
-                (v.no === 1 && bolum <= 4) ||
-                (v.no === 2 && bolum >= 5 && bolum <= 8) ||
-                (v.no === 3 && bolum >= 9 && bolum <= 12) ||
-                (v.no === 4 && bolum >= 13 && bolum <= 16) ||
-                (v.no === 5 && bolum >= 17)
+                (v.no === 1 && bolum <= 5) ||
+                (v.no === 2 && bolum >= 6 && bolum <= 10) ||
+                (v.no === 3 && bolum >= 11 && bolum <= 16) ||
+                (v.no === 4 && bolum >= 17 && bolum <= 22) ||
+                (v.no === 5 && bolum >= 23)
               );
             });
             if (dersler.length === 0) return null;

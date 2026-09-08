@@ -23,7 +23,7 @@ export interface Blok extends Konum {
 }
 
 export type Dugum =
-  | ({ tip: 'cagri'; ad: string } & Konum)
+  | ({ tip: 'cagri'; ad: string; argumanlar: Ifade[] } & Konum)
   | ({ tip: 'tanim'; ad: string; deger: Ifade } & Konum)
   | ({ tip: 'atama'; ad: string; deger: Ifade } & Konum)
   | ({ tip: 'for'; baslangic: Dugum; kosul: Ifade; artis: Dugum; govde: Blok } & Konum)
@@ -34,6 +34,8 @@ export type Dugum =
 
 export interface FonksiyonTanim extends Konum {
   ad: string;
+  /** Fonksiyonun aldığı değerlerin adları. Parametresizse boş. */
+  parametreler: string[];
   govde: Blok;
 }
 

@@ -1,6 +1,6 @@
 # Cevap anahtarı
 
-Bütün bölümlerin çalıştığı doğrulanmış çözümleri. `npm run cevap-anahtari` ile yeniden üretilir —
+Bütün bölümlerin çalıştığı doğrulanmış çözümleri. `npm run cevap-anahtari` ile yeniden üretilir;
 yani bölüm değişirse buradaki çözüm de otomatik güncellenir, elle düzeltmeye gerek yok.
 
 Öğrenciye gösterilecek bir belge değil: oyunu anlatırken, demo yaparken ve takılan birine
@@ -92,7 +92,35 @@ ilerle();
 
 Vardiya notu: İlk çikolata cebe indi. Mesai artık daha tatlı.
 
-## 05 — Upuzun Koridor
+## 05 — Zikzak Koridor
+
+**Vardiya 1 · komutları doğru sırada birleştirmek**
+
+Görev: Koridor iki kere kırılıyor ve yolda bir çikolata var. Sezer'i mola odasına ulaştır, çikolatayı da bırakma.
+
+Hedef 11 satır · bu çözüm 11 satır · çikolata 1 · 11 adım
+
+```cpp
+ilerle();
+sagaDon();
+ilerle();
+ilerle();
+solaDon();
+ilerle();
+kap();
+sagaDon();
+ilerle();
+solaDon();
+ilerle();
+```
+
+1. ipucu: Yolu önce kafanda yürü: nerede dönmen, nerede kapman gerekiyor? Sonra aynı sırayla komutları diz.
+
+2. ipucu: Bir ilerle, sağa dön, iki ilerle, sola dön, bir ilerle, kap, sağa dön, bir ilerle, sola dön, bir ilerle.
+
+Vardiya notu: On bir satır. Sezer yoruldu ama vardiyanın ilk yarısı bitti.
+
+## 06 — Upuzun Koridor
 
 **Vardiya 2 · aynı komutu tekrar yazmanın zorluğu**
 
@@ -121,7 +149,7 @@ ilerle();
 
 Vardiya notu: Parmakların yoruldu mu? Merak etme, bir sonraki vardiyada bunun kolay yolunu öğreneceksin.
 
-## 06 — Aynı Koridor, Tek Satır
+## 07 — Aynı Koridor, Tek Satır
 
 **Vardiya 2 · for döngüsü**
 
@@ -141,7 +169,7 @@ for (int i = 0; i < 12; i++) {
 
 Vardiya notu: İşte mühendislik budur! Amelelik bitti, otomasyon başladı.
 
-## 07 — Aralıklı Raflar
+## 08 — Aralıklı Raflar
 
 **Vardiya 2 · döngü gövdesi**
 
@@ -163,7 +191,32 @@ for (int i = 0; i < 4; i++) {
 
 Vardiya notu: Döngüler sadece yürümek için değildir. 4 çikolata daha zulalandı!
 
-## 08 — Bütün Depoyu Tara
+## 09 — Kare Çiz
+
+**Vardiya 2 · döngünün içinde yön değiştirmek**
+
+Görev: Depo bloğunun etrafını dolaş. Her kenar aynı uzunlukta, her köşede aynı dönüş var.
+
+Hedef 7 satır · bu çözüm 7 satır · çikolata 0 · 18 adım
+
+```cpp
+for (int i = 0; i < 3; i++) {
+  ilerle();
+  ilerle();
+  ilerle();
+  sagaDon();
+}
+ilerle();
+ilerle();
+```
+
+1. ipucu: Tekrarlanan şey sadece ilerlemek değil: üç adım at, sonra dön. Bu dördü tek bir tekrar.
+
+2. ipucu: Döngünün içine üç `ilerle();` ve bir `sagaDon();` koy, üç kenarı böyle dolaş, sonra kalan iki kareyi yürü.
+
+Vardiya notu: Bir kare çizdin. Dönüşü döngünün içine koymak, kenar sayısı kadar kod yazmaktan iyidir.
+
+## 10 — Bütün Depoyu Tara
 
 **Vardiya 2 · iç içe for**
 
@@ -186,7 +239,7 @@ for (int i = 0; i < 3; i++) {
 
 Vardiya notu: Büyük deponun çevresi kısacık bir kodla dönüldü. Amiri bile ağlatacak bir mühendislik harikası.
 
-## 09 — Koridorun Sonu Nerede?
+## 11 — Koridorun Sonu Nerede?
 
 **Vardiya 3 · while döngüsü**
 
@@ -206,7 +259,27 @@ while (!molaOdasindaMiyim()) {
 
 Vardiya notu: Vardiya 3 başladı! Sonsuzluğa ve ötesine... ya da mola odasına kadar.
 
-## 10 — Palet Var mı?
+## 12 — Duvara Kadar
+
+**Vardiya 3 · durma koşulunu seçmek**
+
+Görev: Bu sefer koridorun sonunda ne olduğunu bilmiyorsun. Sezer'i duvara çarpmadan gidebildiği kadar götür.
+
+Hedef 2 satır · bu çözüm 2 satır · çikolata 0 · 15 adım
+
+```cpp
+while (!onumdePaletVar()) {
+  ilerle();
+}
+```
+
+1. ipucu: Döngü ne zaman durmalı? Mola odasına varınca değil, önü kapanınca.
+
+2. ipucu: `while (!onumdePaletVar())` yaz, içine sadece `ilerle();` koy. Önünde palet olduğu an duracak.
+
+Vardiya notu: Aynı döngü, farklı durma koşulu. Doğru soruyu sormak, doğru cevabı bilmekten önce gelir.
+
+## 13 — Palet Var mı?
 
 **Vardiya 3 · if koşulu**
 
@@ -229,7 +302,7 @@ while (!molaOdasindaMiyim()) {
 
 Vardiya notu: Paletlere çarpmadan ilerlemek iş güvenliği uzmanımızı çok sevindirdi.
 
-## 11 — Rafta Ne Var?
+## 14 — Rafta Ne Var?
 
 **Vardiya 3 · if / else**
 
@@ -253,7 +326,33 @@ while (!molaOdasindaMiyim()) {
 
 Vardiya notu: Sezer'in cepleri doluyor. Karar mekanizmaları tıkır tıkır çalışıyor.
 
-## 12 — Sevkiyat Labirenti
+## 15 — Üç İhtimal
+
+**Vardiya 3 · else if ile üçüncü yol**
+
+Görev: Bu koridorda üç ayrı durum var: çikolata, palet ya da açık yol. Üçü için de ne yapacağını söylemen gerekiyor.
+
+Hedef 7 satır · bu çözüm 7 satır · çikolata 2 · 39 adım
+
+```cpp
+while (!molaOdasindaMiyim()) {
+  if (ustumdeCikolataVar()) {
+    kap();
+  } else if (onumdePaletVar()) {
+    sagaDon();
+  } else {
+    ilerle();
+  }
+}
+```
+
+1. ipucu: `if` ve `else` iki yol açıyor. Üçüncü bir durum varsa araya bir tane daha koyman gerek.
+
+2. ipucu: `if (...) { } else if (...) { } else { }` sırasıyla çikolatayı kap, palete rastlayınca dön, kalan durumda ilerle.
+
+Vardiya notu: Üç ihtimal, üç dal, tek döngü. Sezer artık her duruma hazır.
+
+## 16 — Sevkiyat Labirenti
 
 **Vardiya 3 · while ve if birlikte**
 
@@ -277,7 +376,7 @@ while (!molaOdasindaMiyim()) {
 
 Vardiya notu: Beş satır, koca bir labirent. Gözü kapalı bile çözerdin. Sevkiyat bölgesi tamam!
 
-## 13 — Kaç Tane Kaptım?
+## 17 — Kaç Tane Kaptım?
 
 **Vardiya 4 · değişkenler (int)**
 
@@ -303,7 +402,32 @@ while (!molaOdasindaMiyim()) {
 
 Vardiya notu: Değişkenler devrede! Gece vardiyası matematik gerektirir.
 
-## 14 — Beş Tane Yeter
+## 18 — Sayarak Dön
+
+**Vardiya 4 · değişkenin verdiği karar**
+
+Görev: Depo bomboş, hiçbir duvar sana nerede döneceğini söylemiyor. Adımlarını sayman ve doğru anda dönmen gerekiyor.
+
+Hedef 6 satır · bu çözüm 6 satır · çikolata 0 · 27 adım
+
+```cpp
+int adim = 0;
+while (!molaOdasindaMiyim()) {
+  if (adim == 3) {
+    sagaDon();
+  }
+  ilerle();
+  adim++;
+}
+```
+
+1. ipucu: `onumdePaletVar()` burada işe yaramaz, çünkü ortalık açık. Kaç adım attığını yalnızca sen bilebilirsin.
+
+2. ipucu: Bir `int adim = 0;` sayacı tut, her ilerlemede artır, `if (adim == 3)` olduğunda sağa dön.
+
+Vardiya notu: Duvar yokken bile yolunu buldun. Sayaç, görmediğin şeyi bilmeni sağlar.
+
+## 19 — Beş Tane Yeter
 
 **Vardiya 4 · && ile iki koşulu birleştirmek**
 
@@ -332,7 +456,7 @@ while (!molaOdasindaMiyim()) {
 
 Vardiya notu: Nefsine hakim oldun ve beşte durdun. Ayın elemanı olmaya çok yakınsın.
 
-## 15 — Kendi Kısayolum
+## 20 — Kendi Kısayolum
 
 **Vardiya 4 · void ile kendi fonksiyonunu yazmak**
 
@@ -359,7 +483,35 @@ koseDon();
 
 Vardiya notu: Kendi komutunu icat ettin. Artık `koseDon();` diye bir şey var ve onu sen yazdın.
 
-## 16 — Büyük Çikolata Soygunu
+## 21 — Sayıyla Komut
+
+**Vardiya 4 · parametre: komuta bilgi vermek**
+
+Görev: Üç ayrı düzlük var ama uzunlukları farklı: üç, iki, üç adım. Her biri için ayrı komut yazmak yerine tek bir komuta kaç adım atacağını söyle.
+
+Hedef 8 satır · bu çözüm 8 satır · çikolata 0 · 24 adım
+
+```cpp
+void ilerleN(int n) {
+  for (int i = 0; i < n; i++) {
+    ilerle();
+  }
+}
+// --- buradan aşağısı main() içine ---
+ilerleN(3);
+sagaDon();
+ilerleN(2);
+solaDon();
+ilerleN(3);
+```
+
+1. ipucu: Geçen bölümde yazdığın komut hep aynı işi yapıyordu. Bu sefer komutun sana kaç adım atacağını sorması gerek.
+
+2. ipucu: `void ilerleN(int n)` diye tanımla, içine `n` kere dönen bir `for` koy. Sonra `ilerleN(3);` diye çağır.
+
+Vardiya notu: Komutun artık soru soruyor: kaç adım? Tek bir isim, sonsuz farklı iş.
+
+## 22 — Büyük Çikolata Soygunu
 
 **Vardiya 4 · hepsini birden kullanmak**
 
@@ -385,7 +537,7 @@ while (!molaOdasindaMiyim()) {
 
 Vardiya notu: Vardiya bitti. Dört çikolata, sıfır tanık. Sezer paydos kartını bastı.
 
-## 17 — Bir Fazla, Bir Eksik
+## 23 — Bir Fazla, Bir Eksik
 
 **Vardiya 5 · sınır hatası (off-by-one)**
 
@@ -405,7 +557,7 @@ for (int i = 0; i < 7; i++) {
 
 Vardiya notu: Bir eksik saymak, programcıların en meşhur hatasıdır. Artık sen de kulübün üyesisin.
 
-## 18 — Hiç Bitmeyen Vardiya
+## 24 — Hiç Bitmeyen Vardiya
 
 **Vardiya 5 · sonsuz döngü**
 
@@ -428,7 +580,7 @@ while (!molaOdasindaMiyim()) {
 
 Vardiya notu: Sonsuz döngü bir hata değil, bir unutkanlıktır: koşulu yanlış yapacak şeyi yazmayı unutursun.
 
-## 19 — Yanlış Yerdeki Satır
+## 25 — Yanlış Yerdeki Satır
 
 **Vardiya 5 · satırın yeri anlamı değiştirir**
 
@@ -453,3 +605,23 @@ while (!molaOdasindaMiyim()) {
 2. ipucu: `sayac++;` satırını `else` dalından alıp `kap();` satırının hemen altına taşı. Sayaç kapılanı saymalı, adımı değil.
 
 Vardiya notu: Aynı satır, farklı yer, bambaşka program. Girintiler süs değil, anlamın kendisi.
+
+## 26 — Ters Koşul
+
+**Vardiya 5 · mantık hatası**
+
+Görev: Bu kod hiç hata vermiyor, sadece hiçbir şey yapmıyor. Çalıştır, Sezer'in neden kıpırdamadığını bul.
+
+Hedef 2 satır · bu çözüm 2 satır · çikolata 0 · 15 adım
+
+```cpp
+while (!molaOdasindaMiyim()) {
+  ilerle();
+}
+```
+
+1. ipucu: Döngü koşulu ne zaman doğru? Sezer başlangıçta mola odasında mı?
+
+2. ipucu: Koşul tersine yazılmış. "Mola odasındayken devam et" değil, "mola odasında değilken devam et" olmalı. Başına bir `!` koy.
+
+Vardiya notu: Tek bir ünlem işareti. Mantık hataları en sinsi olanlardır, çünkü program hata bile vermez.
