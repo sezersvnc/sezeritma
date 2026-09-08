@@ -38,7 +38,7 @@ export type YapiAdi = (typeof YAPILAR)[number];
 
 export interface Bolum {
   no: number;
-  vardiya: 1 | 2 | 3 | 4 | 5;
+  vardiya: 1 | 2 | 3 | 4 | 5 | 6;
   ad: string;
   /** Bu bölümün öğrettiği tek yeni şey. */
   kavram: string;
@@ -152,7 +152,7 @@ export interface BolumIlerleme {
 export interface UstBarProps {
   bolumNo: number;
   toplamBolum: number;
-  vardiya: 1 | 2 | 3 | 4 | 5;
+  vardiya: 1 | 2 | 3 | 4 | 5 | 6;
   toplamYildiz: number;
   enFazlaYildiz: number;
   onHaritaAc: () => void;

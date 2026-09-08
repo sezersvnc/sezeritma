@@ -56,7 +56,7 @@ Bölüm adı kısa ve akılda kalıcı olsun. "Döngü Alıştırması 3" değil
 
 ### `vardiya`
 
-1'den 5'e kadar. Bölüm 1-5 birinci vardiya, 6-10 ikinci, 11-16 üçüncü, 17-22 dördüncü, 23-26 beşinci (hata ayıklama).
+1'den 6'ya kadar. Bölüm 1-5 birinci vardiya, 6-10 ikinci, 11-16 üçüncü, 17-22 dördüncü, 23-26 beşinci (hata ayıklama), 27-32 altıncı (usta işi).
 
 Birinci vardiyada `izinliYapilar` boş (`-`) olan bölümlerde **kart modu** kendiliğinden açılır: öğrenci klavyeye dokunmadan, komut kartlarına basarak program kurar. Bu yüzden ilk bölümlerde yapı açmamaya dikkat et.
 

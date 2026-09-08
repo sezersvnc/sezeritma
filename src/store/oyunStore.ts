@@ -93,7 +93,7 @@ interface OyunDurumu {
 
 /** Ders kartı sadece o bölümde yeni bir kavram varsa ve daha önce görülmediyse açılır. */
 const dersGosterilsinMi = (bolumNo: number, gorulen: number[]) => {
-  const vardiyaBasi = [1, 6, 11, 17, 23].includes(bolumNo);
+  const vardiyaBasi = [1, 6, 11, 17, 23, 27].includes(bolumNo);
   return (dersBul(bolumNo) !== undefined || vardiyaBasi) && !gorulen.includes(bolumNo);
 };
 

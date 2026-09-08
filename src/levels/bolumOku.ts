@@ -94,13 +94,13 @@ export function bolumOku(metin: string, no: number): Bolum {
   }
 
   const vardiya = Number(ustBilgi(metin, 'vardiya', no));
-  if (![1, 2, 3, 4, 5].includes(vardiya)) {
-    throw new Error(`Bölüm ${no}: vardiya 1 ile 5 arasında olmalı.`);
+  if (![1, 2, 3, 4, 5, 6].includes(vardiya)) {
+    throw new Error(`Bölüm ${no}: vardiya 1 ile 6 arasında olmalı.`);
   }
 
   return {
     no,
-    vardiya: vardiya as 1 | 2 | 3 | 4 | 5,
+    vardiya: vardiya as 1 | 2 | 3 | 4 | 5 | 6,
     ad: basligiEslesme[1].trim(),
     kavram: ustBilgi(metin, 'kavram', no),
     gorev: al('Gorev'),

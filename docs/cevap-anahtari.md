@@ -625,3 +625,165 @@ while (!molaOdasindaMiyim()) {
 2. ipucu: Koşul tersine yazılmış. "Mola odasındayken devam et" değil, "mola odasında değilken devam et" olmalı. Başına bir `!` koy.
 
 Vardiya notu: Tek bir ünlem işareti. Mantık hataları en sinsi olanlardır, çünkü program hata bile vermez.
+
+## 27 — İlk Dönüş, Son Dönüş
+
+**Vardiya 6 · bool ile evet-hayır hatırlamak**
+
+Görev: İki kere döneceksin ama aynı yöne değil: ilkinde sağa, ikincisinde sola. Duvar ikisinde de aynı görünüyor, farkı senin hatırlaman gerek.
+
+Hedef 9 satır · bu çözüm 9 satır · çikolata 0 · 28 adım
+
+```cpp
+bool ilkDonus = true;
+while (!molaOdasindaMiyim()) {
+  if (onumdePaletVar()) {
+    if (ilkDonus) {
+      sagaDon();
+      ilkDonus = false;
+    } else {
+      solaDon();
+    }
+  }
+  ilerle();
+}
+```
+
+1. ipucu: `onumdePaletVar()` sana duvarı söyler ama kaçıncı duvar olduğunu söylemez. Bunu ancak sen tutabilirsin.
+
+2. ipucu: `bool ilkDonus = true;` diye başla. İlk dönüşte sağa dön ve değeri `false` yap; sonrakinde sola dön.
+
+Vardiya notu: Bir evet, bir hayır. Bazen tüm program tek bir hatırlanan cevaba bakar.
+
+## 28 — Komut İçinde Komut
+
+**Vardiya 6 · fonksiyonun başka fonksiyonu çağırması**
+
+Görev: Merdiven yine karşında ama bu sefer iki isim kullan: köşe dönüşünü ayrı bir komut yap, basamağı da onu çağıran bir komut olarak yaz.
+
+Hedef 10 satır · bu çözüm 10 satır · çikolata 0 · 18 adım
+
+```cpp
+void koseDon() {
+  sagaDon();
+  ilerle();
+  solaDon();
+}
+void basamak() {
+  ilerle();
+  koseDon();
+}
+// --- buradan aşağısı main() içine ---
+basamak();
+basamak();
+basamak();
+```
+
+1. ipucu: Bir fonksiyonun içinde `ilerle();` çağırabiliyorsan, kendi yazdığın başka bir komutu da çağırabilirsin.
+
+2. ipucu: Önce `void koseDon()` yaz: sağa dön, ilerle, sola dön. Sonra `void basamak()` yaz: ilerle ve `koseDon();` çağır. Ana bölmede üç kere `basamak();` demen yeterli.
+
+Vardiya notu: İsimler üst üste bindi. Büyük programlar tam olarak böyle kurulur: küçük komutlar, birbirini çağırarak.
+
+## 29 — Her Üç Adımda Bir
+
+**Vardiya 6 · % ile ritim yakalamak**
+
+Görev: Depo bomboş, hiçbir duvar sana yol göstermiyor. Üç adımda bir dönerek kareyi tamamla ve mola odasına in.
+
+Hedef 6 satır · bu çözüm 6 satır · çikolata 0 · 40 adım
+
+```cpp
+int adim = 0;
+while (!molaOdasindaMiyim()) {
+  if (adim > 0 && adim % 3 == 0) {
+    sagaDon();
+  }
+  ilerle();
+  adim++;
+}
+```
+
+1. ipucu: Sayaç üçe geldiğinde dönmek yetmez; altıda, dokuzda da dönmen gerekiyor. Tek tek yazmak yerine bir kalıp lazım.
+
+2. ipucu: `%` işleci bölmeden kalanı verir. `adim % 3 == 0` ifadesi üçün katlarında doğru olur; başlangıçtaki sıfırı dışarıda tutmak için `adim > 0` şartını da ekle.
+
+Vardiya notu: Üç, altı, dokuz. Tek satırda sonsuz bir ritim kurdun.
+
+## 30 — Kendini Çağıran Komut
+
+**Vardiya 6 · özyineleme**
+
+Görev: Bu koridoru döngüsüz geç. Yazacağın komut, işi bitmediyse kendini yeniden çağırsın.
+
+Hedef 5 satır · bu çözüm 5 satır · çikolata 0 · 23 adım
+
+```cpp
+void yuru() {
+  if (!molaOdasindaMiyim()) {
+    ilerle();
+    yuru();
+  }
+}
+// --- buradan aşağısı main() içine ---
+yuru();
+```
+
+1. ipucu: Bir komut kendi içinde kendini çağırabilir. Ama bir yerde durması gerekir, yoksa hiç bitmez.
+
+2. ipucu: `void yuru()` yaz: mola odasında değilsen bir ilerle ve `yuru();` diye kendini çağır. Mola odasındaysan hiçbir şey yapma, iş kendiliğinden biter.
+
+Vardiya notu: Komut kendini çağırdı ve yine de bitti. Özyinelemede zor olan başlamak değil, durmayı hatırlamaktır.
+
+## 31 — Büyüyen Spiral
+
+**Vardiya 6 · döngü değişkenini parametre olarak vermek**
+
+Görev: Bir adım, iki adım, üç adım. Her kenar bir öncekinden uzun. Aynı komutu her turda farklı bir sayıyla çağır.
+
+Hedef 6 satır · bu çözüm 6 satır · çikolata 0 · 25 adım
+
+```cpp
+void ilerleN(int n) {
+  for (int i = 0; i < n; i++) {
+    ilerle();
+  }
+}
+// --- buradan aşağısı main() içine ---
+for (int i = 1; i <= 3; i++) {
+  ilerleN(i);
+  sagaDon();
+}
+```
+
+1. ipucu: Döngünün sayacı sadece kaç kere döneceğini belirlemez; onu bir değer olarak da kullanabilirsin.
+
+2. ipucu: `void ilerleN(int n)` yaz, sonra `for (int i = 1; i <= 3; i++)` döngüsünün içinde `ilerleN(i);` ve `sagaDon();` çağır. Her turda i büyüdükçe kenar da uzar.
+
+Vardiya notu: Altı satır, büyüyen bir spiral. Döngü ile fonksiyon birleşince ortaya desen çıkıyor.
+
+## 32 — Vardiya Amiri
+
+**Vardiya 6 · öğrendiğin her şey**
+
+Görev: Fabrikanın en büyük deposu, yedi çikolata ve tek bir çıkış. Yolu ezberleyemezsin, ezberlemene de gerek yok. Öğrendiğin kuralı yaz ve arkana yaslan.
+
+Hedef 7 satır · bu çözüm 7 satır · çikolata 7 · 254 adım
+
+```cpp
+while (!molaOdasindaMiyim()) {
+  if (ustumdeCikolataVar()) {
+    kap();
+  } else if (onumdePaletVar()) {
+    sagaDon();
+  } else {
+    ilerle();
+  }
+}
+```
+
+1. ipucu: Bu harita öncekilerden büyük ama kural değişmedi. Her karede üç ihtimal var, üçü için de ne yapacağını söylemen yeterli.
+
+2. ipucu: Çikolata varsa kap, önünde palet varsa sağa dön, ikisi de yoksa ilerle. Yedi satır, on bir kare genişliğinde bir labirent.
+
+Vardiya notu: Vardiya bitti, depo boş, amir hâlâ ofiste. Sezer paydos kartını bastı ve cebi çikolata dolu.

@@ -8,6 +8,7 @@ const VARDIYA_ADI: Record<number, string> = {
   3: 'Sevkiyat Bölgesi',
   4: 'Gece Vardiyası',
   5: 'Hata Ayıklama',
+  6: 'Usta İşi',
 };
 
 export function BolumHaritasi({ bolumler, suAnki, onSec, onKapat }: BolumHaritasiProps) {
@@ -17,7 +18,7 @@ export function BolumHaritasi({ bolumler, suAnki, onSec, onKapat }: BolumHaritas
     return () => window.removeEventListener('keydown', kapat);
   }, [onKapat]);
 
-  const vardiyalar = [1, 2, 3, 4, 5] as const;
+  const vardiyalar = [1, 2, 3, 4, 5, 6] as const;
 
   return (
     <div className="orti" role="dialog" aria-modal="true" aria-label="Vardiya çizelgesi">
@@ -26,9 +27,14 @@ export function BolumHaritasi({ bolumler, suAnki, onSec, onKapat }: BolumHaritas
         <div className="tabela-ic">
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'baseline' }}>
             <h2 style={{ fontSize: 22 }}>Vardiya çizelgesi</h2>
-            <button className="dugme-cizgili etiket" onClick={onKapat}>
-              Kapat
-            </button>
+            <div style={{ display: 'flex', gap: 8 }}>
+              <a className="dugme-cizgili etiket" href="#serbest">
+                Serbest harita
+              </a>
+              <button className="dugme-cizgili etiket" onClick={onKapat}>
+                Kapat
+              </button>
+            </div>
           </div>
 
           {vardiyalar.map((v) => {

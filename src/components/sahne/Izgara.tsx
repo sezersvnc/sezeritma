@@ -1,4 +1,4 @@
-import { useMemo, type CSSProperties } from 'react';
+import { useMemo, useState, type CSSProperties } from 'react';
 import type { Bolum, Durum, Kare, Yon } from '../../core/types';
 
 const ACI: Record<Yon, number> = { kuzey: 0, dogu: 90, guney: 180, bati: 270 };
@@ -17,9 +17,13 @@ interface Props {
   bolum: Bolum;
   durum: Durum;
   iz: readonly Kare[];
+  /** Serbest modda hücrelere tıklayarak harita çizilir. */
+  duzenlenebilir?: boolean;
+  onHucre?: (x: number, y: number) => void;
 }
 
-export function Izgara({ bolum, durum, iz }: Props) {
+export function Izgara({ bolum, durum, iz, duzenlenebilir = false, onHucre }: Props) {
+  const [boyaniyor, setBoyaniyor] = useState(false);
   const { genislik, yukseklik } = bolum.izgara;
 
   // Dış duvar halkası hücre olarak çizilmiyor: çerçevenin kendisi o duvar.
@@ -38,16 +42,38 @@ export function Izgara({ bolum, durum, iz }: Props) {
       const mola = bolum.mola.x === x && bolum.mola.y === y;
       const cikolataVardi = bolum.cikolatalar.some((c) => anahtar(c) === a);
 
+      const ortak = {
+        className: 'hucre',
+        'data-tip': palet ? 'palet' : mola ? 'mola' : 'zemin',
+        'data-iz': !palet && izSeti.has(a) ? '1' : undefined,
+        'data-aktif': durum.kare.x === x && durum.kare.y === y ? '1' : undefined,
+      } as const;
+
+      const icerik = cikolataVardi ? (
+        <span className="cikolata" data-alindi={kalanSeti.has(a) ? '0' : '1'} />
+      ) : null;
+
       hucreler.push(
-        <div
-          key={a}
-          className="hucre"
-          data-tip={palet ? 'palet' : mola ? 'mola' : 'zemin'}
-          data-iz={!palet && izSeti.has(a) ? '1' : undefined}
-          data-aktif={durum.kare.x === x && durum.kare.y === y ? '1' : undefined}
-        >
-          {cikolataVardi && <span className="cikolata" data-alindi={kalanSeti.has(a) ? '0' : '1'} />}
-        </div>,
+        duzenlenebilir ? (
+          <button
+            key={a}
+            {...ortak}
+            type="button"
+            aria-label={`${x}. sütun, ${y}. satır`}
+            onMouseDown={() => {
+              setBoyaniyor(true);
+              onHucre?.(x, y);
+            }}
+            onMouseUp={() => setBoyaniyor(false)}
+            onMouseEnter={() => boyaniyor && onHucre?.(x, y)}
+          >
+            {icerik}
+          </button>
+        ) : (
+          <div key={a} {...ortak}>
+            {icerik}
+          </div>
+        ),
       );
     }
   }
@@ -65,7 +91,9 @@ export function Izgara({ bolum, durum, iz }: Props) {
     >
       <div
         className="zemin"
-        role="img"
+        data-duzenlenebilir={duzenlenebilir ? '1' : undefined}
+        onMouseLeave={() => setBoyaniyor(false)}
+        role={duzenlenebilir ? 'group' : 'img'}
         aria-label={`${icGenislik}e ${icYukseklik} depo zemini. Sezer ${durum.kare.x}. sütun, ${durum.kare.y}. satırda, ${durum.yon} yönüne bakıyor.`}
       >
         {hucreler}

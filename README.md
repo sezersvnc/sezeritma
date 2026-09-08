@@ -12,6 +12,7 @@ Gerçek olaylardan esinlenilmiştir.
 
 Yeni başlayan öğrencinin asıl problemi sözdizimi değil, kodun zamanda aktığını görememesi. `for` döngüsünü ezberliyor ama "şu an 3. tur, `i` iki, karakter burada" resmini kafasında kuramıyor. Bu projenin tek işi o resmi ekrana koymak.
 
+- **Serbest mod** — kendi haritanı çizip kendi kodunu deneyebileceğin, yıldızsız ve hedefsiz bir alan. Adres satırına `#serbest` yazarak ya da vardiya çizelgesindeki bağlantıdan açılır.
 - **Kart modu** — ilk bölümlerde öğrenci hiç yazmıyor: komut kartlarına basıyor, C++ satırları editörde kendiliğinden beliriyor. Kod yazmayı bilmeyen biri ilk dakikadan itibaren doğru kodu görüyor, sadece yazma yükü kalkıyor. İstediği an "kendim yazayım" diyebiliyor.
 - **Türkçe okuma** — öğrencinin kendi yazdığı C++, tek tıkla Türkçe adımlara çevriliyor: `while (!molaOdasindaMiyim())` satırı "mola odasında değilsen şunları tekrarla" oluyor. Sözdizimi ezberlenecek bir şey olmaktan çıkıyor.
 - **Ders kartları** — her yeni kavram, ilk kullanıldığı bölümde anlatılıyor: önce hangi problemi çözdüğü, sonra nasıl çalıştığı, sonra satır satır açıklamalı bir örnek. Cevabı vermiyor, kavramı öğretiyor.
@@ -33,7 +34,7 @@ Yeni başlayan öğrencinin asıl problemi sözdizimi değil, kodun zamanda akt�
 
 ## Müfredat
 
-Beş vardiya, yirmi altı bölüm. Her bölüm tek bir yeni fikir öğretiyor ve öncekini tekrar ettiriyor.
+Altı vardiya, otuz iki bölüm. Her bölüm tek bir yeni fikir öğretiyor ve öncekini tekrar ettiriyor.
 
 | Vardiya | Ne öğretiyor |
 |---|---|
@@ -42,6 +43,7 @@ Beş vardiya, yirmi altı bölüm. Her bölüm tek bir yeni fikir öğretiyor ve
 | 3 — Sevkiyat Bölgesi (11-16) | `while`, durma koşulu seçmek, `if`, `if / else`, `else if`, ve algoritma kavramının kendisi |
 | 4 — Gece Vardiyası (17-22) | Değişken, değişkenle karar, `&&`, fonksiyon, parametre, sentez |
 | 5 — Hata Ayıklama (23-26) | Bozuk kodu okuyup düzeltmek: sınır hatası, sonsuz döngü, yanlış yerdeki satır, ters koşul |
+| 6 — Usta İşi (27-32) | `bool` ile hatırlama, fonksiyonların birbirini çağırması, `%` ile ritim, özyineleme, döngü sayacını parametreye vermek, büyük final labirenti |
 
 Vardiya 5 tersine çalışıyor: kodu başkası yazmış ve bozuk. Öğrenci okuyor, çalıştırıyor, karşılaştırıyor, tek bir şey değiştiriyor. Gerçek bir programcının zamanının çoğu burada geçtiği için ayrı bir vardiya hak ediyor.
 

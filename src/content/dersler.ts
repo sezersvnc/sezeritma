@@ -26,7 +26,7 @@ export interface Ders {
 }
 
 export interface Vardiya {
-  no: 1 | 2 | 3 | 4 | 5;
+  no: 1 | 2 | 3 | 4 | 5 | 6;
   ad: string;
   giris: string;
   ozet: string;
@@ -73,9 +73,104 @@ export const VARDIYALAR: readonly Vardiya[] = [
     ozet:
       'Artık bozuk bir kodu okuyup düzeltebiliyorsun. Bu, kod yazmaktan daha zor ve daha değerli bir beceridir, çünkü kendi yazdığın kod da bir gün çalışmayacak ve o gün bu bölümlerde öğrendiğin refleksi kullanacaksın.',
   },
+  {
+    no: 6,
+    ad: 'Usta İşi',
+    giris:
+      'Buraya kadar geldiysen temel dördü biliyorsun: sıra, tekrar, karar, isimlendirme. Bu vardiya onların üzerine kuruluyor. Bölümler daha uzun düşünmeni isteyecek ve çoğunda tek bir doğru cevap yok.',
+    ozet:
+      'Bitti. Artık evet-hayır saklayabiliyor, komutlarını birbirinin içinde kullanabiliyor, ritim kurabiliyor, bir komuta kendini çağırtabiliyor ve döngünün sayacını fonksiyona geçirebiliyorsun. Bunlar süs değil: gerçek programların çoğu bu beş fikrin birleşiminden ibaret.',
+  },
 ];
 
 export const DERSLER: readonly Ders[] = [
+  {
+    bolum: 27,
+    baslik: 'bool: evet mi hayır mı',
+    neden:
+      'Sayaçlar "kaç tane" sorusunu cevaplar. Ama bazı sorular sayıyla değil, evet ya da hayırla cevaplanır: kapıyı açtım mı, ilk dönüşü yaptım mı, çikolatayı buldum mu?',
+    nasil:
+      '`bool` yalnızca iki değer alır: `true` ve `false`. Bir `bool` değişkeni doğrudan koşulun içine yazabilirsin, karşılaştırmaya gerek yoktur. `if (ilkDonus)` demek, `if (ilkDonus == true)` demekle aynı şeydir ve daha okunaklıdır.',
+    ornek: [
+      { kod: 'bool ilkDonus = true;', not: 'Başlangıçta evet.' },
+      { kod: 'if (ilkDonus) {', not: 'Değeri doğruysa buraya girer.' },
+      { kod: '  sagaDon();' },
+      { kod: '  ilkDonus = false;', not: 'Bir daha girmesin diye hayıra çevir.' },
+      { kod: '}' },
+    ],
+    hatirla:
+      '`bool` iki değerli bir bellektir: `true` ya da `false`. Bir olayın olup olmadığını hatırlamanın en sade yolu.',
+  },
+  {
+    bolum: 28,
+    baslik: 'Komutların birbirini çağırması',
+    neden:
+      'Kendi komutunu yazmayı öğrendin. Şimdi asıl güç geliyor: yazdığın komut, yine senin yazdığın başka bir komutu çağırabilir. Büyük programlar tam olarak böyle kurulur.',
+    nasil:
+      'Bir fonksiyonun gövdesinde `ilerle();` çağırabiliyorsan, `koseDon();` de çağırabilirsin. Oyunun komutlarıyla senin komutların arasında hiçbir fark yoktur; ikisi de aynı biçimde çağrılır.\n\nBöylece küçük parçalardan daha büyük parçalar kurarsın: köşe dönüşü bir komut olur, basamak inişi köşe dönüşünü kullanan başka bir komut olur.',
+    ornek: [
+      { kod: 'void koseDon() {', not: 'Küçük parça.' },
+      { kod: '  sagaDon();' },
+      { kod: '  ilerle();' },
+      { kod: '}' },
+      { kod: '', not: '' },
+      { kod: 'void basamak() {', not: 'Büyük parça.' },
+      { kod: '  ilerle();' },
+      { kod: '  koseDon();', not: 'Kendi yazdığın komutu kullanıyor.' },
+      { kod: '}' },
+    ],
+    hatirla:
+      'Fonksiyonlar birbirini çağırabilir. Karmaşık bir işi çözmenin yolu, onu isimlendirilmiş küçük işlere bölmektir.',
+  },
+  {
+    bolum: 29,
+    baslik: '% ile ritim kurmak',
+    neden:
+      '"Üçüncü adımda dön" demek kolay. Peki "her üç adımda bir dön"? Altıncıda, dokuzuncuda, on ikincide de dönmesi gerekiyor ve hepsini tek tek yazamazsın.',
+    nasil:
+      '`%` işleci bölmeden kalanı verir. `9 % 3` sıfırdır, çünkü dokuz üçe tam bölünür. `10 % 3` ise birdir. Bu yüzden `adim % 3 == 0` ifadesi tam olarak üçün katlarında doğru olur.\n\nSayının kendisiyle değil, bıraktığı kalanla ilgilendiğin her yerde bu işleç işine yarar.',
+    ornek: [
+      { kod: '6 % 3', not: 'Kalan sıfır. Altı, üçün katı.' },
+      { kod: '7 % 3', not: 'Kalan bir. Katı değil.' },
+      { kod: 'if (adim % 3 == 0)', not: 'Her üçüncü turda doğru olur.' },
+    ],
+    hatirla:
+      '`%` bölmeden kalanı verir. Tekrar eden bir düzeni yakalamanın en kısa yolu, kalana bakmaktır.',
+  },
+  {
+    bolum: 30,
+    baslik: 'Özyineleme: kendini çağıran komut',
+    neden:
+      'Bir işi tekrarlamanın döngüden başka bir yolu daha var: komut, işi bitmediyse kendini yeniden çağırır. Buna özyineleme denir ve ilk bakışta imkânsız görünür.',
+    nasil:
+      'İki parçası vardır ve ikisi de şart. **Durma noktası:** işin bittiği durum, orada kendini çağırmaz. **Küçültme:** her çağrıda probleme biraz daha yaklaşır.\n\nDurma noktasını unutursan program hiç bitmez, tıpkı koşulu yanlış yazılmış bir `while` gibi. Oyun bunu yakalar ve sana söyler.',
+    ornek: [
+      { kod: 'void yuru() {' },
+      { kod: '  if (!molaOdasindaMiyim()) {', not: 'Durma noktası: molaya vardıysak hiçbir şey yapma.' },
+      { kod: '    ilerle();', not: 'Küçültme: hedefe bir adım yaklaş.' },
+      { kod: '    yuru();', not: 'Kalan işi aynı komuta devret.' },
+      { kod: '  }' },
+      { kod: '}' },
+    ],
+    hatirla:
+      'Özyinelemede zor olan başlamak değil, durmayı hatırlamaktır. Her kendini çağıran komutun bir çıkış kapısı olmalı.',
+  },
+  {
+    bolum: 31,
+    baslik: 'Döngü sayacını parametreye vermek',
+    neden:
+      'Döngünün sayacını şimdiye kadar sadece "kaç kere döneceğim" diye kullandın. Oysa o bir sayı ve her turda değişiyor. Onu bir değer olarak kullanabilirsin.',
+    nasil:
+      '`for (int i = 1; i <= 3; i++)` döngüsünde `i` sırayla 1, 2, 3 olur. `ilerleN(i);` yazdığında fonksiyon her turda farklı bir sayı alır: önce bir adım, sonra iki, sonra üç.\n\nDöngü ile parametre birleşince tek bir satır büyüyen bir desen üretir. Az kodla çok iş yapmanın en tipik örneği budur.',
+    ornek: [
+      { kod: 'for (int i = 1; i <= 3; i++) {', not: 'i sırayla 1, 2, 3 olur.' },
+      { kod: '  ilerleN(i);', not: 'Her turda farklı uzunlukta bir kenar.' },
+      { kod: '  sagaDon();' },
+      { kod: '}' },
+    ],
+    hatirla:
+      'Döngünün sayacı sadece tekrar sayısı değil, kullanabileceğin bir değerdir. Fonksiyona verdiğinde desen üretir.',
+  },
   {
     bolum: 9,
     baslik: 'Döngünün içinde dönmek',

@@ -20,7 +20,7 @@ export function VardiyaSonu({
 
   const verimli = kullanilanSatir <= hedefSatir;
   // Vardiyanın son bölümü geçildiğinde ne öğrenildiğini toparlıyoruz.
-  const VARDIYA_SONLARI: Record<number, number> = { 5: 1, 10: 2, 16: 3, 22: 4, 26: 5 };
+  const VARDIYA_SONLARI: Record<number, number> = { 5: 1, 10: 2, 16: 3, 22: 4, 26: 5, 32: 6 };
   const vardiyaOzeti = vardiyaBul(VARDIYA_SONLARI[bolumNo]);
 
   return (

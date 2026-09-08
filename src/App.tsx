@@ -88,7 +88,7 @@ export default function App() {
   const hata = sonuc?.hata;
 
   const ders = dersBul(bolum.no);
-  const vardiyaGirisi = [1, 6, 11, 17, 23].includes(bolum.no) ? vardiyaBul(bolum.vardiya) : undefined;
+  const vardiyaGirisi = [1, 6, 11, 17, 23, 27].includes(bolum.no) ? vardiyaBul(bolum.vardiya) : undefined;
   const anlati = adimAnlat(suAnkiAdim, adimIndex > 0 ? adimlar[adimIndex - 1] : undefined);
 
   return (
