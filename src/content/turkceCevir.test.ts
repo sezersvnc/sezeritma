@@ -59,4 +59,43 @@ describe('turkceyeCevir', () => {
     const sonuc = turkceyeCevir({ govde: 'ilerle()', fonksiyonlar: '' });
     expect(sonuc.hata).toContain('noktalı virgül');
   });
+
+  it('sayaci kullanan for dongusunde uc parcayi da yazar', () => {
+    // "N kere tekrarla" burada yanıltıcı olur: i gövdede değer olarak kullanılıyor.
+    const satir = cevir('for (int i = 1; i <= 3; i++) {\n  ilerleN(i);\n}', 'void ilerleN(int n) {\n  ilerle();\n}')
+      .find((x) => x.includes('tekrarla'));
+    expect(satir).toContain('i sayacını 1 yap');
+    expect(satir).toContain('her turun sonunda i sayısını 1 artır');
+  });
+
+  it('fonksiyona verilen degeri okur', () => {
+    const satirlar = cevir('ilerleN(3);', 'void ilerleN(int n) {\n  ilerle();\n}');
+    expect(satirlar[0]).toBe('ilerleN komutun, verdiğin n değeriyle şunu yapar:');
+    expect(satirlar).toContain('  kendi yazdığın ilerleN komutunu 3 değeriyle çalıştır');
+  });
+
+  it('else if zincirini tek zincir olarak okur', () => {
+    expect(
+      cevir('if (ustumdeCikolataVar()) { kap(); } else if (onumdePaletVar()) { sagaDon(); } else { ilerle(); }'),
+    ).toEqual([
+      'Program başlar:',
+      '  eğer bastığın karede çikolata varsa şunu yap:',
+      '    bastığın karedeki çikolatayı al',
+      '  değilse, eğer önünde palet varsa şunu yap:',
+      '    sağa dön',
+      '  hiçbiri değilse şunu yap:',
+      '    bir kare ilerle',
+    ]);
+  });
+
+  it('bool degiskeni sayi gibi okumaz', () => {
+    const satirlar = cevir('bool aldim = false;\nif (!aldim) { kap(); }');
+    expect(satirlar[1]).toContain('doğru/yanlış tutan bir kutu');
+    expect(satirlar[2]).toBe('  eğer aldim yanlışsa şunu yap:');
+  });
+
+  it('kalanli karsilastirmayi duzgun cumle kurar', () => {
+    const satir = cevir('int a = 3;\nif (a % 3 == 0) { sagaDon(); }')[2];
+    expect(satir).toBe('  eğer a sayısının 3 ile bölümünden kalan, 0 ise şunu yap:');
+  });
 });

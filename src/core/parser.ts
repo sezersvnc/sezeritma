@@ -225,7 +225,13 @@ class Ayristirici {
       `${anahtar.satir}. satırda \`${ad.deger}\` değişkenine bir başlangıç değeri vermelisin: \`${anahtar.deger} ${ad.deger} = 0;\``,
       anahtar.satir,
     );
-    return { tip: 'tanim', ad: ad.deger, deger: this.ifade(), ...this.konum(anahtar.satir) };
+    return {
+      tip: 'tanim',
+      ad: ad.deger,
+      tur: anahtar.deger === 'bool' ? 'bool' : 'int',
+      deger: this.ifade(),
+      ...this.konum(anahtar.satir),
+    };
   }
 
   /** Komut çağrısı, atama, artırma. Noktalı virgülü yemez. */

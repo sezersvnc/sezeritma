@@ -24,7 +24,7 @@ export interface Blok extends Konum {
 
 export type Dugum =
   | ({ tip: 'cagri'; ad: string; argumanlar: Ifade[] } & Konum)
-  | ({ tip: 'tanim'; ad: string; deger: Ifade } & Konum)
+  | ({ tip: 'tanim'; ad: string; tur: 'int' | 'bool'; deger: Ifade } & Konum)
   | ({ tip: 'atama'; ad: string; deger: Ifade } & Konum)
   | ({ tip: 'for'; baslangic: Dugum; kosul: Ifade; artis: Dugum; govde: Blok } & Konum)
   | ({ tip: 'while'; kosul: Ifade; govde: Blok } & Konum)
