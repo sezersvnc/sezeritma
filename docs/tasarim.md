@@ -353,6 +353,8 @@ Yeni başlayan biri için en büyük engel dilin zorluğu değil, aynı anda bak
 
 Bir bölümde açılan öğeler tek bir blokta duyuruluyor ve ne işe yaradıkları söyleniyor.
 
+Anlatım penceresi kapatılabiliyor. Kartın altındaki "Anlatımı kapat" bir daha kendiliğinden açılmamasını sağlıyor; Kavramlar panelindeki anahtar geri açıyor. Ayar kayda yazılıyor. Gerekçe: kod bilen biri için anlatım gereksiz bir durak, sıfırdan öğrenen için asıl ders. İkisi de aynı oyunu oynayabilmeli. Kapalıyken anlatım kaybolmuyor, görev kartındaki "anlatımı aç" bağlantısı yerinde duruyor.
+
 ### Çalışma dökümü
 
 Sahnenin altında, kod çalışırken her satır ne yaptığıyla birlikte sırayla yazılıyor. Döngü çalıştığında aynı satır tekrar tekrar dökülüyor; bu gürültü değil, dersin kendisi. Öğrenci döngünün "açılışını" gözüyle burada görüyor.

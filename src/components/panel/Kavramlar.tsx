@@ -6,6 +6,9 @@ import { useOdakTuzagi } from './odakTuzagi';
 interface Props {
   bolumNo: number;
   onKapat: () => void;
+  /** Yeni kavramda anlatım penceresi kendiliğinden açılsın mı. */
+  dersOtomatik: boolean;
+  onDersOtomatik: (otomatik: boolean) => void;
 }
 
 /**
@@ -13,7 +16,7 @@ interface Props {
  * her zaman açık; henüz gelmediği kavramlar kilitli görünür ki merak etsin
  * ama şaşırmasın.
  */
-export function Kavramlar({ bolumNo, onKapat }: Props) {
+export function Kavramlar({ bolumNo, onKapat, dersOtomatik, onDersOtomatik }: Props) {
   const kap = useOdakTuzagi<HTMLDivElement>();
   const [acik, setAcik] = useState<number | null>(
     [...DERSLER].reverse().find((d) => d.bolum <= bolumNo)?.bolum ?? null,
@@ -40,6 +43,21 @@ export function Kavramlar({ bolumNo, onKapat }: Props) {
           <p className="ders-metin" style={{ marginTop: 6 }}>
             Her kavram, ilk kullanıldığı bölümde açılır. Unuttuğunda buraya dönebilirsin.
           </p>
+
+          <label className="anahtar">
+            <input
+              type="checkbox"
+              checked={dersOtomatik}
+              onChange={(e) => onDersOtomatik(e.target.checked)}
+            />
+            <span>
+              Yeni kavramda anlatımı kendiliğinden aç
+              <em>
+                Kapalıyken hiçbir pencere önüne çıkmaz. Anlatımı istediğinde görev kartındaki
+                <b> anlatımı aç</b> bağlantısından okursun.
+              </em>
+            </span>
+          </label>
 
           {VARDIYALAR.map((v) => {
             const dersler = DERSLER.filter((d) => {

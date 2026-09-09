@@ -1845,3 +1845,34 @@ button {
   line-height: 1.5;
   color: var(--beton-4);
 }
+
+/* ------------------------------------------------------------------ ayar anahtarı */
+
+.anahtar {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 10px;
+  align-items: start;
+  margin: 14px 0 4px;
+  padding: 12px 14px;
+  background: var(--beton-1);
+  border: 1px solid var(--beton-3);
+  font-size: 14px;
+  line-height: 1.5;
+  cursor: pointer;
+}
+
+.anahtar input {
+  width: 16px;
+  height: 16px;
+  margin-top: 2px;
+  accent-color: var(--yelek);
+}
+
+.anahtar em {
+  display: block;
+  margin-top: 3px;
+  font-style: normal;
+  font-size: 13px;
+  color: var(--beton-4);
+}

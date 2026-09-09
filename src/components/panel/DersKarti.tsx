@@ -18,9 +18,11 @@ interface Props {
   vardiya?: Vardiya;
   onKapat: () => void;
   onKavramlar: () => void;
+  /** Anlatımı bir daha kendiliğinden açma. Kod bilen için gereksiz bir durak. */
+  onOtomatikKapat: () => void;
 }
 
-export function DersKarti({ ders, vardiya, onKapat, onKavramlar }: Props) {
+export function DersKarti({ ders, vardiya, onKapat, onKavramlar, onOtomatikKapat }: Props) {
   const kap = useOdakTuzagi<HTMLDivElement>();
   const adimlar = useMemo(() => {
     const liste: ('vardiya' | 'ogren' | 'izle' | 'uygula')[] = [];
@@ -138,6 +140,13 @@ export function DersKarti({ ders, vardiya, onKapat, onKavramlar }: Props) {
             )}
             <button className="dugme-cizgili etiket" onClick={onKavramlar}>
               Kavramlar
+            </button>
+            <button
+              className="dugme-cizgili etiket"
+              onClick={onOtomatikKapat}
+              title="Anlatım pencereleri bir daha kendiliğinden açılmaz. Kavramlar panelinden geri açabilirsin."
+            >
+              Anlatımı kapat
             </button>
 
             {sonAdim ? (

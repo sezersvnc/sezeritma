@@ -24,6 +24,12 @@ interface Kayit {
   /** Tahmin şeridini kapatan öğrenciye bir daha gösterilmez. */
   tahminKapali?: boolean;
   /**
+   * Anlatım penceresi yeni kavramda kendiliğinden açılsın mı.
+   * Kod bilen biri için gereksiz bir durak; sıfırdan öğrenen için asıl ders.
+   * Varsayılan açık, kapatan öğrenci Kavramlar panelinden geri açabiliyor.
+   */
+  dersOtomatik?: boolean;
+  /**
    * Karşılamada seçilen giriş seviyesi. Kod bilen biri baştan başlamak
    * zorunda kalmasın diye buraya kadar olan bölümler açık gelir.
    */
@@ -79,6 +85,8 @@ interface OyunDurumu {
   basariAcik: boolean;
   haritaAcik: boolean;
   dersAcik: boolean;
+  /** Yeni kavramda anlatım penceresi kendiliğinden açılsın mı. */
+  dersOtomatik: boolean;
   kavramlarAcik: boolean;
   /** Kart modu açıkken öğrenci klavye yerine komut kartlarıyla kod kuruyor. */
   kartlaYaz: boolean;
@@ -112,6 +120,7 @@ interface OyunDurumu {
   haritaAcKapa: (acik: boolean) => void;
   basariKapat: () => void;
   dersAc: () => void;
+  dersOtomatikDegistir: (otomatik: boolean) => void;
   dersKapat: () => void;
   kavramlarAcKapa: (acik: boolean) => void;
   kartEkle: (komut: KomutAdi) => void;
@@ -127,7 +136,8 @@ interface OyunDurumu {
 }
 
 /** Ders kartı sadece o bölümde yeni bir kavram varsa ve daha önce görülmediyse açılır. */
-const dersGosterilsinMi = (bolumNo: number, gorulen: number[]) => {
+const dersGosterilsinMi = (bolumNo: number, gorulen: number[], otomatik: boolean) => {
+  if (!otomatik) return false;
   const vardiyaBasi = [1, 6, 11, 17, 23, 27].includes(bolumNo);
   return (dersBul(bolumNo) !== undefined || vardiyaBasi) && !gorulen.includes(bolumNo);
 };
@@ -157,7 +167,12 @@ export const useOyun = create<OyunDurumu>((set, get) => ({
   cozumGoruldu: false,
   basariAcik: false,
   haritaAcik: false,
-  dersAcik: dersGosterilsinMi(ilkBolum.no, ilkKayit.gorulenDersler),
+  dersOtomatik: ilkKayit.dersOtomatik !== false,
+  dersAcik: dersGosterilsinMi(
+    ilkBolum.no,
+    ilkKayit.gorulenDersler,
+    ilkKayit.dersOtomatik !== false,
+  ),
   kavramlarAcik: false,
   kartlaYaz: ilkBolum.kartModu,
   turkceAcik: false,
@@ -254,7 +269,7 @@ export const useOyun = create<OyunDurumu>((set, get) => ({
       tahmin: null,
       gercekSonuc: null,
       bitisAcik: false,
-      dersAcik: dersGosterilsinMi(no, kayit.gorulenDersler),
+      dersAcik: dersGosterilsinMi(no, kayit.gorulenDersler, get().dersOtomatik),
     });
   },
 
@@ -288,6 +303,11 @@ export const useOyun = create<OyunDurumu>((set, get) => ({
   basariKapat: () => set({ basariAcik: false }),
 
   dersAc: () => set({ dersAcik: true }),
+
+  dersOtomatikDegistir: (otomatik) => {
+    kayitYaz({ ...kayitOku(), dersOtomatik: otomatik });
+    set({ dersOtomatik: otomatik });
+  },
 
   dersKapat: () => {
     const no = get().bolum.no;

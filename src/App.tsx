@@ -316,11 +316,20 @@ export default function App() {
             s.dersKapat();
             s.kavramlarAcKapa(true);
           }}
+          onOtomatikKapat={() => {
+            s.dersOtomatikDegistir(false);
+            s.dersKapat();
+          }}
         />
       )}
 
       {s.kavramlarAcik && (
-        <Kavramlar bolumNo={bolum.no} onKapat={() => s.kavramlarAcKapa(false)} />
+        <Kavramlar
+          bolumNo={bolum.no}
+          onKapat={() => s.kavramlarAcKapa(false)}
+          dersOtomatik={s.dersOtomatik}
+          onDersOtomatik={s.dersOtomatikDegistir}
+        />
       )}
 
       {s.haritaAcik && (
