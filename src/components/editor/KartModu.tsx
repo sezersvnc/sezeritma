@@ -23,13 +23,25 @@ const KART_KOMUTLARI: readonly KomutAdi[] = ['ilerle', 'sagaDon', 'solaDon', 'ka
 
 interface Props {
   izinliKomutlar: readonly KomutAdi[];
-  satirSayisi: number;
+  /** Kurulmuş program, satır satır. */
+  satirlar: readonly string[];
+  /** Yeni kart bunun altına eklenir; null ise sona. */
+  secilenSatir: number | null;
   onEkle: (komut: KomutAdi) => void;
-  onGeriAl: () => void;
+  onSil: (index: number) => void;
+  onSec: (index: number | null) => void;
   onTemizle: () => void;
 }
 
-export function KartModu({ izinliKomutlar, satirSayisi, onEkle, onGeriAl, onTemizle }: Props) {
+export function KartModu({
+  izinliKomutlar,
+  satirlar,
+  secilenSatir,
+  onEkle,
+  onSil,
+  onSec,
+  onTemizle,
+}: Props) {
   const kartlar = KART_KOMUTLARI.filter((k) => izinliKomutlar.includes(k));
 
   return (
@@ -48,14 +60,39 @@ export function KartModu({ izinliKomutlar, satirSayisi, onEkle, onGeriAl, onTemi
         ))}
       </div>
 
+      {satirlar.length > 0 && (
+        <ol className="kart-satirlari">
+          {satirlar.map((satir, i) => (
+            <li key={i} data-secili={secilenSatir === i ? '1' : undefined}>
+              <button
+                className="kart-satir-sec"
+                aria-pressed={secilenSatir === i}
+                onClick={() => onSec(secilenSatir === i ? null : i)}
+              >
+                <span className="kart-satir-no">{i + 1}</span>
+                <code>{satir}</code>
+              </button>
+              <button
+                className="kart-satir-sil"
+                aria-label={`${i + 1}. satırı sil`}
+                onClick={() => onSil(i)}
+              >
+                ×
+              </button>
+            </li>
+          ))}
+        </ol>
+      )}
+
       <div className="kart-arac">
-        <button className="dugme" onClick={onGeriAl} disabled={satirSayisi === 0}>
-          Son satırı sil
-        </button>
-        <button className="dugme" onClick={onTemizle} disabled={satirSayisi === 0}>
+        <span className="kart-ipucu">
+          {secilenSatir === null
+            ? 'Yeni satır en sona eklenir. Araya eklemek için bir satıra bas.'
+            : `Yeni satır ${secilenSatir + 1}. satırın altına eklenir. Seçimi bırakmak için tekrar bas.`}
+        </span>
+        <button className="dugme" onClick={onTemizle} disabled={satirlar.length === 0}>
           Hepsini sil
         </button>
-        <span className="etiket kart-sayac">{satirSayisi} satır</span>
       </div>
     </section>
   );

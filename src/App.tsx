@@ -27,8 +27,8 @@ import type { Durum } from './core/types';
 /** Hız kaydırıcısının adım aralıkları. */
 const GECIKME = [700, 400, 200, 90, 30];
 
-const kartSatirSayisi = (govde: string) =>
-  govde.split(String.fromCharCode(10)).filter((l) => l.trim().length > 0).length;
+const kartSatirlari = (govde: string) =>
+  govde.split(String.fromCharCode(10)).filter((l) => l.trim().length > 0);
 
 export default function App() {
   const s = useOyun();
@@ -236,9 +236,11 @@ export default function App() {
           {bolum.kartModu && s.kartlaYaz && !s.turkceAcik && (
             <KartModu
               izinliKomutlar={bolum.izinliKomutlar}
-              satirSayisi={kartSatirSayisi(s.kod.govde)}
+              satirlar={kartSatirlari(s.kod.govde)}
+              secilenSatir={s.secilenSatir}
               onEkle={s.kartEkle}
-              onGeriAl={s.kartGeriAl}
+              onSil={s.kartSatirSil}
+              onSec={s.kartSatirSec}
               onTemizle={s.kartTemizle}
             />
           )}

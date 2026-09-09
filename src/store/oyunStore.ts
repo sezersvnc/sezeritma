@@ -90,6 +90,11 @@ interface OyunDurumu {
   kavramlarAcik: boolean;
   /** Kart modu açıkken öğrenci klavye yerine komut kartlarıyla kod kuruyor. */
   kartlaYaz: boolean;
+  /**
+   * Kart modunda seçili satır. Yeni kart bunun altına eklenir.
+   * null ise en sona eklenir. Ortadaki bir satırı düzeltmenin yolu bu.
+   */
+  secilenSatir: number | null;
   /** Türkçe okuma paneli açık mı. */
   turkceAcik: boolean;
   gorulenDersler: number[];
@@ -124,7 +129,8 @@ interface OyunDurumu {
   dersKapat: () => void;
   kavramlarAcKapa: (acik: boolean) => void;
   kartEkle: (komut: KomutAdi) => void;
-  kartGeriAl: () => void;
+  kartSatirSil: (index: number) => void;
+  kartSatirSec: (index: number | null) => void;
   kartTemizle: () => void;
   kartlaYazDegistir: (kartla: boolean) => void;
   turkceAcKapa: (acik: boolean) => void;
@@ -175,6 +181,7 @@ export const useOyun = create<OyunDurumu>((set, get) => ({
   ),
   kavramlarAcik: false,
   kartlaYaz: ilkBolum.kartModu,
+  secilenSatir: null,
   turkceAcik: false,
   gorulenDersler: ilkKayit.gorulenDersler,
   karsilamaAcik: !ilkKayit.karsilamaGorundu,
@@ -265,6 +272,7 @@ export const useOyun = create<OyunDurumu>((set, get) => ({
       haritaAcik: false,
       kavramlarAcik: false,
       kartlaYaz: bolum.kartModu,
+      secilenSatir: null,
       turkceAcik: false,
       tahmin: null,
       gercekSonuc: null,
@@ -323,17 +331,34 @@ export const useOyun = create<OyunDurumu>((set, get) => ({
 
   kartEkle: (komut) => {
     const satirlar = kartSatirlari(get().kod.govde);
-    satirlar.push(`${komut}();`);
+    const secilen = get().secilenSatir;
+    const yer = secilen === null ? satirlar.length : secilen + 1;
+    satirlar.splice(yer, 0, `${komut}();`);
+    // Seçim eklenen satırla birlikte ilerlesin ki arka arkaya ekleme akıcı olsun.
+    set({ secilenSatir: secilen === null ? null : yer });
     get().kodYaz({ govde: satirlar.join(SATIR_SONU) });
   },
 
-  kartGeriAl: () => {
+  kartSatirSil: (index) => {
     const satirlar = kartSatirlari(get().kod.govde);
-    satirlar.pop();
+    if (index < 0 || index >= satirlar.length) return;
+    satirlar.splice(index, 1);
+    const secilen = get().secilenSatir;
+    set({
+      secilenSatir:
+        secilen === null || satirlar.length === 0
+          ? null
+          : Math.min(secilen > index ? secilen - 1 : secilen, satirlar.length - 1),
+    });
     get().kodYaz({ govde: satirlar.join(SATIR_SONU) });
   },
 
-  kartTemizle: () => get().kodYaz({ govde: '' }),
+  kartSatirSec: (index) => set({ secilenSatir: index }),
+
+  kartTemizle: () => {
+    set({ secilenSatir: null });
+    get().kodYaz({ govde: '' });
+  },
 
   kartlaYazDegistir: (kartlaYaz) => set({ kartlaYaz }),
 

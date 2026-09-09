@@ -355,6 +355,10 @@ Bir bölümde açılan öğeler tek bir blokta duyuruluyor ve ne işe yaradıkla
 
 Anlatım penceresi kapatılabiliyor. Kartın altındaki "Anlatımı kapat" bir daha kendiliğinden açılmamasını sağlıyor; Kavramlar panelindeki anahtar geri açıyor. Ayar kayda yazılıyor. Gerekçe: kod bilen biri için anlatım gereksiz bir durak, sıfırdan öğrenen için asıl ders. İkisi de aynı oyunu oynayabilmeli. Kapalıyken anlatım kaybolmuyor, görev kartındaki "anlatımı aç" bağlantısı yerinde duruyor.
 
+### Kart modu
+
+Kartla kurulan program, kartların altında satır satır listeleniyor. Her satırın kendi silme düğmesi var ve bir satıra basıldığında yeni kartlar onun altına ekleniyor. Önceden tek yol vardı: sondan tek tek silmek. On iki satırlık bir programda üçüncü satırı düzeltmek dokuz silme demekti, yani öğrenci hatasını düzeltmek yerine baştan başlıyordu.
+
 ### Çalışma dökümü
 
 Sahnenin altında, kod çalışırken her satır ne yaptığıyla birlikte sırayla yazılıyor. Döngü çalıştığında aynı satır tekrar tekrar dökülüyor; bu gürültü değil, dersin kendisi. Öğrenci döngünün "açılışını" gözüyle burada görüyor.
