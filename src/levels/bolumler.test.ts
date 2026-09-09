@@ -3,6 +3,7 @@ import { BOLUMLER } from './index';
 import { cozumuBol } from './bolumOku';
 import { calistir, satirSay } from '../core/yurutucu';
 import type { KomutAdi, YapiAdi } from '../core/types';
+import { yeniOzellikler } from '../content/arayuz';
 
 /**
  * Bölüm doğrulayıcı. `npm run bolum:dogrula` bunu çalıştırır.
@@ -82,3 +83,19 @@ describe.each(BOLUMLER.map((b) => [b.no, b.ad, b] as const))(
     });
   },
 );
+
+describe('kart modu ve duyurular', () => {
+  it('kart modu, ilk yapı açılana kadar sürüyor', () => {
+    // Kartlar sadece komut dizer; for/while/if kartla ifade edilemez.
+    // Yeni başlayan biri klavyeye ancak yapılar geldiğinde mecbur kalmalı.
+    BOLUMLER.forEach((b) => {
+      expect(b.kartModu, `bölüm ${b.no}`).toBe(b.izinliYapilar.length === 0);
+    });
+  });
+
+  it('kartların bittiği bölüm bir kere duyuruluyor', () => {
+    const ilkYapili = BOLUMLER.find((b) => b.izinliYapilar.length > 0);
+    expect(ilkYapili).toBeDefined();
+    expect(yeniOzellikler(ilkYapili!.no).some((d) => d.includes('Kartlar burada bitiyor'))).toBe(true);
+  });
+});

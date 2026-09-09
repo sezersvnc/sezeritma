@@ -98,7 +98,7 @@ function denetle(program: Program, bolum: Bolum): Hata | undefined {
       kod: 'izinsiz-yapi',
       bolme: konum.bolme,
       satir: konum.satir,
-      mesaj: `${konum.satir}. satırda ${YAPI_ADI[yapi]} kullanmışsın ama bu bölümde ${yapi} henüz açılmadı. Elindeki komutlarla çözebilirsin.`,
+      mesaj: `${konum.satir}. satırda ${YAPI_ADI[yapi]} kullanmışsın ama o bu bölümde henüz açılmadı. Elindeki komutlarla çözebilirsin.`,
     };
   };
 
@@ -572,6 +572,16 @@ export function calistir(
     kullanilanSatir,
     yildiz: 0,
   });
+
+  // Boş kodu "molaya varmadı" diye raporlamak yanıltıcı olur.
+  if (!kod.govde.trim() && !kod.fonksiyonlar.trim()) {
+    return basarisiz({
+      kod: 'molaya-varmadi',
+      bolme: 'govde',
+      satir: 0,
+      mesaj: 'Henüz kod yazmadın. Sezer ne yapacağını bilmiyor, o yüzden yerinden kıpırdamadı.',
+    });
+  }
 
   let program: Program;
   try {

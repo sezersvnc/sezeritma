@@ -1668,6 +1668,16 @@ button {
   background: var(--kakao-3);
   color: var(--sut);
   border-left: 2px solid var(--yelek);
+  display: grid;
+  gap: 6px;
+}
+
+.rapor-yeni .etiket {
+  color: var(--yelek);
+}
+
+.rapor-yeni p {
+  margin: 0;
 }
 
 /* ------------------------------------------------------------------ giriş seviyesi */

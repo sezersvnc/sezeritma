@@ -9,6 +9,8 @@ interface Props {
   onDevam: () => void;
   onAdim: () => void;
   onSifirla: () => void;
+  /** Bölüm hazır kodla başlıyorsa, bozulan kodu geri getirme yolu. */
+  onKoduGeriYukle?: () => void;
   onHiz: (hiz: number) => void;
 }
 
@@ -22,6 +24,7 @@ export function Kontroller({
   onDevam,
   onAdim,
   onSifirla,
+  onKoduGeriYukle,
   onHiz,
 }: Props) {
   return (
@@ -47,6 +50,11 @@ export function Kontroller({
       <button className="dugme" onClick={onSifirla} disabled={!calisti}>
         Sıfırla
       </button>
+      {onKoduGeriYukle && (
+        <button className="dugme" onClick={onKoduGeriYukle} disabled={oynatiliyor}>
+          Kodu geri yükle
+        </button>
+      )}
 
       {adimKontrolu && (
         <label className="hiz">

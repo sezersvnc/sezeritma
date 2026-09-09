@@ -122,7 +122,9 @@ export function bolumOku(metin: string, no: number): Bolum {
     izinliYapilar,
     hedefSatir,
     fonksiyonBolmesi,
-    kartModu: izinliYapilar.length === 0 && vardiya === 1,
+    // Kart modu, dilde henüz yapı (for/while/if) açılmadığı sürece yaşar.
+    // Yapılar kartlarla ifade edilemez; ilk yapı açıldığı bölümde klavye zorunlu olur.
+    kartModu: izinliYapilar.length === 0,
 
     baslangicKodu: parcalar.get('BaslangicKodu') ?? '',
     referansCozum: al('Cozum'),

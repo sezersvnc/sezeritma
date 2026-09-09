@@ -22,10 +22,10 @@ const ADIM: Record<Yon, Kare> = {
 };
 
 const YON_ADI: Record<Yon, string> = {
-  kuzey: 'yukarı',
-  dogu: 'sağa',
-  guney: 'aşağı',
-  bati: 'sola',
+  kuzey: 'Yukarı',
+  dogu: 'Sağa',
+  guney: 'Aşağı',
+  bati: 'Sola',
 };
 
 export function dunyaKur(harita: CozulmusHarita): Dunya {

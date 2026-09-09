@@ -5,13 +5,13 @@ import type { Bolme } from './types';
 
 /** Öğrencinin yazması muhtemel ama oyunda yeri olmayan C++ parçaları. */
 const DESTEKLENMEYEN: Record<string, string> = {
-  cout: 'Bu oyunda `cout` yok. Sezer\'i komutlarla yönetiyorsun.',
-  cin: 'Bu oyunda `cin` yok. Sezer dışarıdan girdi almıyor.',
-  endl: 'Bu oyunda `endl` yok, çünkü ekrana yazı yazmıyoruz.',
-  printf: 'Bu oyunda `printf` yok. Sezer\'i komutlarla yönetiyorsun.',
-  scanf: 'Bu oyunda `scanf` yok.',
-  string: 'Bu oyunda `string` yok. Sadece `int` ve `bool` var.',
-  vector: 'Bu oyunda `vector` yok.',
+  cout: 'bu oyunda `cout` yok. Sezer\'i komutlarla yönetiyorsun.',
+  cin: 'bu oyunda `cin` yok. Sezer dışarıdan girdi almıyor.',
+  endl: 'bu oyunda `endl` yok, çünkü ekrana yazı yazmıyoruz.',
+  printf: 'bu oyunda `printf` yok. Sezer\'i komutlarla yönetiyorsun.',
+  scanf: 'bu oyunda `scanf` yok.',
+  string: 'bu oyunda `string` yok. Sadece `int` ve `bool` var.',
+  vector: 'bu oyunda `vector` yok.',
   include: '`#include` satırı zaten yukarıda, senin yazmana gerek yok.',
 };
 
@@ -230,7 +230,7 @@ class Ayristirici {
     }
 
     const acikla = DESTEKLENMEYEN[ad.deger];
-    if (acikla) this.hata('desteklenmeyen', acikla, ad.satir);
+    if (acikla) this.hata('desteklenmeyen', `${ad.satir}. satırda ${acikla}`, ad.satir);
 
     if (this.yediysen('(')) {
       const argumanlar = this.argumanListesi(ad.satir);
@@ -272,7 +272,7 @@ class Ayristirici {
 
     this.hata(
       'sozdizimi',
-      `\`${ad.deger}\` komutunu çağırmak için sonuna parantez koymalısın: \`${ad.deger}();\``,
+      `${ad.satir}. satırda \`${ad.deger}\` komutunu çağırmak için sonuna parantez koymalısın: \`${ad.deger}();\``,
       ad.satir,
     );
   }
@@ -365,7 +365,7 @@ class Ayristirici {
 
     if (t.tip === 'ad') {
       const acikla = DESTEKLENMEYEN[t.deger];
-      if (acikla) this.hata('desteklenmeyen', acikla, t.satir);
+      if (acikla) this.hata('desteklenmeyen', `${t.satir}. satırda ${acikla}`, t.satir);
       if (this.yediysen('(')) {
         this.bekle(')', `${t.satir}. satırda açtığın parantezi kapatmalısın.`, t.satir);
         return { tip: 'sorgu', ad: t.deger, ...konum };

@@ -97,6 +97,12 @@ export default function App() {
   const ozellik = arayuzOzellikleri(bolum.no);
   const duyurular = yeniOzellikler(bolum.no);
 
+  // Tek seçenekli sekme satırı anlamsızdır: seçilecek başka bir şey yoksa gizlenir.
+  const sekmeSayisi =
+    (bolum.kartModu && ozellik.yazimSekmeleri ? 1 : 0) +
+    (ozellik.yazimSekmeleri ? 1 : 0) +
+    (ozellik.turkceOku ? 1 : 0);
+
   return (
     <div className="uygulama">
       <UstBar
@@ -154,7 +160,7 @@ export default function App() {
             onDegis={s.kodYaz}
           />
 
-          {(ozellik.yazimSekmeleri || ozellik.turkceOku) && (
+          {sekmeSayisi >= 2 && (
           <div className="yazim-secimi">
             {bolum.kartModu && ozellik.yazimSekmeleri && (
               <button
@@ -223,14 +229,23 @@ export default function App() {
             onDevam={s.devamEt}
             onAdim={s.ileriAl}
             onSifirla={s.sifirla}
+            onKoduGeriYukle={
+              bolum.baslangicKodu &&
+              (s.kod.govde !== bolum.baslangicKodu || s.kod.fonksiyonlar.trim() !== '')
+                ? s.koduGeriYukle
+                : undefined
+            }
             onHiz={(hiz) => useOyun.setState({ hiz })}
           />
 
-          {duyurular.map((d) => (
-            <p key={d} className="rapor rapor-yeni">
-              {d}
-            </p>
-          ))}
+          {duyurular.length > 0 && (
+            <div className="rapor rapor-yeni">
+              <span className="etiket">Bu bölümde açılanlar</span>
+              {duyurular.map((d) => (
+                <p key={d}>{d}</p>
+              ))}
+            </div>
+          )}
 
           {hata && (oynatmaBitti || adimlar.length === 0) && (
             <p className="rapor rapor-hata" role="status">

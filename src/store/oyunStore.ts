@@ -97,6 +97,8 @@ interface OyunDurumu {
   devamEt: () => void;
   ileriAl: () => void;
   sifirla: () => void;
+  /** Hata ayıklama bölümlerinde bozuk kodu bölümün ilk hâline döndürür. */
+  koduGeriYukle: () => void;
   tik: () => void;
   bolumSec: (no: number) => void;
   sonrakiBolum: () => void;
@@ -214,6 +216,11 @@ export const useOyun = create<OyunDurumu>((set, get) => ({
 
   sifirla: () =>
     set({ adimlar: [], adimIndex: -1, oynatiliyor: false, sonuc: null }),
+
+  koduGeriYukle: () => {
+    const bolum = get().bolum;
+    get().kodYaz({ govde: bolum.baslangicKodu, fonksiyonlar: '' });
+  },
 
   bolumSec: (no) => {
     const bolum = BOLUMLER.find((b) => b.no === no);

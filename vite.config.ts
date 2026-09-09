@@ -4,7 +4,7 @@ import react from '@vitejs/plugin-react'
 // `npm test` sadece yayındaki bölümleri denetler.
 // `npm run bolum:gelen` ise docs/bolumler altındaki taslakları denetler;
 // oradaki bölümler henüz çalışmıyor olabilir, bu yüzden varsayılan koşuya girmez.
-const kontrolKosusu = ['bolum:gelen', 'cevap-anahtari'].includes(
+const kontrolKosusu = ['bolum:gelen', 'cevap-anahtari', 'hata-katalogu'].includes(
   process.env.npm_lifecycle_event ?? '',
 )
 

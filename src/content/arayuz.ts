@@ -20,6 +20,8 @@ export interface ArayuzOzellikleri {
   turkceOku: boolean;
   /** Çalıştırmadan önce sonucu tahmin etme. */
   tahmin: boolean;
+  /** Kartların bittiği, klavyenin zorunlu olduğu bölüm. Sadece duyuru için. */
+  klavyeZorunlu: boolean;
 }
 
 interface Kilit {
@@ -34,30 +36,36 @@ const KILITLER: readonly Kilit[] = [
     bolum: 3,
     anahtar: 'adimKontrolu',
     duyuru:
-      'Yeni: Adım adım düğmesi açıldı. Kodu tek tek ilerletip her komutun ne yaptığını görebilirsin.',
+      'Adım adım düğmesi açıldı. Kodu tek tek ilerletip her komutun ne yaptığını görebilirsin.',
   },
   {
     bolum: 3,
     anahtar: 'yazimSekmeleri',
     duyuru:
-      'Yeni: İstersen kartları bırakıp kodu kendin yazabilirsin. Kartlara dönmek her zaman serbest.',
+      'İstersen kartları bırakıp kodu kendin yazabilirsin. Kartlara dönmek her zaman serbest.',
+  },
+  {
+    bolum: 7,
+    anahtar: 'klavyeZorunlu',
+    duyuru:
+      'Kartlar burada bitiyor. Döngü bir komut değil, bir yapı; kart olarak dizilemez. Bundan sonra kodu kendin yazacaksın.',
   },
   {
     bolum: 7,
     anahtar: 'hedefSatir',
     duyuru:
-      'Yeni: Artık satır sayısı önemli. Üçüncü yıldızı, işi hedeflenen satırda bitirdiğinde alırsın.',
+      'Artık satır sayısı önemli. Üçüncü yıldızı, işi hedeflenen satırda bitirdiğinde alırsın.',
   },
   {
     bolum: 7,
     anahtar: 'turkceOku',
-    duyuru: 'Yeni: Türkçe oku sekmesi açıldı. Yazdığın kodun Türkçe karşılığını gösterir.',
+    duyuru: 'Türkçe oku sekmesi açıldı. Yazdığın kodun Türkçe karşılığını gösterir.',
   },
   {
     bolum: 11,
     anahtar: 'tahmin',
     duyuru:
-      'Yeni: Çalıştırmadan önce ne olacağını tahmin edebilirsin. Kodu okumadan tahmin edemezsin, öğreten kısım da orası.',
+      'Çalıştırmadan önce ne olacağını tahmin edebilirsin. Kodu okumadan tahmin edemezsin, öğreten kısım da orası.',
   },
 ];
 
@@ -71,6 +79,7 @@ export function arayuzOzellikleri(bolumNo: number): ArayuzOzellikleri {
     yazimSekmeleri: acik('yazimSekmeleri'),
     turkceOku: acik('turkceOku'),
     tahmin: acik('tahmin'),
+    klavyeZorunlu: acik('klavyeZorunlu'),
   };
 }
 
