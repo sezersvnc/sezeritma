@@ -291,3 +291,12 @@ describe('kosul sonuclari adima yaziliyor', () => {
     expect(s.adimlar[0].olay).toBe('kosul-yanlis');
   });
 });
+
+describe('cozume bakildiginda yildiz', () => {
+  it('tek yildizda kalir', () => {
+    const kod = 'ilerle();\nilerle();\nilerle();';
+    const bolum = bolumYap(KORIDOR);
+    expect(kosa(kod, bolum).yildiz).toBe(3);
+    expect(calistir({ govde: kod, fonksiyonlar: '' }, bolum, { cozumGoruldu: true }).yildiz).toBe(1);
+  });
+});

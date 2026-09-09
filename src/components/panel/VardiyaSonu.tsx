@@ -5,6 +5,7 @@ import { kodluMetin } from './metin';
 import { useOdakTuzagi } from './odakTuzagi';
 
 export function VardiyaSonu({
+  cozumGoruldu,
   bolumNo,
   ad,
   yildiz,
@@ -91,13 +92,20 @@ export function VardiyaSonu({
             <div data-alindi="1">
               <b>1</b> Bölümü çözdün.
             </div>
-            <div data-alindi={yildiz >= 2 ? '1' : undefined}>
+            <div data-alindi={!cozumGoruldu && yildiz >= 2 ? '1' : undefined}>
               <b>2</b> İpucu kullanmadan çözdün.
             </div>
-            <div data-alindi={verimli ? '1' : undefined}>
+            <div data-alindi={!cozumGoruldu && verimli ? '1' : undefined}>
               <b>3</b> {hedefSatir} satır ya da daha azıyla çözdün.
             </div>
           </div>
+
+          {cozumGoruldu && (
+            <p className="yildiz-notu">
+              Çözüme baktığın için bu bölüm tek yıldızla kapandı. Sonra dönüp kendin çözersen
+              yıldızları yine kazanırsın.
+            </p>
+          )}
 
           <div className="tabela-dugmeler">
             <button ref={odak} className="dugme-koyu etiket" onClick={onSonraki}>

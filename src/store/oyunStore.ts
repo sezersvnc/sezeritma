@@ -1,6 +1,7 @@
 import { create } from 'zustand';
 import { BOLUMLER, TOPLAM_BOLUM } from '../levels';
 import { calistir } from '../core/yurutucu';
+import { cozumuBol } from '../levels/bolumOku';
 import { dersBul } from '../content/dersler';
 import { sonucTuru, type TahminTuru } from '../content/tahmin';
 import type { Adim, Bolum, CalismaSonucu, Kod, KomutAdi } from '../core/types';
@@ -72,6 +73,9 @@ interface OyunDurumu {
 
   ipucuAcik: 0 | 1 | 2;
   ipucuKullanildi: boolean;
+  /** Bu bölümde kaç kere çalıştırıp geçemedi. Çözüm ancak birkaç denemeden sonra sunulur. */
+  basarisizDeneme: number;
+  cozumGoruldu: boolean;
   basariAcik: boolean;
   haritaAcik: boolean;
   dersAcik: boolean;
@@ -103,6 +107,8 @@ interface OyunDurumu {
   bolumSec: (no: number) => void;
   sonrakiBolum: () => void;
   ipucuAc: () => void;
+  /** Referans çözümü editöre yazar. Bölüm tek yıldızla kapanır. */
+  cozumuGoster: () => void;
   haritaAcKapa: (acik: boolean) => void;
   basariKapat: () => void;
   dersAc: () => void;
@@ -147,6 +153,8 @@ export const useOyun = create<OyunDurumu>((set, get) => ({
 
   ipucuAcik: 0,
   ipucuKullanildi: false,
+  basarisizDeneme: 0,
+  cozumGoruldu: false,
   basariAcik: false,
   haritaAcik: false,
   dersAcik: dersGosterilsinMi(ilkBolum.no, ilkKayit.gorulenDersler),
@@ -169,9 +177,10 @@ export const useOyun = create<OyunDurumu>((set, get) => ({
   },
 
   calistirBasla: () => {
-    const { kod, bolum, ipucuKullanildi } = get();
-    const sonuc = calistir(kod, bolum, { ipucuKullanildi });
+    const { kod, bolum, ipucuKullanildi, cozumGoruldu, basarisizDeneme } = get();
+    const sonuc = calistir(kod, bolum, { ipucuKullanildi, cozumGoruldu });
     set({
+      basarisizDeneme: sonuc.basarili ? basarisizDeneme : basarisizDeneme + 1,
       sonuc,
       gercekSonuc: sonucTuru(sonuc),
       adimlar: sonuc.adimlar,
@@ -235,6 +244,8 @@ export const useOyun = create<OyunDurumu>((set, get) => ({
       sonuc: null,
       ipucuAcik: 0,
       ipucuKullanildi: false,
+      basarisizDeneme: 0,
+      cozumGoruldu: false,
       basariAcik: false,
       haritaAcik: false,
       kavramlarAcik: false,
@@ -255,6 +266,17 @@ export const useOyun = create<OyunDurumu>((set, get) => ({
       return;
     }
     get().bolumSec(sonraki);
+  },
+
+  /**
+   * Çözüm o bölümdeki bu ziyaret boyunca yıldızı tek yıldıza sabitler.
+   * Kalıcı değil: öğrenci sonra dönüp kendi çözerse yıldızlarını kazanır.
+   * Zaten kazanılmış yıldız da geri alınmaz, kayıt en yükseği tutuyor.
+   */
+  cozumuGoster: () => {
+    const bolum = get().bolum;
+    set({ cozumGoruldu: true });
+    get().kodYaz(cozumuBol(bolum.referansCozum));
   },
 
   ipucuAc: () => {

@@ -187,9 +187,19 @@ export interface IpucuPaneliProps {
   /** 0 = hiçbiri açık değil. */
   acikSayisi: 0 | 1 | 2;
   onAc: () => void;
+  /**
+   * Çözüme bakma yolu. İki ipucu da açıkken ve birkaç denemeden sonra
+   * çıkar; oyunu yarıda bırakmaktansa çözümü okuyup üzerinde yürümek
+   * daha çok şey öğretir.
+   */
+  cozumSunuluyor: boolean;
+  cozumGoruldu: boolean;
+  onCozum: () => void;
 }
 
 export interface VardiyaSonuProps {
+  /** Çözüme bakıldıysa bölüm tek yıldızla kapanır; ölçüt listesi bunu söyler. */
+  cozumGoruldu: boolean;
   bolumNo: number;
   ad: string;
   yildiz: 1 | 2 | 3;

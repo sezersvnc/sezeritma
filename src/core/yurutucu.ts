@@ -560,6 +560,8 @@ class Yurutucu {
 
 export interface CalistirmaSecenekleri {
   ipucuKullanildi?: boolean;
+  /** Çözüme bakıldıysa bölüm tek yıldızla kapanır. */
+  cozumGoruldu?: boolean;
 }
 
 export function calistir(
@@ -637,9 +639,13 @@ export function calistir(
     );
   }
 
-  const yildiz = (1 +
-    (secenekler.ipucuKullanildi ? 0 : 1) +
-    (kullanilanSatir <= bolum.hedefSatir ? 1 : 0)) as 1 | 2 | 3;
+  const yildiz = (
+    secenekler.cozumGoruldu
+      ? 1
+      : 1 +
+        (secenekler.ipucuKullanildi ? 0 : 1) +
+        (kullanilanSatir <= bolum.hedefSatir ? 1 : 0)
+  ) as 1 | 2 | 3;
 
   return { basarili: true, adimlar, kullanilanSatir, yildiz };
 }

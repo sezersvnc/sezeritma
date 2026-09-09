@@ -265,13 +265,21 @@ export default function App() {
               izinliKomutlar={bolum.izinliKomutlar}
               izinliYapilar={bolum.izinliYapilar}
             />
-            <IpucuPaneli ipuclari={bolum.ipuclari} acikSayisi={s.ipucuAcik} onAc={s.ipucuAc} />
+            <IpucuPaneli
+              ipuclari={bolum.ipuclari}
+              acikSayisi={s.ipucuAcik}
+              onAc={s.ipucuAc}
+              cozumSunuluyor={s.ipucuAcik === 2 && s.basarisizDeneme >= 3}
+              cozumGoruldu={s.cozumGoruldu}
+              onCozum={s.cozumuGoster}
+            />
           </div>
         </section>
       </main>
 
       {s.basariAcik && sonuc?.basarili && (
         <VardiyaSonu
+          cozumGoruldu={s.cozumGoruldu}
           bolumNo={bolum.no}
           ad={bolum.ad}
           yildiz={sonuc.yildiz as 1 | 2 | 3}
