@@ -17,7 +17,7 @@ const tema = EditorView.theme(
     '&': { color: '#e9e8e5', fontSize: '13.5px' },
     '.cm-scroller': { fontFamily: "'JetBrains Mono', ui-monospace, monospace" },
     '.cm-selectionBackground, ::selection': { background: '#333840 !important' },
-    '.cm-gutterElement': { color: '#5a5f68' },
+    '.cm-gutterElement': { color: '#868b93' },
   },
   { dark: true },
 );
@@ -29,11 +29,11 @@ const renkler = HighlightStyle.define([
   { tag: tags.controlKeyword, color: '#e2571f' },
   { tag: tags.number, color: '#e9e8e5' },
   { tag: tags.bool, color: '#e9e8e5' },
-  { tag: tags.comment, color: '#6a6f78', fontStyle: 'italic' },
+  { tag: tags.comment, color: '#8a8f98', fontStyle: 'italic' },
   { tag: tags.variableName, color: '#e9e8e5' },
   { tag: tags.function(tags.variableName), color: '#b9c2cc' },
-  { tag: tags.operator, color: '#8a8f98' },
-  { tag: tags.punctuation, color: '#6a6f78' },
+  { tag: tags.operator, color: '#9aa0a8' },
+  { tag: tags.punctuation, color: '#8a8f98' },
 ]);
 
 /**

@@ -355,6 +355,12 @@ Bir bölümde açılan öğeler tek bir blokta duyuruluyor ve ne işe yaradıkla
 
 Anlatım penceresi kapatılabiliyor. Kartın altındaki "Anlatımı kapat" bir daha kendiliğinden açılmamasını sağlıyor; Kavramlar panelindeki anahtar geri açıyor. Ayar kayda yazılıyor. Gerekçe: kod bilen biri için anlatım gereksiz bir durak, sıfırdan öğrenen için asıl ders. İkisi de aynı oyunu oynayabilmeli. Kapalıyken anlatım kaybolmuyor, görev kartındaki "anlatımı aç" bağlantısı yerinde duruyor.
 
+### Renk kontrastı
+
+`node araclar/kontrast-bak.mjs` beş ayrı ekranda çizilen her metnin arka planıyla kontrastını ölçer ve WCAG AA eşiğinin (normal metin 4.5, büyük metin 3.0) altında kalanları listeler. Jetonlara bakarak tahmin etmek yerine tarayıcının gerçekten çizdiği rengi okur.
+
+Tek bir gri iki zemini birden taşıyamıyor: açık zeminde okunan gri koyu zeminde okunmuyor. Bu yüzden ikinci mürekkep ikiye ayrıldı: `--beton-4` açık zeminler, `--kalem` koyu zeminler için. Marka turuncusu da küçük yazıda açık zeminde 3'ün altında kaldığı için `--yelek-yazi` eklendi; turuncu dolgu ve çerçevelerde marka rengi olduğu gibi duruyor.
+
 ### Kart modu
 
 Kartla kurulan program, kartların altında satır satır listeleniyor. Her satırın kendi silme düğmesi var ve bir satıra basıldığında yeni kartlar onun altına ekleniyor. Önceden tek yol vardı: sondan tek tek silmek. On iki satırlık bir programda üçüncü satırı düzeltmek dokuz silme demekti, yani öğrenci hatasını düzeltmek yerine baştan başlıyordu.

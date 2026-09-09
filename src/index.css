@@ -10,7 +10,8 @@
   --beton-1: #eceae6;
   --beton-2: #dcd9d4;
   --beton-3: #b6b2ab;
-  --beton-4: #7d7a76;
+  /* Açık zeminlerin ikinci mürekkebi. WCAG AA için koyultuldu. */
+  --beton-4: #5f5c58;
 
   --kakao-1: #16171a;
   --kakao-2: #1d1f23;
@@ -19,6 +20,11 @@
 
   --serit: #8a8f98;
   --serit-koyu: #6f747c;
+  /* Koyu zeminlerin ikinci mürekkebi. Tek bir gri iki zemini birden
+     taşıyamıyor: açık zeminde okunan gri, koyu zeminde okunmuyor. */
+  --kalem: #969ba3;
+  /* Küçük yazıda turuncu. Marka turuncusu açık zeminde 3'ün altında kalıyor. */
+  --yelek-yazi: #a83a0b;
   --yelek: #e2571f;
   --folyo: #6b4f3c;
   --sut: #e9e8e5;
@@ -292,7 +298,7 @@ button {
   font-family: var(--kod);
   font-size: 9px;
   font-weight: 700;
-  color: var(--yelek);
+  color: var(--yelek-yazi);
 }
 
 .hucre[data-iz='1']::before {
@@ -446,7 +452,7 @@ button {
 
 .kilitli-satir {
   padding: 1px 16px 1px 44px;
-  color: #5a5f68;
+  color: #868b93;
   white-space: pre;
   user-select: none;
 }
@@ -457,7 +463,7 @@ button {
 
 .bolme-etiketi {
   padding: 12px 16px 4px 44px;
-  color: var(--kakao-4);
+  color: var(--kalem);
 }
 
 .cm-editor {
@@ -524,7 +530,8 @@ button {
 .dugme-birincil {
   background: var(--yelek);
   border-color: var(--yelek);
-  color: #fff;
+  /* Turuncu zeminde beyaz 3.05'te kalıyor; koyu mürekkep 4.79 veriyor. */
+  color: var(--kakao-1);
   font-weight: 700;
   letter-spacing: 0.04em;
 }
@@ -538,7 +545,7 @@ button {
   display: flex;
   align-items: center;
   gap: 8px;
-  color: var(--beton-4);
+  color: var(--kalem);
 }
 
 .hiz input {
@@ -623,7 +630,7 @@ button {
   justify-content: space-between;
   gap: 12px;
   width: 100%;
-  color: var(--beton-4);
+  color: var(--kalem);
   padding: 2px 0;
 }
 
@@ -658,7 +665,7 @@ button {
 
 .ipucu code {
   font-family: var(--kod);
-  color: var(--yelek);
+  color: var(--yelek-yazi);
 }
 
 /* ------------------------------------------------------------------ örtü */
@@ -935,7 +942,7 @@ button {
 
 .ders-satir span code {
   font-size: 12px;
-  color: var(--yelek);
+  color: var(--yelek-yazi);
 }
 
 .ders-hatirla {
@@ -964,7 +971,7 @@ button {
 .ders-baglantisi {
   margin-left: 10px;
   font-size: 13px;
-  color: var(--yelek);
+  color: var(--yelek-yazi);
   border-bottom: 1px solid currentColor;
   padding: 0;
 }
@@ -1071,7 +1078,7 @@ button {
   font-size: 11px;
   letter-spacing: 0.1em;
   text-transform: uppercase;
-  color: var(--beton-4);
+  color: var(--kalem);
   padding: 11px 14px;
   border-bottom: 2px solid transparent;
 }
@@ -1127,7 +1134,7 @@ button {
 
 .kart span {
   font-size: 12px;
-  color: var(--beton-4);
+  color: var(--kalem);
 }
 
 .kart-arac {
@@ -1139,14 +1146,14 @@ button {
 
 .kart-sayac {
   margin-left: auto;
-  color: var(--beton-4);
+  color: var(--kalem);
 }
 
 .kart-ipucu {
   flex: 1;
   font-size: 12.5px;
   line-height: 1.4;
-  color: var(--serit-koyu);
+  color: var(--kalem);
 }
 
 /* Kurulan program: her satır silinebilir, her satır ekleme noktası olabilir. */
@@ -1193,7 +1200,7 @@ button {
 .kart-satir-no {
   font-family: var(--kod);
   font-size: 11px;
-  color: var(--serit-koyu);
+  color: var(--kalem);
   min-width: 1.4em;
   text-align: right;
 }
@@ -1207,7 +1214,7 @@ button {
   background: none;
   border: none;
   border-left: 1px solid var(--kakao-4);
-  color: var(--serit-koyu);
+  color: var(--kalem);
   font-size: 17px;
   line-height: 1;
   cursor: pointer;
@@ -1539,11 +1546,11 @@ button {
 
 .ders-demo-alt .dugme-birincil {
   border-color: var(--yelek);
-  color: #fff;
+  color: var(--kakao-1);
 }
 
 .ders-demo-sayac {
-  color: var(--beton-4);
+  color: var(--kalem);
 }
 
 .ders-demo-degisken {
@@ -1592,11 +1599,11 @@ button {
   align-items: baseline;
   justify-content: space-between;
   gap: 12px;
-  color: var(--beton-4);
+  color: var(--kalem);
 }
 
 .tahmin-kapat {
-  color: var(--kakao-4);
+  color: var(--kalem);
 }
 
 .tahmin-kapat:hover {
@@ -1866,12 +1873,12 @@ button {
   font-family: var(--kod);
   font-size: 12px;
   text-align: right;
-  color: var(--beton-3);
+  color: var(--beton-4);
   padding-top: 1px;
 }
 
 .dokum-liste li[data-son] .dokum-satir {
-  color: var(--yelek);
+  color: var(--yelek-yazi);
 }
 
 .dokum-atlanan {
@@ -1882,11 +1889,11 @@ button {
 }
 
 .dokum-hata .dokum-metin {
-  color: var(--yelek);
+  color: var(--yelek-yazi);
 }
 
 .dokum-hata .dokum-satir {
-  color: var(--yelek);
+  color: var(--yelek-yazi);
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -1905,7 +1912,7 @@ button {
   font-weight: 500;
   letter-spacing: 0;
   text-transform: none;
-  color: var(--serit-koyu);
+  color: var(--kalem);
 }
 
 /* Klavye kısayolu ipucu, klavyesi olmayan ekranda yer kaplamasın. */
