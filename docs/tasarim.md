@@ -164,6 +164,8 @@ Motorda ek iş gerektirmeyen, vakit kalırsa eklenecek bölümler: parametreli f
 | 2 | İpucu kullanmadan çözdü |
 | 3 | Hedef satır sayısının altında veya eşitinde çözdü |
 
+İki ipucu da açıldıktan ve üç kere denendikten sonra "Çözümü göster" çıkıyor. Çözüm editöre yazılıyor, öğrenci üzerinde adım adım yürüyebiliyor ve o bölüm tek yıldızla kapanıyor. Bu kalıcı değil: sonra dönüp kendi çözerse yıldızlarını kazanıyor, kayıt zaten en yüksek yıldızı tutuyor. Gerekçe: iki ipucuyla da açılamayan öğrencinin önündeki tek seçenek oyunu bırakmak olmamalı.
+
 Satır sayılırken kilitli iskelet, boş satırlar ve sadece `{` veya `}` içeren satırlar sayılmıyor. Öğrenci parantez saymakla değil, algoritmayla uğraşıyor.
 
 Üçüncü yıldız verimliliği ödüllendiriyor ve her bölümde ulaşılabilir. 5. bölümde 12 satır yazan öğrenci üç yıldızını alıyor, ama 6. bölümde aynı koridoru 2 satırda geçince döngünün ne işe yaradığını kimse anlatmadan kavrıyor. Ders, ceza vermekten değil karşılaştırmadan doğuyor.
@@ -341,14 +343,21 @@ Yeni başlayan biri için en büyük engel dilin zorluğu değil, aynı anda bak
 
 | Öğe | Açıldığı bölüm | Gerekçe |
 |---|---|---|
-| Kart modu, ipucu, komut listesi, adım anlatıcı | 1 | Yapılacak tek iş var |
+| Kart modu, ipucu, komut listesi, çalışma dökümü | 1 | Yapılacak tek iş var |
 | Adım adım ve hız | 3 | İlk çok adımlı dizi |
 | Kart ile klavye arasında geçiş | 3 | İsteyen erken yazmaya başlasın |
+| Klavye zorunlu olur, kart modu kapanır | 7 | Döngü bir yapı, kartla dizilemez |
 | Satır hedefi | 7 | Verimlilik `for` ile anlam kazanır |
 | Türkçe okuma | 7 | Kod düz liste olmaktan çıkar |
 | Tahmin şeridi | 11 | `while` ile sonuç belirsizleşir |
 
-Bir öğe ilk kez açıldığında tek satırlık bir duyuru çıkıyor ve ne işe yaradığını söylüyor.
+Bir bölümde açılan öğeler tek bir blokta duyuruluyor ve ne işe yaradıkları söyleniyor.
+
+### Çalışma dökümü
+
+Sahnenin altında, kod çalışırken her satır ne yaptığıyla birlikte sırayla yazılıyor. Döngü çalıştığında aynı satır tekrar tekrar dökülüyor; bu gürültü değil, dersin kendisi. Öğrenci döngünün "açılışını" gözüyle burada görüyor.
+
+Koşul satırları sonucunu da söylüyor: koşul doğru mu çıktı, döngü neden bir tur daha döndü, `else`'e neden geçildi. Yürütücü koşulu ölçüp sonucu adıma yazıyor (`dongu-devam`, `dongu-son`, `kosul-dogru`, `kosul-yanlis`, `kosul-else`).
 
 ## 11. Kararlar
 
@@ -357,3 +366,5 @@ Bir öğe ilk kez açıldığında tek satırlık bir duyuru çıkıyor ve ne i�
 - Bölümlerin en büyük ölçüsü 16x16. 5. bölümün "acısı" uzun bir koridor gerektirdiği için ilk yazdığımız 12x12 sınırı büyütüldü.
 - Izgarada dış duvar halkası hücre olarak çizilmiyor; çerçevenin kendisi o duvar. Küçük haritalar böylece koridor gibi okunuyor.
 - Yıldız merdiveni: çözdü (1) + ipucu kullanmadı (+1) + hedef satırın altında kaldı (+1).
+- Kart modu, dilde ilk yapı (`for`) açılana kadar sürüyor. Yapılar kartla dizilemediği için 7. bölümde kapanıyor ve neden kapandığı bir kere söyleniyor.
+- Deponun dış halkası da palet olarak saklanıyor ama ekranda palet görünmüyor. Oraya çarpan öğrenciye "palete çarptın" değil "deponun duvarına çarptın" deniyor.

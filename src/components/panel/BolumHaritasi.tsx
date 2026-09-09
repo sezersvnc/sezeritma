@@ -55,7 +55,7 @@ export function BolumHaritasi({
             return (
               <div key={v} className="vardiya-blogu">
                 <h3 className="etiket">
-                  Vardiya {v} · {VARDIYA_ADI[v] ?? ''}
+                  Vardiya {v}: {VARDIYA_ADI[v] ?? ''}
                 </h3>
                 <div className="bolum-rafi">
                   {bolumlerinVardiyasi.map((b) => {

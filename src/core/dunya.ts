@@ -53,6 +53,14 @@ const onundekiKare = (durum: Durum): Kare => ({
 const izgaraDisinda = (k: Kare, dunya: Dunya) =>
   k.x < 0 || k.y < 0 || k.x >= dunya.izgara.genislik || k.y >= dunya.izgara.yukseklik;
 
+/**
+ * Deponun dış halkası da palet olarak saklanıyor ama ekranda palet gibi
+ * görünmüyor: çerçevenin kendisi o duvar. Öğrenciye "palete çarptın" demek
+ * yanıltıcı olur, ortada gördüğü bir palet yok.
+ */
+const disHalka = (k: Kare, dunya: Dunya) =>
+  k.x === 0 || k.y === 0 || k.x === dunya.izgara.genislik - 1 || k.y === dunya.izgara.yukseklik - 1;
+
 export function ilerle(durum: Durum, dunya: Dunya, konum: Konum): Durum {
   const hedef = onundekiKare(durum);
 
@@ -60,6 +68,14 @@ export function ilerle(durum: Durum, dunya: Dunya, konum: Konum): Durum {
     throw new CalismaHatasi(
       'disari-ciktin',
       `${konum.satir}. satırda depodan çıktın. Sezer duvarların dışına gidemez.`,
+      konum.satir,
+      konum.bolme,
+    );
+  }
+  if (disHalka(hedef, dunya)) {
+    throw new CalismaHatasi(
+      'palete-carptin',
+      `${konum.satir}. satırda deponun duvarına çarptın. ${YON_ADI[durum.yon]} bakıyordun ve depo orada bitiyor.`,
       konum.satir,
       konum.bolme,
     );

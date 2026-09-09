@@ -14,6 +14,7 @@ import type { Bolum } from './types';
 
 const KORIDOR = ['######', '#S..M#', '######'];
 const CIKOLATALI = ['######', '#SC.M#', '######'];
+const PALETLI = ['######', '#S.#M#', '######'];
 
 const bolumYap = (satirlar: string[], ek: Partial<Bolum> = {}): Bolum => ({
   ...bolumUret({ hucreler: haritaOku(satirlar.join('\n')), yon: 'dogu' }, { govde: '', fonksiyonlar: '' }),
@@ -43,7 +44,8 @@ describe('hata katalogu', () => {
     dene('Büyük harf hatası', 'Ilerle();');
     dene('cout kullanıldı', 'cout << 5;');
     dene('Tanımsız değişken', 'sayac = 1;');
-    dene('Duvara çarpma', 'ilerle();\nilerle();\nilerle();\nilerle();');
+    dene('Depo duvarına çarpma', 'ilerle();\nilerle();\nilerle();\nilerle();');
+    dene('Palete çarpma', 'ilerle();\nilerle();', bolumYap(PALETLI));
     dene('Boş karede toplama', 'kap();', bolumYap(KORIDOR));
     dene('Sonsuz döngü', 'while (true) {\n  sagaDon();\n}');
     dene('Molaya varmadan bitti', 'ilerle();');

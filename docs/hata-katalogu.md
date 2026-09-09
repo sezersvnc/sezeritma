@@ -63,7 +63,7 @@ sayac = 1;
 
 > 1. satırda `sayac` diye bir değişken yok. Önce `int sayac = 0;` diye tanımlaman gerekiyor.
 
-## Duvara çarpma
+## Depo duvarına çarpma
 
 ```cpp
 ilerle();
@@ -72,7 +72,16 @@ ilerle();
 ilerle();
 ```
 
-> 4. satırda palete çarptın. Sağa bakıyordun ve orada bir palet vardı. `onumdePaletVar()` ile önce kontrol etmeyi deneyebilirsin.
+> 4. satırda deponun duvarına çarptın. Sağa bakıyordun ve depo orada bitiyor.
+
+## Palete çarpma
+
+```cpp
+ilerle();
+ilerle();
+```
+
+> 2. satırda palete çarptın. Sağa bakıyordun ve orada bir palet vardı. `onumdePaletVar()` ile önce kontrol etmeyi deneyebilirsin.
 
 ## Boş karede toplama
 
