@@ -21,6 +21,7 @@ import { TahminSeridi } from './components/editor/TahminSeridi';
 import { kodluMetin } from './components/panel/metin';
 import { dersBul, vardiyaBul } from './content/dersler';
 import { adimAnlat } from './content/anlatici';
+import { arayuzOzellikleri, yeniOzellikler } from './content/arayuz';
 import type { Durum } from './core/types';
 
 /** Hız kaydırıcısının adım aralıkları. */
@@ -93,6 +94,8 @@ export default function App() {
   const ders = dersBul(bolum.no);
   const vardiyaGirisi = [1, 6, 11, 17, 23, 27].includes(bolum.no) ? vardiyaBul(bolum.vardiya) : undefined;
   const anlati = adimAnlat(suAnkiAdim, adimIndex > 0 ? adimlar[adimIndex - 1] : undefined);
+  const ozellik = arayuzOzellikleri(bolum.no);
+  const duyurular = yeniOzellikler(bolum.no);
 
   return (
     <div className="uygulama">
@@ -134,9 +137,13 @@ export default function App() {
         <section className="kod-paneli">
           <div className="kod-baslik">
             <span className="etiket">main.cpp</span>
-            <span className="etiket">
-              {sonuc ? `${sonuc.kullanilanSatir} / ${bolum.hedefSatir} satır` : `hedef ${bolum.hedefSatir} satır`}
-            </span>
+            {ozellik.hedefSatir && (
+              <span className="etiket">
+                {sonuc
+                  ? `${sonuc.kullanilanSatir} / ${bolum.hedefSatir} satır`
+                  : `hedef ${bolum.hedefSatir} satır`}
+              </span>
+            )}
           </div>
 
           <KodEditoru
@@ -147,8 +154,9 @@ export default function App() {
             onDegis={s.kodYaz}
           />
 
+          {(ozellik.yazimSekmeleri || ozellik.turkceOku) && (
           <div className="yazim-secimi">
-            {bolum.kartModu && (
+            {bolum.kartModu && ozellik.yazimSekmeleri && (
               <button
                 className="yazim-sekmesi"
                 data-secili={s.kartlaYaz && !s.turkceAcik ? '1' : undefined}
@@ -160,24 +168,29 @@ export default function App() {
                 Kartlarla diz
               </button>
             )}
-            <button
-              className="yazim-sekmesi"
-              data-secili={!s.kartlaYaz && !s.turkceAcik ? '1' : undefined}
-              onClick={() => {
-                s.kartlaYazDegistir(false);
-                s.turkceAcKapa(false);
-              }}
-            >
-              Kendim yazayım
-            </button>
-            <button
-              className="yazim-sekmesi"
-              data-secili={s.turkceAcik ? '1' : undefined}
-              onClick={() => s.turkceAcKapa(!s.turkceAcik)}
-            >
-              Türkçe oku
-            </button>
+            {ozellik.yazimSekmeleri && (
+              <button
+                className="yazim-sekmesi"
+                data-secili={!s.kartlaYaz && !s.turkceAcik ? '1' : undefined}
+                onClick={() => {
+                  s.kartlaYazDegistir(false);
+                  s.turkceAcKapa(false);
+                }}
+              >
+                Kendim yazayım
+              </button>
+            )}
+            {ozellik.turkceOku && (
+              <button
+                className="yazim-sekmesi"
+                data-secili={s.turkceAcik ? '1' : undefined}
+                onClick={() => s.turkceAcKapa(!s.turkceAcik)}
+              >
+                Türkçe oku
+              </button>
+            )}
           </div>
+          )}
 
           {s.turkceAcik && <TurkceOkuma kod={s.kod} />}
 
@@ -191,7 +204,7 @@ export default function App() {
             />
           )}
 
-          {!s.tahminKapali && (
+          {ozellik.tahmin && !s.tahminKapali && (
             <TahminSeridi
               secilen={s.tahmin}
               gercek={s.gercekSonuc}
@@ -201,6 +214,7 @@ export default function App() {
           )}
 
           <Kontroller
+            adimKontrolu={ozellik.adimKontrolu}
             oynatiliyor={s.oynatiliyor}
             calisti={adimlar.length > 0 || sonuc !== null}
             hiz={s.hiz}
@@ -211,6 +225,12 @@ export default function App() {
             onSifirla={s.sifirla}
             onHiz={(hiz) => useOyun.setState({ hiz })}
           />
+
+          {duyurular.map((d) => (
+            <p key={d} className="rapor rapor-yeni">
+              {d}
+            </p>
+          ))}
 
           {hata && (oynatmaBitti || adimlar.length === 0) && (
             <p className="rapor rapor-hata" role="status">
@@ -283,7 +303,7 @@ export default function App() {
           bolumler={BOLUMLER.map((b) => ({
             no: b.no,
             yildiz: s.yildizlar[b.no] ?? 0,
-            acik: bolumAcik(b.no, s.yildizlar),
+            acik: bolumAcik(b.no, s.yildizlar, s.enYuksekAcik),
           }))}
           suAnki={bolum.no}
           onSec={s.bolumSec}

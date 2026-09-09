@@ -1662,3 +1662,56 @@ button {
     display: none;
   }
 }
+
+/* Bir özellik ilk kez açıldığında gösterilen tek satırlık duyuru. */
+.rapor-yeni {
+  background: var(--kakao-3);
+  color: var(--sut);
+  border-left: 2px solid var(--yelek);
+}
+
+/* ------------------------------------------------------------------ giriş seviyesi */
+
+.seviye-secimi {
+  display: grid;
+  gap: 8px;
+  margin: 6px 0 18px;
+}
+
+.seviye {
+  display: grid;
+  gap: 3px;
+  text-align: left;
+  border: 1px solid var(--beton-3);
+  background: var(--beton-2);
+  padding: 11px 14px;
+  transition: border-color 90ms ease;
+}
+
+.seviye:hover {
+  border-color: var(--kakao-3);
+}
+
+.seviye[data-secili='1'] {
+  border-color: var(--yelek);
+  box-shadow: inset 0 0 0 1px var(--yelek);
+  background: var(--beton-1);
+}
+
+.seviye strong {
+  font-size: 15px;
+  font-weight: 700;
+}
+
+.seviye span {
+  font-size: 13.5px;
+  line-height: 1.5;
+  color: var(--kakao-2);
+}
+
+.fis-kavram {
+  font-family: var(--kod);
+  font-size: 10.5px;
+  line-height: 1.35;
+  color: var(--beton-4);
+}

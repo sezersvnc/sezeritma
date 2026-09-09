@@ -1,4 +1,6 @@
 interface Props {
+  /** Adım adım ve hız, üçüncü bölümde açılır. Öncesinde ekranı kalabalıklaştırır. */
+  adimKontrolu: boolean;
   oynatiliyor: boolean;
   calisti: boolean;
   hiz: number;
@@ -11,6 +13,7 @@ interface Props {
 }
 
 export function Kontroller({
+  adimKontrolu,
   oynatiliyor,
   calisti,
   hiz,
@@ -36,25 +39,29 @@ export function Kontroller({
         </button>
       )}
 
-      <button className="dugme" onClick={onAdim} disabled={oynatiliyor}>
-        Adım adım
-      </button>
+      {adimKontrolu && (
+        <button className="dugme" onClick={onAdim} disabled={oynatiliyor}>
+          Adım adım
+        </button>
+      )}
       <button className="dugme" onClick={onSifirla} disabled={!calisti}>
         Sıfırla
       </button>
 
-      <label className="hiz">
-        <span className="etiket">Hız</span>
-        <input
-          type="range"
-          min={1}
-          max={5}
-          step={1}
-          value={hiz}
-          onChange={(e) => onHiz(Number(e.target.value))}
-          aria-label="Çalıştırma hızı"
-        />
-      </label>
+      {adimKontrolu && (
+        <label className="hiz">
+          <span className="etiket">Hız</span>
+          <input
+            type="range"
+            min={1}
+            max={5}
+            step={1}
+            value={hiz}
+            onChange={(e) => onHiz(Number(e.target.value))}
+            aria-label="Çalıştırma hızı"
+          />
+        </label>
+      )}
     </div>
   );
 }

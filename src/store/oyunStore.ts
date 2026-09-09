@@ -22,6 +22,11 @@ interface Kayit {
   karsilamaGorundu?: boolean;
   /** Tahmin şeridini kapatan öğrenciye bir daha gösterilmez. */
   tahminKapali?: boolean;
+  /**
+   * Karşılamada seçilen giriş seviyesi. Kod bilen biri baştan başlamak
+   * zorunda kalmasın diye buraya kadar olan bölümler açık gelir.
+   */
+  enYuksekAcik?: number;
 }
 
 const bosKayit: Kayit = { yildizlar: {}, kodlar: {}, gorulenDersler: [] };
@@ -47,9 +52,12 @@ const kayitYaz = (kayit: Kayit) => {
 const baslangicKodu = (bolum: Bolum, kayit: Kayit): Kod =>
   kayit.kodlar[bolum.no] ?? { govde: bolum.baslangicKodu, fonksiyonlar: '' };
 
-/** En yüksek açık bölüm: bir öncekini geçtiysen sonraki açılır. */
-const acikMi = (no: number, yildizlar: Kayit['yildizlar']) =>
-  no === 1 || (yildizlar[no - 1] ?? 0) > 0;
+/**
+ * Bir bölüm açık mı? İki yoldan biriyle açılır: öncekini geçmişsindir,
+ * ya da karşılamada "bunu zaten biliyorum" diyerek oraya kadar atlamışsındır.
+ */
+const acikMi = (no: number, yildizlar: Kayit['yildizlar'], enYuksekAcik = 1) =>
+  no <= Math.max(1, enYuksekAcik) || (yildizlar[no - 1] ?? 0) > 0;
 
 interface OyunDurumu {
   bolum: Bolum;
@@ -75,6 +83,8 @@ interface OyunDurumu {
   gorulenDersler: number[];
   karsilamaAcik: boolean;
   bitisAcik: boolean;
+  /** Karşılamada seçilen giriş seviyesi. */
+  enYuksekAcik: number;
   /** Çalıştırmadan önce seçilen tahmin. */
   tahmin: TahminTuru | null;
   /** Son çalıştırmanın gerçek sonucu. Tahminle karşılaştırılır. */
@@ -101,7 +111,7 @@ interface OyunDurumu {
   kartTemizle: () => void;
   kartlaYazDegistir: (kartla: boolean) => void;
   turkceAcKapa: (acik: boolean) => void;
-  karsilamayiBitir: () => void;
+  karsilamayiBitir: (baslangicBolumu?: number) => void;
   karsilamayiAc: () => void;
   bitisKapat: () => void;
   tahminSec: (tur: TahminTuru) => void;
@@ -116,8 +126,11 @@ const dersGosterilsinMi = (bolumNo: number, gorulen: number[]) => {
 
 const ilkKayit = kayitOku();
 const ilkBolum =
-  BOLUMLER.find((b) => (ilkKayit.yildizlar[b.no] ?? 0) === 0 && acikMi(b.no, ilkKayit.yildizlar)) ??
-  BOLUMLER[0];
+  BOLUMLER.find(
+    (b) =>
+      (ilkKayit.yildizlar[b.no] ?? 0) === 0 &&
+      acikMi(b.no, ilkKayit.yildizlar, ilkKayit.enYuksekAcik),
+  ) ?? BOLUMLER[0];
 
 export const useOyun = create<OyunDurumu>((set, get) => ({
   bolum: ilkBolum,
@@ -141,6 +154,7 @@ export const useOyun = create<OyunDurumu>((set, get) => ({
   gorulenDersler: ilkKayit.gorulenDersler,
   karsilamaAcik: !ilkKayit.karsilamaGorundu,
   bitisAcik: false,
+  enYuksekAcik: ilkKayit.enYuksekAcik ?? 1,
   tahmin: null,
   gercekSonuc: null,
   tahminKapali: ilkKayit.tahminKapali === true,
@@ -288,10 +302,12 @@ export const useOyun = create<OyunDurumu>((set, get) => ({
     set({ tahminKapali: true });
   },
 
-  karsilamayiBitir: () => {
+  karsilamayiBitir: (baslangicBolumu) => {
     const kayit = kayitOku();
-    kayitYaz({ ...kayit, karsilamaGorundu: true });
-    set({ karsilamaAcik: false });
+    const enYuksekAcik = Math.max(kayit.enYuksekAcik ?? 1, baslangicBolumu ?? 1);
+    kayitYaz({ ...kayit, karsilamaGorundu: true, enYuksekAcik });
+    set({ karsilamaAcik: false, enYuksekAcik });
+    if (baslangicBolumu && baslangicBolumu > get().bolum.no) get().bolumSec(baslangicBolumu);
   },
 }));
 

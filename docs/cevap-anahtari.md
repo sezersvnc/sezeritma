@@ -96,29 +96,25 @@ Vardiya notu: İlk çikolata cebe indi. Mesai artık daha tatlı.
 
 **Vardiya 1 · komutları doğru sırada birleştirmek**
 
-Görev: Koridor iki kere kırılıyor ve yolda bir çikolata var. Sezer'i mola odasına ulaştır, çikolatayı da bırakma.
+Görev: Koridor bir kere kırılıyor ve yolda bir çikolata var. Dönmeyi ve toplamayı aynı görevde birleştir.
 
-Hedef 11 satır · bu çözüm 11 satır · çikolata 1 · 11 adım
+Hedef 7 satır · bu çözüm 7 satır · çikolata 1 · 7 adım
 
 ```cpp
 ilerle();
 sagaDon();
 ilerle();
-ilerle();
 solaDon();
 ilerle();
 kap();
-sagaDon();
-ilerle();
-solaDon();
 ilerle();
 ```
 
 1. ipucu: Yolu önce kafanda yürü: nerede dönmen, nerede kapman gerekiyor? Sonra aynı sırayla komutları diz.
 
-2. ipucu: Bir ilerle, sağa dön, iki ilerle, sola dön, bir ilerle, kap, sağa dön, bir ilerle, sola dön, bir ilerle.
+2. ipucu: Bir ilerle, sağa dön, bir ilerle, sola dön, bir ilerle, kap, bir ilerle.
 
-Vardiya notu: On bir satır. Sezer yoruldu ama vardiyanın ilk yarısı bitti.
+Vardiya notu: Yedi satır. Dönmeyi de toplamayı da öğrendin, birinci vardiya tamam.
 
 ## 06 — Upuzun Koridor
 

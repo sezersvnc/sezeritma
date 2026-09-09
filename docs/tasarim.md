@@ -335,7 +335,22 @@ Sezer motor kodunu hiç okumadan, saniyeler içinde geri bildirim alıyor.
 
 ---
 
-## 10. Kararlar
+## 10. Kademeli arayüz
+
+Yeni başlayan biri için en büyük engel dilin zorluğu değil, aynı anda bakması gereken şeyin fazlalığıdır. Bu yüzden arayüz de dil gibi bölüm bölüm açılıyor. Kural `src/content/arayuz.ts` içinde tek yerde duruyor.
+
+| Öğe | Açıldığı bölüm | Gerekçe |
+|---|---|---|
+| Kart modu, ipucu, komut listesi, adım anlatıcı | 1 | Yapılacak tek iş var |
+| Adım adım ve hız | 3 | İlk çok adımlı dizi |
+| Kart ile klavye arasında geçiş | 3 | İsteyen erken yazmaya başlasın |
+| Satır hedefi | 7 | Verimlilik `for` ile anlam kazanır |
+| Türkçe okuma | 7 | Kod düz liste olmaktan çıkar |
+| Tahmin şeridi | 11 | `while` ile sonuç belirsizleşir |
+
+Bir öğe ilk kez açıldığında tek satırlık bir duyuru çıkıyor ve ne işe yaradığını söylüyor.
+
+## 11. Kararlar
 
 - Oyunun adı **Sezeritma**. Sezer + algoritma.
 - Fabrika adı **Neşteli**. Gerçek marka adı kullanılmıyor.

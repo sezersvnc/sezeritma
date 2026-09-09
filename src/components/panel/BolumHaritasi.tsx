@@ -72,6 +72,7 @@ export function BolumHaritasi({
                           {String(b.no).padStart(2, '0')}
                         </span>
                         <strong>{acik ? b.ad : 'Kilitli'}</strong>
+                        {acik && <span className="fis-kavram">{b.kavram}</span>}
                         <span className="mini-yildiz">
                           {[1, 2, 3].map((i) => (
                             <i key={i} data-dolu={i <= (ilerleme?.yildiz ?? 0) ? '1' : '0'} />

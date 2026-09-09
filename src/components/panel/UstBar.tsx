@@ -31,9 +31,12 @@ export function UstBar({
             ))}
           </div>
 
-          <span className="yildiz-sayaci">
-            {toplamYildiz}/{enFazlaYildiz}
-          </span>
+          {/* Sıfır yıldızla karşılaşan yeni öğrenciye 96 sayısı korkutucu geliyor. */}
+          {toplamYildiz > 0 && (
+            <span className="yildiz-sayaci">
+              {toplamYildiz}/{enFazlaYildiz}
+            </span>
+          )}
 
           <button className="harita-dugmesi etiket" onClick={onKavramlarAc}>
             Kavramlar

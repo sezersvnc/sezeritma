@@ -364,6 +364,7 @@ export function Serbest() {
           {turkceAcik && <TurkceOkuma kod={kod} />}
 
           <Kontroller
+            adimKontrolu
             oynatiliyor={oynatiliyor}
             calisti={adimlar.length > 0 || sonuc !== null}
             hiz={hiz}

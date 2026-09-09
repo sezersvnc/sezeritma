@@ -23,6 +23,8 @@ interface Sayfa {
   paragraflar: string[];
   maddeler?: string[];
   demo?: Demo;
+  /** Son sayfada giriş seviyesi sorulur. */
+  seviyeSecimi?: boolean;
 }
 
 const SAYFALAR: Sayfa[] = [
@@ -86,10 +88,38 @@ const SAYFALAR: Sayfa[] = [
       'Yani ilk günden itibaren asıl işi, yani algoritmayı kuracaksın.',
     ],
   },
+  {
+    etiket: 'Son soru',
+    baslik: 'Nereden başlayalım?',
+    paragraflar: [
+      'Yanlış cevap yok. Seçtiğin yerden ileriye kadar bütün bölümler açılır, geri dönmek de serbest.',
+    ],
+    seviyeSecimi: true,
+  },
 ];
 
-export function Karsilama({ onBitir }: { onBitir: () => void }) {
+/** Giriş seviyeleri. Kod bilen biri baştan başlamak zorunda kalmasın diye. */
+const SEVIYELER = [
+  {
+    bolum: 1,
+    baslik: 'Hiç kod yazmadım',
+    ne: 'Baştan başlarsın. İlk bölümlerde yazmadan, kartlarla ilerlersin.',
+  },
+  {
+    bolum: 7,
+    baslik: 'Komut ve sıra biliyorum',
+    ne: 'Döngülerden başlarsın. Tekrarı bilgisayara devretmeyi öğreneceksin.',
+  },
+  {
+    bolum: 17,
+    baslik: 'Döngü ve koşul biliyorum',
+    ne: 'Değişkenlerden başlarsın. Fonksiyon ve özyineleme de burada.',
+  },
+];
+
+export function Karsilama({ onBitir }: { onBitir: (baslangicBolumu?: number) => void }) {
   const [i, setI] = useState(0);
+  const [seviye, setSeviye] = useState(1);
   const odak = useRef<HTMLButtonElement>(null);
   const sayfa = SAYFALAR[i];
   const son = i === SAYFALAR.length - 1;
@@ -130,6 +160,23 @@ export function Karsilama({ onBitir }: { onBitir: () => void }) {
 
           {sayfa.demo && <DersDemo demo={sayfa.demo} />}
 
+          {sayfa.seviyeSecimi && (
+            <div className="seviye-secimi">
+              {SEVIYELER.map((sv) => (
+                <button
+                  key={sv.bolum}
+                  className="seviye"
+                  data-secili={seviye === sv.bolum ? '1' : undefined}
+                  aria-pressed={seviye === sv.bolum}
+                  onClick={() => setSeviye(sv.bolum)}
+                >
+                  <strong>{sv.baslik}</strong>
+                  <span>{sv.ne}</span>
+                </button>
+              ))}
+            </div>
+          )}
+
           <div className="ders-gezinme">
             <div className="ders-noktalar" aria-hidden="true">
               {SAYFALAR.map((_, n) => (
@@ -142,14 +189,14 @@ export function Karsilama({ onBitir }: { onBitir: () => void }) {
                 Geri
               </button>
             )}
-            <button className="dugme-cizgili etiket" onClick={onBitir}>
+            <button className="dugme-cizgili etiket" onClick={() => onBitir(seviye)}>
               Geç
             </button>
 
             <button
               ref={odak}
               className="dugme-koyu etiket ileri"
-              onClick={() => (son ? onBitir() : setI((n) => n + 1))}
+              onClick={() => (son ? onBitir(seviye) : setI((n) => n + 1))}
             >
               {son ? 'Başla' : 'Devam'}
               <span aria-hidden="true">→</span>

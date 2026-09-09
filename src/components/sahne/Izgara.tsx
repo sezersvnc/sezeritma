@@ -9,9 +9,13 @@ const anahtar = (k: Kare) => `${k.x},${k.y}`;
  * Karenin alabileceği en büyük boy. Gerçek boy bundan küçük olabilir:
  * ızgara sütun sayısına göre esniyor, dar ekranda kareler kendiliğinden
  * küçülüyor. Bu yüzden boy piksel olarak sabitlenmiyor, tavan olarak veriliyor.
+ *
+ * Küçük haritalarda tavan yüksek tutuluyor. İlk bölümlerde ızgara üç kare
+ * genişliğinde ve öğrencinin bakması gereken tek yer orası; küçücük durursa
+ * ekranın ağırlığı yanlış yere kayıyor.
  */
 const enBuyukKare = (genislik: number, yukseklik: number) =>
-  Math.round(Math.max(30, Math.min(64, 620 / Math.max(genislik, yukseklik))));
+  Math.round(Math.max(30, Math.min(96, 640 / Math.max(genislik, yukseklik))));
 
 interface Props {
   bolum: Bolum;
