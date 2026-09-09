@@ -222,6 +222,15 @@ class Ayristirici {
       return this.tanim();
     }
     if (ad.tip !== 'ad') {
+      // Editör her `{` için kapanışını kendisi ekliyor. Öğrenci bir de kendi
+      // yazınca fazladan `}` kalıyor; en sık görülen sözdizimi hatası bu.
+      if (ad.deger === '}') {
+        this.hata(
+          'sozdizimi',
+          `${ad.satir}. satırda fazladan bir \`}\` var. Editör süslü parantezi açtığında kapanışını kendisi ekliyor, bir tanesini silmen yeterli.`,
+          ad.satir,
+        );
+      }
       this.hata(
         'sozdizimi',
         `${ad.satir}. satırda \`${ad.deger || 'kodun sonu'}\` ile başlayan bir satırı anlamadım.`,

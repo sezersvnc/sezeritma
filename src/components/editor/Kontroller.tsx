@@ -36,7 +36,7 @@ export function Kontroller({
       ) : (
         <button className="dugme dugme-birincil" onClick={calisti ? onDevam : onCalistir}>
           {calisti ? 'Devam et' : 'Çalıştır'}
-          <kbd className="etiket" style={{ opacity: 0.6 }}>
+          <kbd className="etiket kisayol" style={{ opacity: 0.6 }}>
             Ctrl↵
           </kbd>
         </button>

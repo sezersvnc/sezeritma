@@ -60,7 +60,7 @@ export function DersKarti({ ders, vardiya, onKapat, onKavramlar }: Props) {
                 Yeni vardiya
               </span>
               <h2>
-                {vardiya.no}. Vardiya · {vardiya.ad}
+                {vardiya.no}. Vardiya: {vardiya.ad}
               </h2>
               <p className="ders-giris">{kodluMetin(vardiya.giris)}</p>
             </section>

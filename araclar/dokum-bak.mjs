@@ -1,0 +1,20 @@
+import { chromium } from 'playwright';
+const SP = process.argv[2];
+const t = await chromium.launch();
+const s = await t.newPage({ viewport: { width: 1440, height: 950 } });
+const y = {}; for (let i = 1; i < 10; i++) y[i] = 3;
+await s.goto('http://localhost:5177/');
+await s.evaluate((yy) => localStorage.setItem('sezeritma.ilerleme.v1', JSON.stringify({
+  yildizlar: yy, kodlar: {}, gorulenDersler: Array.from({length: 33}, (_, i) => i), karsilamaGorundu: true })), y);
+await s.reload({ waitUntil: 'networkidle' });
+await s.waitForTimeout(500);
+await s.screenshot({ path: `${SP}/d0-bos.png` });
+await s.locator('.cm-content').last().click();
+await s.keyboard.type('for (int i = 0; i < 6; i++) {\nilerle();\nsagaDon();');
+await s.waitForTimeout(300);
+await s.getByRole('button', { name: /Çalıştır/ }).click();
+await s.waitForTimeout(2500);
+await s.screenshot({ path: `${SP}/d1-calisirken.png` });
+await s.waitForTimeout(4000);
+await s.screenshot({ path: `${SP}/d2-bitti.png` });
+await t.close();

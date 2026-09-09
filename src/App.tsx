@@ -3,6 +3,7 @@ import { useOyun, bolumAcik } from './store/oyunStore';
 import { BOLUMLER, EN_FAZLA_YILDIZ, TOPLAM_BOLUM } from './levels';
 import { Izgara } from './components/sahne/Izgara';
 import { DurumSeridi } from './components/sahne/DurumSeridi';
+import { Dokum } from './components/sahne/Dokum';
 import { KodEditoru } from './components/editor/KodEditoru';
 import { Kontroller } from './components/editor/Kontroller';
 import { KartModu } from './components/editor/KartModu';
@@ -20,7 +21,6 @@ import { Bitis } from './components/panel/Bitis';
 import { TahminSeridi } from './components/editor/TahminSeridi';
 import { kodluMetin } from './components/panel/metin';
 import { dersBul, vardiyaBul } from './content/dersler';
-import { adimAnlat } from './content/anlatici';
 import { arayuzOzellikleri, yeniOzellikler } from './content/arayuz';
 import type { Durum } from './core/types';
 
@@ -93,7 +93,6 @@ export default function App() {
 
   const ders = dersBul(bolum.no);
   const vardiyaGirisi = [1, 6, 11, 17, 23, 27].includes(bolum.no) ? vardiyaBul(bolum.vardiya) : undefined;
-  const anlati = adimAnlat(suAnkiAdim, adimIndex > 0 ? adimlar[adimIndex - 1] : undefined);
   const ozellik = arayuzOzellikleri(bolum.no);
   const duyurular = yeniOzellikler(bolum.no);
 
@@ -134,9 +133,12 @@ export default function App() {
               toplamAdim={adimlar.length}
               degiskenler={suAnkiAdim?.degiskenler ?? {}}
             />
-            <p className="anlati" aria-live="polite">
-              {anlati}
-            </p>
+            <Dokum
+              adimlar={adimlar}
+              adimIndex={adimIndex}
+              hata={hata}
+              hataGoster={oynatmaBitti || adimlar.length === 0}
+            />
           </div>
         </section>
 

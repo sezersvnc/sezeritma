@@ -241,7 +241,8 @@ button {
   --cerceve: clamp(6px, 1.4vw, 14px);
   /* Üç sınırın en küçüğü: doğal boy, sütunun genişliği, ekranın yüksekliği.
      Üçüncüsü olmazsa dar ve uzun ekranlarda ızgara metinlerin üstüne taşıyor. */
-  --yukseklik-butcesi: calc((100dvh - 330px) / var(--satir));
+  /* 330px üst bar, görev kartı ve ölçekler; 210px çalışma dökümü. */
+  --yukseklik-butcesi: calc((100dvh - 580px) / var(--satir));
   width: min(
     100%,
     calc(var(--sutun) * var(--kare) + var(--cerceve) * 2),
@@ -828,7 +829,7 @@ button {
 
   /* Izgara yine de ekranın yarısını aşmasın ki kod paneli görünür kalsın. */
   .zemin-cerceve {
-    --yukseklik-butcesi: calc(52dvh / var(--satir));
+    --yukseklik-butcesi: calc(42dvh / var(--satir));
   }
 
   .kod-paneli {
@@ -1724,4 +1725,112 @@ button {
   font-size: 10.5px;
   line-height: 1.35;
   color: var(--beton-4);
+}
+
+/* ------------------------------------------------------------------ çalışma dökümü */
+
+.dokum {
+  width: min(100%, 62ch);
+  flex: 0 1 auto;
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+  border-left: 2px solid var(--beton-3);
+  padding-left: 12px;
+}
+
+.dokum-bos p {
+  margin: 0;
+  max-width: 52ch;
+  font-size: 14px;
+  line-height: 1.5;
+  color: var(--kakao-2);
+}
+
+.dokum-baslik {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  margin-bottom: 6px;
+}
+
+.dokum-sayac {
+  color: var(--beton-4);
+}
+
+.dokum-liste {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  overflow-y: auto;
+  max-height: min(24dvh, 190px);
+  font-size: 13.5px;
+  line-height: 1.45;
+  /* Uzun koşularda kaydırma kendiliğinden olur, ekran zıplamasın. */
+  scroll-behavior: smooth;
+}
+
+.dokum-liste li {
+  display: grid;
+  grid-template-columns: 2.4em 1fr;
+  gap: 10px;
+  padding: 3px 0;
+  color: var(--beton-4);
+}
+
+.dokum-liste li[data-son] {
+  color: var(--kakao-1);
+}
+
+.dokum-satir {
+  font-family: var(--kod);
+  font-size: 12px;
+  text-align: right;
+  color: var(--beton-3);
+  padding-top: 1px;
+}
+
+.dokum-liste li[data-son] .dokum-satir {
+  color: var(--yelek);
+}
+
+.dokum-atlanan {
+  display: block !important;
+  font-size: 12px;
+  color: var(--beton-3);
+  padding-bottom: 4px;
+}
+
+.dokum-hata .dokum-metin {
+  color: var(--yelek);
+}
+
+.dokum-hata .dokum-satir {
+  color: var(--yelek);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .dokum-liste {
+    scroll-behavior: auto;
+  }
+}
+
+.komut-grubu + .komut-grubu {
+  margin-top: 14px;
+}
+
+.komut-grup-basligi {
+  margin: 0 0 6px;
+  font-size: 12.5px;
+  font-weight: 500;
+  letter-spacing: 0;
+  text-transform: none;
+  color: var(--serit-koyu);
+}
+
+/* Klavye kısayolu ipucu, klavyesi olmayan ekranda yer kaplamasın. */
+@media (pointer: coarse), (max-width: 700px) {
+  .kisayol {
+    display: none;
+  }
 }

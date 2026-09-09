@@ -182,6 +182,17 @@ int a;
 
 > 1. satırda `a` değişkenine bir başlangıç değeri vermelisin: `int a = 0;`
 
+## Fazladan kapanış parantezi
+
+```cpp
+for (int i = 0; i < 3; i++) {
+  ilerle();
+}
+}
+```
+
+> 4. satırda fazladan bir `}` var. Editör süslü parantezi açtığında kapanışını kendisi ekliyor, bir tanesini silmen yeterli.
+
 ## Fonksiyon void ile başlamıyor
 
 ```cpp

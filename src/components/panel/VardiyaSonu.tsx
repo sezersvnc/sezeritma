@@ -55,10 +55,12 @@ export function VardiyaSonu({
                 <span style={{ color: 'var(--beton-4)' }}>/{hedefSatir}</span>
               </dd>
             </dl>
-            <dl className="olcek" style={{ border: 'none', background: 'none', padding: 0 }}>
-              <dt className="etiket">Kapılan</dt>
-              <dd>{cantada}</dd>
-            </dl>
+            {cantada > 0 && (
+              <dl className="olcek" style={{ border: 'none', background: 'none', padding: 0 }}>
+                <dt className="etiket">Kapılan</dt>
+                <dd>{cantada}</dd>
+              </dl>
+            )}
           </div>
 
           <p className="vardiya-notu">{vardiyaNotu}</p>
@@ -66,7 +68,7 @@ export function VardiyaSonu({
           {vardiyaOzeti && (
             <section className="vardiya-ozeti">
               <span className="etiket">
-                Vardiya {vardiyaOzeti.no} bitti · {vardiyaOzeti.ad}
+                Vardiya {vardiyaOzeti.no} bitti: {vardiyaOzeti.ad}
               </span>
               <p>{kodluMetin(vardiyaOzeti.ozet)}</p>
 

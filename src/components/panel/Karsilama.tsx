@@ -30,7 +30,7 @@ interface Sayfa {
 
 const SAYFALAR: Sayfa[] = [
   {
-    etiket: 'Hoş geldin',
+    etiket: '',
     baslik: 'Sezeritma',
     paragraflar: [
       'Burada kod yazarak bir fabrikada çalışan stajyer Sezer\'i yönetiyorsun.',
@@ -84,7 +84,7 @@ const SAYFALAR: Sayfa[] = [
     etiket: 'Başlıyoruz',
     baslik: 'İlk bölümde yazman gerekmiyor',
     paragraflar: [
-      'İlk beş bölümde klavyeye dokunmayacaksın. Komut kartlarına basacaksın.',
+      'İlk altı bölümde klavyeye dokunmayacaksın. Komut kartlarına basacaksın.',
       'Satırlar senin yerine yazılacak, sen sadece sıraya karar vereceksin.',
       'Yani ilk günden itibaren asıl işi, yani algoritmayı kuracaksın.',
     ],
@@ -141,9 +141,11 @@ export function Karsilama({ onBitir }: { onBitir: (baslangicBolumu?: number) => 
       <div className="tabela ders-tabelasi">
         <div className="serit" />
         <div className="tabela-ic ders-ic">
-          <span className="etiket" style={{ color: 'var(--beton-4)' }}>
-            {sayfa.etiket}
-          </span>
+          {sayfa.etiket && (
+            <span className="etiket" style={{ color: 'var(--beton-4)' }}>
+              {sayfa.etiket}
+            </span>
+          )}
           <h2>{sayfa.baslik}</h2>
 
           {sayfa.paragraflar.map((p, n) => (

@@ -56,6 +56,7 @@ describe('hata katalogu', () => {
     dene('else tek başına', 'else {\n  ilerle();\n}');
     dene('Sıfıra bölme', 'int a = 1 / 0;');
     dene('Değişkene başlangıç değeri yok', 'int a;');
+    dene('Fazladan kapanış parantezi', 'for (int i = 0; i < 3; i++) {\n  ilerle();\n}\n}');
     dene('Fonksiyon void ile başlamıyor', 'koseDon();', bolumYap(KORIDOR), 'koseDon() {\n  ilerle();\n}');
 
     kayitlar.forEach((k) => {

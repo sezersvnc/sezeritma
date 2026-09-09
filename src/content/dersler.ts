@@ -176,13 +176,62 @@ export const DERSLER: readonly Ders[] = [
     hatirla: 'Dönmek ilerlemek değildir. Aynı komut, farklı yönde farklı sonuç verir.',
   },
   {
+    bolum: 4,
+    baslik: 'Her komutun bir şartı vardır',
+    neden:
+      '`kap();` çikolatayı alır ama her yerde çalışmaz. Sezer tam çikolatanın üstünde duruyor olmalı.',
+    nasil: [
+      'Önce çikolatanın olduğu kareye git.',
+      'Sonra `kap();` yaz.',
+      'Yan karedeyken kapmaya çalışırsan elin boşa gider.',
+    ],
+    ornek: [
+      { kod: 'ilerle();', not: 'Çikolatanın olduğu kareye çıktı.' },
+      { kod: 'kap();', not: 'Şart sağlandı, çikolata çantada.' },
+      { kod: 'ilerle();', not: 'Yoluna devam.' },
+    ],
+    demo: {
+      harita: ['######', '#SC.M#', '######'],
+      yon: 'dogu',
+      kod: 'ilerle();\nkap();\nilerle();\nilerle();',
+      anlat:
+        "İkinci satır ancak birinci satır Sezer'i doğru kareye getirdiği için çalışıyor.",
+    },
+    hatirla: 'Bir komut, ancak koşulları yerindeyse iş görür. Sırayı bunun için kuruyorsun.',
+  },
+  {
+    bolum: 5,
+    baslik: 'Büyük işi parçalara böl',
+    neden:
+      'Bu bölümün yolu uzun. Tek seferde düşünmeye çalışırsan karışır. Profesyoneller de böyle yapmaz.',
+    nasil: [
+      'İşi parçalara ayır: önce çikolataya git, sonra mola odasına git.',
+      'Her parçayı ayrı ayrı çöz, sonra alt alta ekle.',
+      'Bir parça çalışmıyorsa hatanın nerede olduğunu bilirsin.',
+      'Bu yöntemin adı var: problemi bölerek çözmek.',
+    ],
+    ornek: [
+      { kod: '// birinci parça', not: 'Çikolataya kadar git ve al.' },
+      { kod: '// ikinci parça', not: 'Oradan mola odasına git.' },
+      { kod: '// ikisini alt alta koy', not: 'Bütün çözüm bu.' },
+    ],
+    demo: {
+      harita: ['#####', '#S.C#', '#...#', '#M..#', '#####'],
+      yon: 'dogu',
+      kod: 'ilerle();\nilerle();\nkap();\nsagaDon();\nilerle();\nilerle();\nsagaDon();\nilerle();\nilerle();',
+      anlat: 'İlk üç satır bir iş, kalanı başka bir iş. İkisini birleştirince bölüm bitiyor.',
+    },
+    hatirla: 'Çözemediğin bir iş, çözebileceğin iki parçaya bölünebilir.',
+  },
+  {
     bolum: 6,
     baslik: 'Tekrar can sıkıcıdır',
-    neden: 'Bu bölümde aynı komutu on iki kere yazacaksın. Sıkılacaksın. Bu kasıtlı.',
+    neden:
+      'Bu bölümde aynı komutu on iki kere art arda vereceksin. Sıkılacaksın. Bu kasıtlı.',
     nasil: [
       'Yazarken şunu düşün: koridor iki yüz kare olsaydı ne yapardın?',
       'Ya uzunluğunu hiç bilmeseydin?',
-      'Kopyala yapıştır çözüm değildir. On iki ayrı hata yeri demektir.',
+      'On iki kere tekrarlamak çözüm değildir. On iki ayrı hata yeri demektir.',
       'Bir sonraki bölüm bunu iki satıra indirecek.',
     ],
     ornek: [
@@ -425,7 +474,7 @@ export const DERSLER: readonly Ders[] = [
   },
   {
     bolum: 16,
-    baslik: 'Algoritma nedir',
+    baslik: 'Duvar takibi: tek kural, her labirent',
     neden:
       'Bu labirentin yolunu ezberleyip komutları tek tek yazabilirdin. Ama o çözüm sadece bu labirentte işe yarar.',
     nasil: [

@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, type ReactNode } from 'react';
 import type { KomutAdi, KomutListesiProps, YapiAdi } from '../../core/types';
 
 const IMZA: Record<KomutAdi, string> = {
@@ -30,6 +30,9 @@ const YAPI: Record<YapiAdi, { imza: string; ne: string }> = {
   fonksiyon: { imza: 'void isim() { }', ne: 'Kendi komutunu tanımlarsın, adıyla çağırırsın.' },
 };
 
+/** Soru soran komutlar cevap döndürür, hareket ettirenler döndürmez. Ayrı şeyler. */
+const soruMu = (k: KomutAdi) => IMZA[k].startsWith('bool');
+
 /**
  * Elindeki komutların referansı.
  *
@@ -43,6 +46,10 @@ export function KomutListesi({ izinliKomutlar, izinliYapilar }: KomutListesiProp
   );
 
   const sayi = izinliKomutlar.length + izinliYapilar.length;
+  const hareketler = izinliKomutlar.filter((k) => !soruMu(k));
+  const sorular = izinliKomutlar.filter(soruMu);
+  // Liste kısayken başlıklar gereksiz gürültü; uzayınca gruplama okumayı kolaylaştırıyor.
+  const baslikliMi = sayi >= 6;
 
   return (
     <section className="komut-bolumu">
@@ -59,27 +66,47 @@ export function KomutListesi({ izinliKomutlar, izinliYapilar }: KomutListesiProp
 
       {acik && (
         <div className="komut-govdesi">
-          <div className="komut-listesi">
-            {izinliKomutlar.map((k) => (
-              <div key={k} className="komut">
-                <code>{IMZA[k]}</code>
-                <span>{ACIKLAMA[k]}</span>
-              </div>
+          <Grup baslik={baslikliMi ? "Sezer'e yaptırdıkların" : undefined}>
+            {hareketler.map((k) => (
+              <Satir key={k} imza={IMZA[k]} ne={ACIKLAMA[k]} />
             ))}
-          </div>
+          </Grup>
+
+          {sorular.length > 0 && (
+            <Grup baslik={baslikliMi ? "Sezer'e sorabildiklerin" : undefined}>
+              {sorular.map((k) => (
+                <Satir key={k} imza={IMZA[k]} ne={ACIKLAMA[k]} />
+              ))}
+            </Grup>
+          )}
 
           {izinliYapilar.length > 0 && (
-            <div className="komut-listesi" style={{ marginTop: 12 }}>
+            <Grup baslik={baslikliMi ? 'Akışı kuran yapılar' : undefined}>
               {izinliYapilar.map((y) => (
-                <div key={y} className="komut">
-                  <code>{YAPI[y].imza}</code>
-                  <span>{YAPI[y].ne}</span>
-                </div>
+                <Satir key={y} imza={YAPI[y].imza} ne={YAPI[y].ne} />
               ))}
-            </div>
+            </Grup>
           )}
         </div>
       )}
     </section>
+  );
+}
+
+function Grup({ baslik, children }: { baslik?: string; children: ReactNode }) {
+  return (
+    <div className="komut-grubu">
+      {baslik && <h3 className="komut-grup-basligi">{baslik}</h3>}
+      <div className="komut-listesi">{children}</div>
+    </div>
+  );
+}
+
+function Satir({ imza, ne }: { imza: string; ne: string }) {
+  return (
+    <div className="komut">
+      <code>{imza}</code>
+      <span>{ne}</span>
+    </div>
   );
 }

@@ -30,7 +30,7 @@ await sayfa.evaluate(
   ([y, k]) =>
     localStorage.setItem(
       'sezeritma.ilerleme.v1',
-      JSON.stringify({ yildizlar: y, kodlar: { 13: k }, gorulenDersler: [1, 5, 9, 13] }),
+      JSON.stringify({ yildizlar: y, kodlar: { 13: k }, gorulenDersler: Array.from({ length: 33 }, (_, i) => i), karsilamaGorundu: true }),
     ),
   [yildizlar, kod],
 );
