@@ -25,7 +25,7 @@ import { arayuzOzellikleri, yeniOzellikler } from './content/arayuz';
 import type { Durum } from './core/types';
 
 /** Hız kaydırıcısının adım aralıkları. */
-const GECIKME = [700, 430, 260, 140, 60];
+const GECIKME = [700, 400, 200, 90, 30];
 
 const kartSatirSayisi = (govde: string) =>
   govde.split(String.fromCharCode(10)).filter((l) => l.trim().length > 0).length;

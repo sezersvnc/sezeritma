@@ -36,6 +36,25 @@ const renkler = HighlightStyle.define([
   { tag: tags.punctuation, color: '#6a6f78' },
 ]);
 
+/**
+ * Dil, tema ve renkler bir kere kuruluyor. Oynatma sırasında her adımda
+ * yeniden yaratılmalarının bir anlamı yok: değişen tek şey aktif satır,
+ * o yüzden sadece o eklenti yenileniyor.
+ */
+const TEMEL = [cpp(), tema, syntaxHighlighting(renkler), EditorView.lineWrapping];
+
+/** Kimliği sabit kalmalı: her renderda yeni nesne verilirse editör baştan kuruluyor. */
+const TEMEL_KURULUM = {
+  lineNumbers: true,
+  foldGutter: false,
+  highlightActiveLine: false,
+  highlightActiveLineGutter: false,
+  autocompletion: false,
+  searchKeymap: false,
+  bracketMatching: true,
+  closeBrackets: true,
+};
+
 const aktifSatirEklentisi = (satir: number | null) =>
   EditorView.decorations.compute(['doc'], (state) => {
     if (!satir || satir < 1 || satir > state.doc.lines) return Decoration.none;
@@ -52,39 +71,21 @@ interface Props {
 }
 
 export function KodEditoru({ bolum, kod, aktif, duzenlenebilir, onDegis }: Props) {
+  const govdeSatiri = aktif?.bolme === 'govde' ? aktif.satir : null;
+  const fonksiyonSatiri = aktif?.bolme === 'fonksiyon' ? aktif.satir : null;
+
   const govdeEklentileri = useMemo(
-    () => [
-      cpp(),
-      tema,
-      syntaxHighlighting(renkler),
-      EditorView.lineWrapping,
-      aktifSatirEklentisi(aktif?.bolme === 'govde' ? aktif.satir : null),
-    ],
-    [aktif],
+    () => [...TEMEL, aktifSatirEklentisi(govdeSatiri)],
+    [govdeSatiri],
   );
 
   const fonksiyonEklentileri = useMemo(
-    () => [
-      cpp(),
-      tema,
-      syntaxHighlighting(renkler),
-      EditorView.lineWrapping,
-      aktifSatirEklentisi(aktif?.bolme === 'fonksiyon' ? aktif.satir : null),
-    ],
-    [aktif],
+    () => [...TEMEL, aktifSatirEklentisi(fonksiyonSatiri)],
+    [fonksiyonSatiri],
   );
 
   const ortak = {
-    basicSetup: {
-      lineNumbers: true,
-      foldGutter: false,
-      highlightActiveLine: false,
-      highlightActiveLineGutter: false,
-      autocompletion: false,
-      searchKeymap: false,
-      bracketMatching: true,
-      closeBrackets: true,
-    },
+    basicSetup: TEMEL_KURULUM,
     // Tab girinti atmıyor, odağı bir sonraki öğeye taşıyor. Aksi hâlde klavyeyle
     // gezen biri editöre girdiğinde bir daha çıkamıyor.
     indentWithTab: false,
