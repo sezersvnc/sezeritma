@@ -55,6 +55,21 @@ class Ayristirici {
     throw new DerlemeHatasi(kod, mesaj, satir, this.bolme);
   }
 
+  /**
+   * `if (a = 3)` klasik bir yeni başlayan hatası: `=` atama, `==` karşılaştırma.
+   * İfade `a` ile bitip sırada `=` kaldığı için normalde "parantezi kapat"
+   * diye anlamsız bir mesaj çıkıyordu.
+   */
+  private esittirUyarisi(anahtar: string, satir: number): void {
+    if (this.bakiyor('=')) {
+      this.hata(
+        'sozdizimi',
+        `${satir}. satırda \`${anahtar}\` koşulunda tek \`=\` var. Tek eşittir "şu değeri ata" demek; karşılaştırmak için \`==\` yazmalısın.`,
+        satir,
+      );
+    }
+  }
+
   private bekle(deger: string, mesaj: string, satir = this.simdiki.satir): Token {
     if (!this.bakiyor(deger)) this.hata('sozdizimi', mesaj, satir);
     return this.ilerle();
@@ -310,6 +325,7 @@ class Ayristirici {
     const bas = this.ilerle();
     this.bekle('(', `${bas.satir}. satırda \`while\` kelimesinden sonra parantez açmalısın.`, bas.satir);
     const kosul = this.ifade();
+    this.esittirUyarisi('while', bas.satir);
     this.bekle(')', `${bas.satir}. satırda \`while\` parantezini kapatmalısın.`, bas.satir);
     return { tip: 'while', kosul, govde: this.blok(), ...this.konum(bas.satir) };
   }
@@ -318,6 +334,7 @@ class Ayristirici {
     const bas = this.ilerle();
     this.bekle('(', `${bas.satir}. satırda \`if\` kelimesinden sonra parantez açmalısın.`, bas.satir);
     const kosul = this.ifade();
+    this.esittirUyarisi('if', bas.satir);
     this.bekle(')', `${bas.satir}. satırda \`if\` parantezini kapatmalısın.`, bas.satir);
     const govde = this.blok();
     let degilse: Blok | Dugum | undefined;

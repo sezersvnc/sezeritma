@@ -57,6 +57,9 @@ describe('hata katalogu', () => {
     dene('Oyun komutuna değer verildi', 'ilerle(3);');
     dene('else tek başına', 'else {\n  ilerle();\n}');
     dene('Sıfıra bölme', 'int a = 1 / 0;');
+    dene('Sıfıra bölme, kalan', 'int a = 5 % 0;');
+    dene('Karşılaştırmada tek eşittir', 'int a = 1;\nif (a = 3) {\n  ilerle();\n}');
+    dene('Aynı değişkeni iki kere tanımlama', 'int a = 1;\nint a = 2;');
     dene('Değişkene başlangıç değeri yok', 'int a;');
     dene('Fazladan kapanış parantezi', 'for (int i = 0; i < 3; i++) {\n  ilerle();\n}\n}');
     dene('Fonksiyon void ile başlamıyor', 'koseDon();', bolumYap(KORIDOR), 'koseDon() {\n  ilerle();\n}');

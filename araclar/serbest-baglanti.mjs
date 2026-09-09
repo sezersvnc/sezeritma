@@ -1,0 +1,33 @@
+import { chromium } from 'playwright';
+const t = await chromium.launch();
+const c = await t.newContext({ permissions: ['clipboard-read', 'clipboard-write'] });
+const s = await c.newPage({ viewport: { width: 1440, height: 950 } });
+const h = []; s.on('pageerror', e => h.push(String(e))); s.on('console', m => m.type()==='error' && h.push(m.text()));
+await s.goto('http://localhost:5177/#serbest', { waitUntil: 'networkidle' });
+await s.evaluate(() => localStorage.removeItem('sezeritma.serbest.v1'));
+await s.reload({ waitUntil: 'networkidle' });
+await s.waitForTimeout(500);
+await s.getByRole('button', { name: 'Palet' }).click();
+for (const [x, y] of [[3,1],[3,2],[4,3]]) await s.getByRole('button', { name: `${x}. sütun, ${y}. satır` }).click();
+await s.getByRole('button', { name: 'Rastgele labirent' }).click();
+await s.waitForTimeout(400);
+const oncekiHarita = await s.evaluate(() => [...document.querySelectorAll('.hucre')].map(h => h.dataset.tip).join(''));
+await s.getByRole('button', { name: /Bağlantıyı kopyala/ }).click();
+await s.waitForTimeout(400);
+const pano = await s.evaluate(() => navigator.clipboard.readText());
+console.log('baglanti uzunlugu:', pano.length, pano.slice(0, 60) + '...');
+// yeni sekmede ac
+const s2 = await c.newPage({ viewport: { width: 1440, height: 950 } });
+s2.on('pageerror', e => h.push('2: ' + e));
+await s2.goto(pano, { waitUntil: 'networkidle' });
+await s2.waitForTimeout(600);
+const sonrakiHarita = await s2.evaluate(() => [...document.querySelectorAll('.hucre')].map(h => h.dataset.tip).join(''));
+console.log('harita ayni mi:', oncekiHarita === sonrakiHarita, '(', oncekiHarita.length, 'hucre )');
+// bozuk baglanti
+const s3 = await c.newPage({ viewport: { width: 1440, height: 950 } });
+s3.on('pageerror', e => h.push('3: ' + e));
+await s3.goto('http://localhost:5177/#serbest=BOZUKVERI!!!', { waitUntil: 'networkidle' });
+await s3.waitForTimeout(600);
+console.log('bozuk baglantida sayfa ayakta:', await s3.evaluate(() => !!document.querySelector('.hucre')));
+console.log('hatalar:', h.length ? h : 'yok');
+await t.close();

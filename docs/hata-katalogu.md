@@ -183,6 +183,34 @@ int a = 1 / 0;
 
 > 1. satırda sıfıra bölme var. Bölen sıfır olamaz.
 
+## Sıfıra bölme, kalan
+
+```cpp
+int a = 5 % 0;
+```
+
+> 1. satırda sıfıra bölme var. `%` bölmeden kalanı verir, bölen sıfır olamaz.
+
+## Karşılaştırmada tek eşittir
+
+```cpp
+int a = 1;
+if (a = 3) {
+  ilerle();
+}
+```
+
+> 2. satırda `if` koşulunda tek `=` var. Tek eşittir "şu değeri ata" demek; karşılaştırmak için `==` yazmalısın.
+
+## Aynı değişkeni iki kere tanımlama
+
+```cpp
+int a = 1;
+int a = 2;
+```
+
+> 2. satırda `a` adında bir değişken zaten var. Yeniden tanımlamak yerine `a = ...;` diyerek değerini değiştirebilirsin.
+
 ## Değişkene başlangıç değeri yok
 
 ```cpp

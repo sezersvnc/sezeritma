@@ -1,4 +1,4 @@
-import { useEffect, useMemo } from 'react';
+import { useEffect, useMemo, useRef } from 'react';
 import { useOyun, bolumAcik } from './store/oyunStore';
 import { BOLUMLER, EN_FAZLA_YILDIZ, TOPLAM_BOLUM } from './levels';
 import { Izgara } from './components/sahne/Izgara';
@@ -32,6 +32,8 @@ const kartSatirSayisi = (govde: string) =>
 
 export default function App() {
   const s = useOyun();
+  const sahneRef = useRef<HTMLDivElement>(null);
+  const raporRef = useRef<HTMLParagraphElement>(null);
   const { bolum, adimlar, adimIndex, sonuc } = s;
 
   const ilkDurum: Durum = useMemo(
@@ -68,6 +70,22 @@ export default function App() {
     return () => clearTimeout(id);
   }, [s.oynatiliyor, s.hiz, adimIndex, s.tik, s]);
 
+  /*
+   * Dar ekranda depo yukarıda, düğmeler aşağıda kalıyor. Çalıştır'a basan
+   * öğrenci Sezer'i göremiyor, ekranda hiçbir şey olmamış gibi duruyor.
+   * Koşu başlarken depo görünmüyorsa ekranı oraya getiriyoruz.
+   */
+  useEffect(() => {
+    if (!s.oynatiliyor) return;
+    const alan = sahneRef.current;
+    if (!alan) return;
+    const yer = alan.getBoundingClientRect();
+    const gorunur = yer.top >= 0 && yer.bottom <= window.innerHeight;
+    if (gorunur) return;
+    const azHareket = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    alan.scrollIntoView({ block: 'center', behavior: azHareket ? 'auto' : 'smooth' });
+  }, [s.oynatiliyor]);
+
   // animasyon süresi hıza uysun
   useEffect(() => {
     document.documentElement.style.setProperty(
@@ -90,6 +108,19 @@ export default function App() {
 
   const toplamYildiz = Object.values(s.yildizlar).reduce<number>((a, b) => a + b, 0);
   const hata = sonuc?.hata;
+
+  /* Koşu bitip hata yazıldığında da aynısı: dar ekranda rapor ekranın
+     dışında kalıyor, öğrenci neden geçemediğini göremiyor. */
+  useEffect(() => {
+    if (s.oynatiliyor || !hata) return;
+    const rapor = raporRef.current;
+    if (!rapor) return;
+    const yer = rapor.getBoundingClientRect();
+    if (yer.top >= 0 && yer.bottom <= window.innerHeight) return;
+    const azHareket = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    rapor.scrollIntoView({ block: 'center', behavior: azHareket ? 'auto' : 'smooth' });
+  }, [s.oynatiliyor, hata]);
+
 
   const ders = dersBul(bolum.no);
   const vardiyaGirisi = [1, 6, 11, 17, 23, 27].includes(bolum.no) ? vardiyaBul(bolum.vardiya) : undefined;
@@ -124,7 +155,7 @@ export default function App() {
             dersVar={ders !== undefined}
             onDers={s.dersAc}
           />
-          <div className="zemin-alani">
+          <div className="zemin-alani" ref={sahneRef}>
             <Izgara bolum={bolum} durum={durum} iz={iz} />
             <DurumSeridi
               durum={durum}
@@ -250,7 +281,7 @@ export default function App() {
           )}
 
           {hata && (oynatmaBitti || adimlar.length === 0) && (
-            <p className="rapor rapor-hata" role="status">
+            <p className="rapor rapor-hata" role="status" ref={raporRef}>
               {kodluMetin(hata.mesaj)}
             </p>
           )}

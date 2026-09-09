@@ -1,8 +1,8 @@
 import { useMemo } from 'react';
 import CodeMirror from '@uiw/react-codemirror';
-import { cpp } from '@codemirror/lang-cpp';
 import { EditorView, Decoration } from '@codemirror/view';
 import { HighlightStyle, syntaxHighlighting } from '@codemirror/language';
+import { cppAltKumesi } from './cppVurgu';
 import { tags } from '@lezer/highlight';
 import type { Bolme, Bolum, Kod } from '../../core/types';
 
@@ -41,7 +41,7 @@ const renkler = HighlightStyle.define([
  * yeniden yaratılmalarının bir anlamı yok: değişen tek şey aktif satır,
  * o yüzden sadece o eklenti yenileniyor.
  */
-const TEMEL = [cpp(), tema, syntaxHighlighting(renkler), EditorView.lineWrapping];
+const TEMEL = [cppAltKumesi, tema, syntaxHighlighting(renkler), EditorView.lineWrapping];
 
 /** Kimliği sabit kalmalı: her renderda yeni nesne verilirse editör baştan kuruluyor. */
 const TEMEL_KURULUM = {

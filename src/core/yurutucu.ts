@@ -344,7 +344,18 @@ class Yurutucu {
 
       case 'tanim': {
         const deger = this.ifade(d.deger);
-        this.kapsamlar[this.kapsamlar.length - 1].set(d.ad, deger);
+        const kapsam = this.kapsamlar[this.kapsamlar.length - 1];
+        // Aynı kapsamda aynı ismi iki kere tanımlamak C++'ta hata. Sessizce
+        // üzerine yazarsak öğrenci iki ayrı değişkeni olduğunu sanıyor.
+        if (kapsam.has(d.ad)) {
+          throw new CalismaHatasi(
+            'sozdizimi',
+            `${d.satir}. satırda \`${d.ad}\` adında bir değişken zaten var. Yeniden tanımlamak yerine \`${d.ad} = ...;\` diyerek değerini değiştirebilirsin.`,
+            d.satir,
+            d.bolme,
+          );
+        }
+        kapsam.set(d.ad, deger);
         this.adimEkle(d);
         return;
       }
@@ -525,8 +536,18 @@ class Yurutucu {
         }
         return Math.trunc(this.sayiya(sol) / b);
       }
-      case '%':
-        return this.sayiya(sol) % this.sayiya(sag);
+      case '%': {
+        const b = this.sayiya(sag);
+        if (b === 0) {
+          throw new CalismaHatasi(
+            'sozdizimi',
+            `${i.satir}. satırda sıfıra bölme var. \`%\` bölmeden kalanı verir, bölen sıfır olamaz.`,
+            i.satir,
+            i.bolme,
+          );
+        }
+        return this.sayiya(sol) % b;
+      }
       default:
         throw new CalismaHatasi(
           'desteklenmeyen',
