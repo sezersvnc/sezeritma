@@ -85,6 +85,9 @@ export function KodEditoru({ bolum, kod, aktif, duzenlenebilir, onDegis }: Props
       bracketMatching: true,
       closeBrackets: true,
     },
+    // Tab girinti atmıyor, odağı bir sonraki öğeye taşıyor. Aksi hâlde klavyeyle
+    // gezen biri editöre girdiğinde bir daha çıkamıyor.
+    indentWithTab: false,
     editable: duzenlenebilir,
     theme: 'none' as const,
   };

@@ -1,6 +1,7 @@
 import { useEffect } from 'react';
 import { BOLUMLER } from '../../levels';
 import type { BolumHaritasiProps } from '../../core/types';
+import { useOdakTuzagi } from './odakTuzagi';
 
 const VARDIYA_ADI: Record<number, string> = {
   1: 'Üretim Hattı',
@@ -18,6 +19,7 @@ export function BolumHaritasi({
   onKapat,
   onKarsilama,
 }: BolumHaritasiProps & { onKarsilama: () => void }) {
+  const kap = useOdakTuzagi<HTMLDivElement>();
   useEffect(() => {
     const kapat = (e: KeyboardEvent) => e.key === 'Escape' && onKapat();
     window.addEventListener('keydown', kapat);
@@ -27,7 +29,7 @@ export function BolumHaritasi({
   const vardiyalar = [1, 2, 3, 4, 5, 6] as const;
 
   return (
-    <div className="orti" role="dialog" aria-modal="true" aria-label="Vardiya çizelgesi">
+    <div className="orti" ref={kap} role="dialog" aria-modal="true" aria-label="Vardiya çizelgesi">
       <div className="tabela harita-tabelasi">
         <div className="serit" />
         <div className="tabela-ic">

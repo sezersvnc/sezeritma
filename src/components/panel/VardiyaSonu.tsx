@@ -2,6 +2,7 @@ import { useEffect, useRef } from 'react';
 import type { VardiyaSonuProps } from '../../core/types';
 import { DERSLER, vardiyaBul } from '../../content/dersler';
 import { kodluMetin } from './metin';
+import { useOdakTuzagi } from './odakTuzagi';
 
 export function VardiyaSonu({
   bolumNo,
@@ -15,6 +16,7 @@ export function VardiyaSonu({
   onSonraki,
   onTekrar,
 }: VardiyaSonuProps) {
+  const kap = useOdakTuzagi<HTMLDivElement>();
   const odak = useRef<HTMLButtonElement>(null);
   useEffect(() => odak.current?.focus(), []);
 
@@ -30,7 +32,7 @@ export function VardiyaSonu({
     : [];
 
   return (
-    <div className="orti" role="dialog" aria-modal="true" aria-label={`Bölüm ${bolumNo} tamamlandı`}>
+    <div className="orti" ref={kap} role="dialog" aria-modal="true" aria-label={`Bölüm ${bolumNo} tamamlandı`}>
       <div className="tabela">
         <div className="serit" />
         <div className="tabela-ic">

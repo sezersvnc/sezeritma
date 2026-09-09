@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
 import { DersDemo } from './DersDemo';
 import type { Demo } from '../../content/dersler';
+import { useOdakTuzagi } from './odakTuzagi';
 
 /**
  * Karşılama.
@@ -118,6 +119,7 @@ const SEVIYELER = [
 ];
 
 export function Karsilama({ onBitir }: { onBitir: (baslangicBolumu?: number) => void }) {
+  const kap = useOdakTuzagi<HTMLDivElement>();
   const [i, setI] = useState(0);
   const [seviye, setSeviye] = useState(1);
   const odak = useRef<HTMLButtonElement>(null);
@@ -135,7 +137,7 @@ export function Karsilama({ onBitir }: { onBitir: (baslangicBolumu?: number) => 
   }, [i, son]);
 
   return (
-    <div className="orti karsilama-orti" role="dialog" aria-modal="true" aria-label="Karşılama">
+    <div className="orti karsilama-orti" ref={kap} role="dialog" aria-modal="true" aria-label="Karşılama">
       <div className="tabela ders-tabelasi">
         <div className="serit" />
         <div className="tabela-ic ders-ic">

@@ -2,6 +2,7 @@ import { useEffect, useMemo, useRef, useState } from 'react';
 import type { Ders, Vardiya } from '../../content/dersler';
 import { DersDemo } from './DersDemo';
 import { kodluMetin } from './metin';
+import { useOdakTuzagi } from './odakTuzagi';
 
 /**
  * Ders kartı.
@@ -20,6 +21,7 @@ interface Props {
 }
 
 export function DersKarti({ ders, vardiya, onKapat, onKavramlar }: Props) {
+  const kap = useOdakTuzagi<HTMLDivElement>();
   const adimlar = useMemo(() => {
     const liste: ('vardiya' | 'ogren' | 'izle' | 'uygula')[] = [];
     if (vardiya) liste.push('vardiya');
@@ -48,7 +50,7 @@ export function DersKarti({ ders, vardiya, onKapat, onKavramlar }: Props) {
   }, [onKapat, sonAdim, i]);
 
   return (
-    <div className="orti" role="dialog" aria-modal="true" aria-label={ders?.baslik ?? vardiya?.ad}>
+    <div className="orti" ref={kap} role="dialog" aria-modal="true" aria-label={ders?.baslik ?? vardiya?.ad}>
       <div className="tabela ders-tabelasi">
         <div className="serit" />
         <div className="tabela-ic ders-ic">

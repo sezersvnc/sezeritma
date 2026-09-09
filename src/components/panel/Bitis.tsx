@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
 import { DERSLER } from '../../content/dersler';
 import { kodluMetin } from './metin';
+import { useOdakTuzagi } from './odakTuzagi';
 
 /**
  * Bitiş.
@@ -25,6 +26,7 @@ const DORT_FIKIR = [
 ];
 
 export function Bitis({ toplamYildiz, enFazlaYildiz, toplamBolum, onKapat }: Props) {
+  const kap = useOdakTuzagi<HTMLDivElement>();
   const [sayfa, setSayfa] = useState(0);
   const odak = useRef<HTMLButtonElement>(null);
   const son = sayfa === 1;
@@ -32,7 +34,7 @@ export function Bitis({ toplamYildiz, enFazlaYildiz, toplamBolum, onKapat }: Pro
   useEffect(() => odak.current?.focus(), [sayfa]);
 
   return (
-    <div className="orti karsilama-orti" role="dialog" aria-modal="true" aria-label="Vardiya bitti">
+    <div className="orti karsilama-orti" ref={kap} role="dialog" aria-modal="true" aria-label="Vardiya bitti">
       <div className="tabela ders-tabelasi">
         <div className="serit" />
         <div className="tabela-ic ders-ic">

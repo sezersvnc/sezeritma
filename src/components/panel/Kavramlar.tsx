@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { DERSLER, VARDIYALAR } from '../../content/dersler';
 import { kodluMetin } from './metin';
+import { useOdakTuzagi } from './odakTuzagi';
 
 interface Props {
   bolumNo: number;
@@ -13,6 +14,7 @@ interface Props {
  * ama şaşırmasın.
  */
 export function Kavramlar({ bolumNo, onKapat }: Props) {
+  const kap = useOdakTuzagi<HTMLDivElement>();
   const [acik, setAcik] = useState<number | null>(
     [...DERSLER].reverse().find((d) => d.bolum <= bolumNo)?.bolum ?? null,
   );
@@ -24,7 +26,7 @@ export function Kavramlar({ bolumNo, onKapat }: Props) {
   }, [onKapat]);
 
   return (
-    <div className="orti" role="dialog" aria-modal="true" aria-label="Öğrendiğin kavramlar">
+    <div className="orti" ref={kap} role="dialog" aria-modal="true" aria-label="Öğrendiğin kavramlar">
       <div className="tabela ders-tabelasi">
         <div className="serit" />
         <div className="tabela-ic ders-ic">
