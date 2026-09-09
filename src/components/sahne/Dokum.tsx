@@ -78,10 +78,12 @@ export function Dokum({ adimlar, adimIndex, hata, hataGoster }: Props) {
             <span className="dokum-metin">{s.metin}</span>
           </li>
         ))}
-        {hata && hataGoster && (
+        {/* Satırı belli olan hatalarda dökümün sonu, hatanın yerini işaret eder.
+            Satırsız hatalar (mola odasına varamamak gibi) zaten sağda anlatılıyor. */}
+        {hata && hataGoster && hata.satir > 0 && (
           <li className="dokum-hata">
-            <span className="dokum-satir">{hata.satir > 0 ? hata.satir : '!'}</span>
-            <span className="dokum-metin">Burada durdu.</span>
+            <span className="dokum-satir">{hata.satir}</span>
+            <span className="dokum-metin">Program burada durdu.</span>
           </li>
         )}
       </ol>

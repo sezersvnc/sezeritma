@@ -269,3 +269,25 @@ describe('parametreli fonksiyon', () => {
     expect(s.hata?.mesaj).toContain('ilerle');
   });
 });
+
+describe('kosul sonuclari adima yaziliyor', () => {
+  it('for dongusunun son adimi kosulun yanlis ciktigini soyluyor', () => {
+    const s = kosa('for (int i = 0; i < 3; i++) {\n  ilerle();\n}', bolumYap(DUZ));
+    const basliklar = s.adimlar.filter((a) => a.satir === 1).map((a) => a.olay);
+    // Üç tur döndü, dördüncü kontrolde koşul yanlış çıkıp bitti.
+    expect(basliklar).toEqual(['dongu-devam', 'dongu-devam', 'dongu-devam', 'dongu-son']);
+  });
+
+  it('else varsa kosulun yanlis ciktigi ayrica belirtiliyor', () => {
+    const s = kosa(
+      'if (onumdePaletVar()) {\n  sagaDon();\n} else {\n  ilerle();\n}',
+      bolumYap(DUZ),
+    );
+    expect(s.adimlar[0].olay).toBe('kosul-else');
+  });
+
+  it('else yoksa atlandigi soyleniyor', () => {
+    const s = kosa('if (onumdePaletVar()) {\n  sagaDon();\n}', bolumYap(DUZ));
+    expect(s.adimlar[0].olay).toBe('kosul-yanlis');
+  });
+});

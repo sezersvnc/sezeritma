@@ -38,10 +38,22 @@ export function adimAnlat(simdiki: Adim | undefined, onceki: Adim | undefined): 
       return `${yer}: Çikolatayı kaptı. Çantada ${simdiki.durum.cantada} tane.`;
     case 'giris':
       return `${yer}: Kendi yazdığın komut çağrıldı, içindeki satırlar şimdi çalışacak.`;
+    // Koşul sonuçları. Sayaç da değiştiyse ikisi birlikte yazılıyor:
+    // döngünün neden bir tur daha döndüğü ancak böyle anlaşılıyor.
+    case 'dongu-devam':
+      return `${yer}: ${degisim ? `${degisim}. ` : ''}Koşul doğru, döngü bir tur daha dönüyor.`;
+    case 'dongu-son':
+      return `${yer}: ${degisim ? `${degisim}. ` : ''}Koşul yanlış, döngü burada bitti.`;
+    case 'kosul-dogru':
+      return `${yer}: Koşul doğru, içerideki satırlar çalışacak.`;
+    case 'kosul-else':
+      return `${yer}: Koşul yanlış, else'in içindekiler çalışacak.`;
+    case 'kosul-yanlis':
+      return `${yer}: Koşul yanlış, içerideki satırlar atlandı.`;
     default:
       break;
   }
 
   if (degisim) return `${yer}: ${degisim}.`;
-  return `${yer}: Koşul kontrol edildi, program buna göre devam ediyor.`;
+  return `${yer}: Bu satır çalıştı.`;
 }

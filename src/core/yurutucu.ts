@@ -362,8 +362,9 @@ class Yurutucu {
         try {
           this.deyimSessiz(d.baslangic);
           while (true) {
-            this.adimEkle(d);
-            if (!this.dogruMu(this.ifade(d.kosul))) break;
+            const devam = this.dogruMu(this.ifade(d.kosul));
+            this.adimEkle(d, devam ? 'dongu-devam' : 'dongu-son');
+            if (!devam) break;
             this.blok(d.govde);
             this.deyimSessiz(d.artis);
           }
@@ -376,16 +377,18 @@ class Yurutucu {
       case 'while': {
         this.sonDonguKonumu = d;
         while (true) {
-          this.adimEkle(d);
-          if (!this.dogruMu(this.ifade(d.kosul))) break;
+          const devam = this.dogruMu(this.ifade(d.kosul));
+          this.adimEkle(d, devam ? 'dongu-devam' : 'dongu-son');
+          if (!devam) break;
           this.blok(d.govde);
         }
         return;
       }
 
       case 'if': {
-        this.adimEkle(d);
-        if (this.dogruMu(this.ifade(d.kosul))) this.blok(d.govde);
+        const dogru = this.dogruMu(this.ifade(d.kosul));
+        this.adimEkle(d, dogru ? 'kosul-dogru' : d.degilse ? 'kosul-else' : 'kosul-yanlis');
+        if (dogru) this.blok(d.govde);
         else if (d.degilse) this.deyim(d.degilse);
         return;
       }

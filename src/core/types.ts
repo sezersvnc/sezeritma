@@ -86,7 +86,19 @@ export interface Kod {
 
 export type Degiskenler = Readonly<Record<string, number | boolean>>;
 
-export type Olay = 'ilerle' | 'don' | 'kap' | 'carpma' | 'giris' | 'cikis';
+export type Olay =
+  | 'ilerle'
+  | 'don'
+  | 'kap'
+  | 'carpma'
+  | 'giris'
+  | 'cikis'
+  /* Koşul sonuçları: öğrenci döngünün neden döndüğünü ancak böyle görebiliyor. */
+  | 'dongu-devam'
+  | 'dongu-son'
+  | 'kosul-dogru'
+  | 'kosul-yanlis'
+  | 'kosul-else';
 
 /** Editörün iki düzenlenebilir bölmesi. */
 export type Bolme = 'govde' | 'fonksiyon';
