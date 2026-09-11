@@ -183,12 +183,14 @@ export function Serbest() {
     });
 
   const baglantiyiKopyala = async () => {
-    const bag = `${location.origin}${location.pathname}#serbest=${paylasimKodu(tasarim, kod)}`;
-    try {
-      await navigator.clipboard.writeText(bag);
+    const hash = `#serbest=${paylasimKodu(tasarim, kod)}`;
+    const bag = `${location.origin}${location.pathname}${hash}`;
+    // Adres çubuğu da bağlantıyı taşısın: kopyalama tutmazsa oradan alınabilsin.
+    history.replaceState(null, '', hash);
+    if (await panoyaYaz(bag)) {
       setBildirim('Bağlantı kopyalandı. Gönderdiğin kişi haritanı ve kodunu aynen görecek.');
-    } catch {
-      setBildirim('Tarayıcı kopyalamaya izin vermedi. Adres çubuğundaki bağlantıyı elle alabilirsin.');
+    } else {
+      setBildirim('Tarayıcı kopyalamaya izin vermedi. Bağlantı adres çubuğunda, oradan kopyalayabilirsin.');
     }
   };
 
@@ -415,4 +417,35 @@ export function Serbest() {
       </main>
     </div>
   );
+}
+
+/**
+ * Panoya yazar. `navigator.clipboard` sadece güvenli bağlamda (https ya da
+ * localhost) var; oyun aynı ağdaki bir makineden `http://192.168...` ile
+ * açıldığında yok. O durumda eski yol olan seçip kopyalama deneniyor.
+ */
+async function panoyaYaz(metin: string): Promise<boolean> {
+  try {
+    if (navigator.clipboard && window.isSecureContext) {
+      await navigator.clipboard.writeText(metin);
+      return true;
+    }
+  } catch {
+    /* aşağıdaki yola düş */
+  }
+  const alan = document.createElement('textarea');
+  alan.value = metin;
+  alan.setAttribute('readonly', '');
+  alan.style.position = 'fixed';
+  alan.style.opacity = '0';
+  document.body.appendChild(alan);
+  alan.select();
+  let tamam = false;
+  try {
+    tamam = document.execCommand('copy');
+  } catch {
+    tamam = false;
+  }
+  alan.remove();
+  return tamam;
 }
